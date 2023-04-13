@@ -25,7 +25,7 @@ import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class HoaDon extends JFrame {
+public class HoaDon_GUI extends JFrame {
 
 	private JPanel contentPane;
 	private final JPanel pWest = new JPanel();
@@ -49,7 +49,7 @@ public class HoaDon extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					HoaDon frame = new HoaDon();
+					HoaDon_GUI frame = new HoaDon_GUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,10 +61,11 @@ public class HoaDon extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public HoaDon() {
+	public HoaDon_GUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Hóa đơn");
 		setBounds(100, 100, 1200, 680);
+		setResizable(false);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
