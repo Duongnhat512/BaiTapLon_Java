@@ -250,6 +250,9 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		txtMessTim.setBounds(30, 112, 324, 35);
 		pTimKiem.add(txtMessTim);
 		
+		//Load Data
+		loadDataNCC();
+		
 		//Đăng ký sự kiện
 		tableNCC.addMouseListener(this);
 		btnXoaTrang.addActionListener(this);

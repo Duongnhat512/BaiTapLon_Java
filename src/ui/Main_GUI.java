@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import connectDB.ConnectDB;
+import entities.CustomButton;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -117,7 +118,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		btnThoat.setBounds(0, 523, 120, 70);
 		btnThoat.setBackground(Color.WHITE);
 		pWest.add(btnThoat);
-		
+
 		btnKhachHang = new JButton("Khách hàng");
 		btnKhachHang.setBackground(new Color(210, 210, 210));
 		btnKhachHang.setBounds(0, 413, 120, 70);
@@ -149,7 +150,6 @@ public class Main_GUI extends JFrame implements ActionListener{
 			ncc_UI = new NhaCungCap_GUI();
 			pNhaCC = ncc_UI.getNCCPanel();
 			contentPane.add(pNhaCC);
-			ncc_UI.loadDataNCC();
 		}
 		if(btn.equals(btnKhachHang)) {
 			kh_UI = new KhachHang_GUI();
