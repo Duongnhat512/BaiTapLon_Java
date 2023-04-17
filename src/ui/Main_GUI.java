@@ -9,6 +9,7 @@ import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -25,17 +26,18 @@ import javax.swing.JButton;
 public class Main_GUI extends JFrame implements ActionListener{
 
 	private JPanel contentPane;
-	private JPanel pNhaCC;
 	
 	
 	private NhaCungCap_GUI ncc_UI;
 	private HoaDon_GUI hoaDon_UI;
+	private KhachHang_GUI kh_UI;
 	
 	private JPanel pHoaDon;
 	private JPanel pTrangChu;
+	private JPanel pNhaCC;
+	private JPanel pKhachHang;
 	
 	private String currentUI;
-	private String nextUI;
 	
 	private JButton btnNhaCC;
 	private JButton btnHoaDon;
@@ -45,6 +47,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private JButton btnNhanVien;
 	private JButton btnTrangChu;
 	private JButton btnThoat;
+	private JButton btnKhachHang;
 	/**
 	 * Launch the application.
 	 */
@@ -74,7 +77,6 @@ public class Main_GUI extends JFrame implements ActionListener{
 		contentPane = new JPanel();
 		contentPane.setForeground(new Color(245, 245, 245));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-//		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		getContentPane().add(contentPane);
 		
@@ -87,28 +89,28 @@ public class Main_GUI extends JFrame implements ActionListener{
 		colorButton = new Color(r, g, b);
 		
 		btnHoaDon = new JButton("Hóa đơn");
-		btnHoaDon.setBounds(0, 268, 120, 70);
+		btnHoaDon.setBounds(0, 210, 120, 70);
 		btnHoaDon.setBackground(colorButton);
 		pWest.add(btnHoaDon);
 		
 		btnNhaCC = new JButton("Nhà cung cấp");
-		btnNhaCC.setBounds(0, 334, 120, 70);
+		btnNhaCC.setBounds(0, 276, 120, 70);
 		btnNhaCC.setBackground(colorButton);
 		pWest.add(btnNhaCC);
 		
 		btnSanPham = new JButton("Sản phẩm");
 		btnSanPham.setBackground(new Color(210, 210, 210));
-		btnSanPham.setBounds(0, 403, 120, 70);
+		btnSanPham.setBounds(0, 345, 120, 70);
 		pWest.add(btnSanPham);
 		
 		btnNhanVien = new JButton("Nhân viên");
 		btnNhanVien.setBackground(new Color(210, 210, 210));
-		btnNhanVien.setBounds(0, 199, 120, 70);
+		btnNhanVien.setBounds(0, 141, 120, 70);
 		pWest.add(btnNhanVien);
 		
 		btnTrangChu = new JButton("Trang chủ");
 		btnTrangChu.setBackground(new Color(210, 210, 210));
-		btnTrangChu.setBounds(0, 130, 120, 70);
+		btnTrangChu.setBounds(0, 72, 120, 70);
 		pWest.add(btnTrangChu);
 		
 		btnThoat = new JButton("Thoát");
@@ -116,15 +118,28 @@ public class Main_GUI extends JFrame implements ActionListener{
 		btnThoat.setBackground(Color.WHITE);
 		pWest.add(btnThoat);
 		
+		btnKhachHang = new JButton("Khách hàng");
+		btnKhachHang.setBackground(new Color(210, 210, 210));
+		btnKhachHang.setBounds(0, 413, 120, 70);
+		pWest.add(btnKhachHang);
+		
 		pTrangChu = new JPanel();
 		contentPane.add(pTrangChu);
 		currentUI = "Trang chủ";		
 		
 		btnHoaDon.addActionListener(this);
 		btnNhaCC.addActionListener(this);
+		btnKhachHang.addActionListener(this);
+		btnNhanVien.addActionListener(this);
+		btnSanPham.addActionListener(this);
+		btnTrangChu.addActionListener(this);
+		btnThoat.addActionListener(this);
 	}
 	
-	private void openUI(JButton btn) throws ClassNotFoundException, SQLException {
+	/*
+	 * Mở panel khi nhấn vào nút
+	 */
+	private void openPanel(JButton btn) throws ClassNotFoundException, SQLException {
 		if(btn.equals(btnHoaDon)) {
 			hoaDon_UI = new HoaDon_GUI();
 			pHoaDon = hoaDon_UI.getHoaDonPanel();
@@ -136,60 +151,88 @@ public class Main_GUI extends JFrame implements ActionListener{
 			contentPane.add(pNhaCC);
 			ncc_UI.loadDataNCC();
 		}
+		if(btn.equals(btnKhachHang)) {
+			kh_UI = new KhachHang_GUI();
+			pKhachHang = kh_UI.getKhachHangPanel();
+			contentPane.add(pKhachHang);
+		}
 		this.revalidate();
 		this.repaint();	
 	}
 	
+	/*
+	 * Trả về JPanel hiện tại đang được hiện
+	 */
 	private JPanel getCurrentUI() {
-		if(currentUI.equals("Trang chủ")) {
+		if(currentUI.equals("Trang chủ"))
 			return pTrangChu;
-		}
 		if(currentUI.equals("Nhà cung cấp"))
 			return pNhaCC;
 		if(currentUI.equals("Hóa đơn"))
 			return pHoaDon;
+		if(currentUI.equals("Khách hàng"))
+			return pKhachHang;
 		return null;
 	}
 	
+	
+	/*
+	 * Thay đổi màu của JButton khi nhấn vào
+	 */
 	private void changeColorButton(JButton btn) {
 		if(btn == null) return;
 		btn.setBackground(colorButton);
+	}
+	
+	/*
+	 * Lấy tên chủa nút được nhấn
+	 */
+	private String getButtonName(JButton btn) {
+		if(btn.equals(btnKhachHang)) return "Khách hàng";
+		if(btn.equals(btnHoaDon)) return "Hóa đơn";
+		if(btn.equals(btnNhaCC)) return "Nhà cung cấp";
+		if(btn.equals(btnNhanVien)) return "Khách hàng";
+		if(btn.equals(btnTrangChu)) return "Trang chủ";
+		if(btn.equals(btnSanPham)) return "Sản phẩm";
+		return null;
+	}
+	
+	/*
+	 * Thay đổi JPanel đang hiển thị thành JPanel được chọn
+	 */
+	private void updatePanel(JButton btn) {
+		changeColorButton(currentButton);
+		contentPane.remove(getCurrentUI());
+		try {
+			openPanel(btn);
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		currentUI = getButtonName(btn);
+		currentButton = btn;
+		btn.setBackground(Color.WHITE);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object o = e.getSource();
 		if(o.equals(btnNhaCC)) {
-			changeColorButton(currentButton);
-			contentPane.remove(getCurrentUI());
-			try {
-				openUI(btnNhaCC);
-			} catch (ClassNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			currentUI = "Nhà cung cấp";
-			currentButton = btnNhaCC;
-			btnNhaCC.setBackground(Color.WHITE);
+			updatePanel(btnNhaCC);
 		}
 		if(o.equals(btnHoaDon)) {
-			changeColorButton(currentButton);
-			contentPane.remove(getCurrentUI());
-			try {
-				openUI(btnHoaDon);
-			} catch (ClassNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			updatePanel(btnHoaDon);
+		}
+		if(o.equals(btnKhachHang)) {
+			updatePanel(btnKhachHang);
+		}
+		if(o.equals(btnThoat)) {
+			if(JOptionPane.showConfirmDialog(this, "Bạn có muốn thoát chương trình không?", "Hỏi nhắc", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				System.exit(0);
 			}
-			currentUI = "Hóa đơn";
-			currentButton = btnHoaDon;
-			btnHoaDon.setBackground(Color.WHITE);
 		}
 		
 	}

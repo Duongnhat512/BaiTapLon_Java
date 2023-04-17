@@ -9,8 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import bus.KhachHang_Bus;
 import connectDB.ConnectDB;
-import dao.KhachHang_DAO;
 
 import entities.KhachHang;
 
@@ -79,12 +79,14 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 	private JComboBox cbbLoc;
 	private JButton btnLoc;
 	private JButton btnTrang;
-	private KhachHang_DAO kh_dao;
+	private KhachHang_Bus kh_Bus;
 	private JTable table;
 	private JPanel pCenter;
 	
 	
-	
+	public JPanel getKhachHangPanel() {
+		return pCenter;
+	}
 
 	/**
 	 * Create the frame.
@@ -105,7 +107,6 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			e.printStackTrace();
 			System.out.println(2);
 		}
-		kh_dao = new KhachHang_DAO();
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -281,9 +282,9 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		panel.add(btnTrang);
 		
 		pCenter.setLayout(null);
-//		đọc dữ liệu vào table
-		docDulieuVaoTable();
-		updateCBB();
+		
+		loadDataKH();
+		
 		btnThem.addActionListener(this);
 		btnLoc.addActionListener(this);
 		btnReset.addActionListener(this);
@@ -294,6 +295,12 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		table.addMouseListener(this);
 	}
 	
+	public void loadDataKH() {
+		kh_Bus = new KhachHang_Bus();
+		docDulieuVaoTable();
+		updateCBB();
+	}
+	
 	public void xoaTable() {
 		DefaultTableModel dm = (DefaultTableModel) table.getModel();
 		dm.getDataVector().removeAllElements();
@@ -301,7 +308,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 	public void docDulieuVaoTable() {
 		xoaTable();
 		ArrayList<KhachHang> ds = new ArrayList<>();
-		ds = kh_dao.getAllTableKhachHang();
+		ds = kh_Bus.getAllTableKhachHang();
 		int stt=0;
 		for (KhachHang khachHang : ds) {
 			String s="";
@@ -319,7 +326,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		
 	}
 	public void updateCBB() {
-		ArrayList<KhachHang> ds = kh_dao.getAllTableKhachHang();
+		ArrayList<KhachHang> ds = kh_Bus.getAllTableKhachHang();
 		Set<String> uniqueTypes = new HashSet<String>();
 		for (KhachHang kh : ds) {
 		   uniqueTypes.add(kh.getLoaiKhachHang());
@@ -336,7 +343,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			KhachHang k = layData();
 			
 			try {
-				if(kh_dao.them(k)) {
+				if(kh_Bus.them(k)) {
 					JOptionPane.showMessageDialog(null, "Thành công");
 					docDulieuVaoTable();
 					updateCBB();
@@ -357,7 +364,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 				String ma = (String) table.getValueAt(r, 1);
 				KhachHang k =new KhachHang(ma);
 				try {
-					kh_dao.xoa(k);
+					kh_Bus.xoa(k);
 					JOptionPane.showMessageDialog(null, "Thành công");
 					updateCBB();
 					docDulieuVaoTable();
@@ -375,7 +382,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		if(obj.equals(btnTim)) {
 			String ten = txtTimKiem.getText();
 			try {
-				ArrayList<KhachHang> dsks =  kh_dao.getKhachHangTheoTen(ten);
+				ArrayList<KhachHang> dsks =  kh_Bus.getKhachHangTheoTen(ten);
 				thayTable(dsks);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -386,7 +393,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		if(obj.equals(btnLoc)) {
 			String loai = (String) cbbLoc.getSelectedItem(); 
 			try {
-				ArrayList<KhachHang> ds = kh_dao.getKhachHangTheoLoai(loai);
+				ArrayList<KhachHang> ds = kh_Bus.getKhachHangTheoLoai(loai);
 				thayTable(ds);
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -397,9 +404,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		}
 	}
 	
-	/*
-	 * Đưa dữ liệu lên table
-	 */
+
 	public void thayTable(ArrayList<KhachHang> ds) {
 		xoaTable();
 		int stt=0;
