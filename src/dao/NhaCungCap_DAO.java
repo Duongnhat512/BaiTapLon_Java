@@ -44,7 +44,7 @@ public class NhaCungCap_DAO implements INhaCungCap{
 
 	@Override
 	/*
-	 * Thêm nhà cung cấp
+	 * Thêm nhà cung cấpn
 	 */
 	public boolean themNhaCC(NhaCungCap ncc) {
 		ConnectDB.getInstance();
@@ -81,13 +81,15 @@ public class NhaCungCap_DAO implements INhaCungCap{
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
+//		boolean n = false;
 		int n = 0;
 		try {
-			stm = con.prepareStatement("delete form NhaCungCap where maNCC = ?");
+			stm = con.prepareStatement("delete from NhaCungCap where maNCC = ?");
 			stm.setString(1, maNCC);
 			n = stm.executeUpdate();
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 		}finally {
 			try {
 				stm.close();

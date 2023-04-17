@@ -10,6 +10,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
@@ -53,6 +55,7 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 	private JButton btnXoaTrangTim;
 	private JTextField txtMess;
 	private JTextField txtMessTim;
+	private JPanel pCenter;
 
 	/**
 	 * Launch the application.
@@ -69,6 +72,10 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 			}
 		});
 	}
+	
+	public JPanel getNCCPanel() {
+		return pCenter;
+	}
 
 	/**
 	 * Create the frame.
@@ -78,7 +85,7 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 	public NhaCungCap_GUI() throws ClassNotFoundException, SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Nhà cung cấp");
-		setBounds(100, 100, 1200, 720);
+		setBounds(100, 100, 1200, 680);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
@@ -87,18 +94,16 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel pWest = new JPanel();
-		pWest.setBounds(10, 10, 110, 670);
-		contentPane.add(pWest);
 		
-		JPanel pCenter = new JPanel();
+		
+		pCenter = new JPanel();
 		pCenter.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pCenter.setBounds(130, 10, 1046, 670);
+		pCenter.setBounds(130, 10, 1046, 623);
 		contentPane.add(pCenter);
 		pCenter.setLayout(null);
 		
 		JPanel pNhaCungCap = new JPanel();
-		pNhaCungCap.setBounds(10, 6, 637, 654);
+		pNhaCungCap.setBounds(10, 6, 637, 607);
 		pCenter.add(pNhaCungCap);
 		pNhaCungCap.setLayout(new BorderLayout(0, 0));
 		
@@ -131,7 +136,7 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		
 		JPanel pTacVu = new JPanel();
 		pTacVu.setBorder(new TitledBorder(null, "Ch\u1ECDn t\u00E1c v\u1EE5", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pTacVu.setBounds(657, 10, 379, 402);
+		pTacVu.setBounds(657, 10, 379, 379);
 		pCenter.add(pTacVu);
 		pTacVu.setLayout(null);
 		
@@ -189,19 +194,19 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		txtEmail.setColumns(10);
 		
 		btnThem = new JButton("Thêm");
-		btnThem.setBounds(34, 286, 120, 36);
+		btnThem.setBounds(34, 283, 120, 28);
 		pTacVu.add(btnThem);
 		
 		btnXoa = new JButton("Xóa");
-		btnXoa.setBounds(218, 286, 120, 36);
+		btnXoa.setBounds(218, 283, 120, 28);
 		pTacVu.add(btnXoa);
 		
 		btnSua = new JButton("Sửa");
-		btnSua.setBounds(34, 343, 120, 36);
+		btnSua.setBounds(34, 329, 120, 28);
 		pTacVu.add(btnSua);
 		
 		btnXoaTrang = new JButton("Xóa trắng");
-		btnXoaTrang.setBounds(218, 343, 120, 36);
+		btnXoaTrang.setBounds(218, 329, 120, 28);
 		pTacVu.add(btnXoaTrang);
 		
 		txtMess = new JTextField();
@@ -215,7 +220,7 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		
 		JPanel pTimKiem = new JPanel();
 		pTimKiem.setBorder(new TitledBorder(null, "T\u00ECm ki\u1EBFm", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		pTimKiem.setBounds(657, 441, 379, 219);
+		pTimKiem.setBounds(657, 411, 379, 202);
 		pCenter.add(pTimKiem);
 		pTimKiem.setLayout(null);
 		
@@ -229,11 +234,11 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		txtTimNCC.setColumns(10);
 		
 		btnTim = new JButton("Tìm");
-		btnTim.setBounds(54, 161, 105, 35);
+		btnTim.setBounds(55, 152, 105, 28);
 		pTimKiem.add(btnTim);
 		
 		btnXoaTrangTim = new JButton("Xóa trắng");
-		btnXoaTrangTim.setBounds(221, 161, 105, 35);
+		btnXoaTrangTim.setBounds(219, 152, 105, 28);
 		pTimKiem.add(btnXoaTrangTim);
 		
 		txtMessTim = new JTextField();
@@ -245,9 +250,6 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		txtMessTim.setBounds(30, 112, 324, 35);
 		pTimKiem.add(txtMessTim);
 		
-		nccBus = new NhaCungCap_Bus();
-		capNhatBangNhaCC();
-		
 		//Đăng ký sự kiện
 		tableNCC.addMouseListener(this);
 		btnXoaTrang.addActionListener(this);
@@ -255,6 +257,11 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		btnXoa.addActionListener(this);
 		btnXoaTrangTim.addActionListener(this);
 		btnTim.addActionListener(this);
+	}
+	
+	public void loadDataNCC() {
+		nccBus = new NhaCungCap_Bus();
+		capNhatBangNhaCC();
 	}
 	
 	/*
@@ -265,6 +272,7 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		for(NhaCungCap ncc : nccBus.getListNhaCC()) {
 			dm.addRow(new Object[] {ncc.getMaNCC(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai(), ncc.getEmail()});
 		}
+		tableNCC.setModel(dm);
 	}
 	
 	/*
@@ -316,6 +324,7 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		xoaTrang();
 		DefaultTableModel dm = (DefaultTableModel) tableNCC.getModel();
 		dm.addRow(new Object[] {ncc.getMaNCC(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai(), ncc.getEmail()});
+		tableNCC.setModel(dm);
 	}
 
 	/*
@@ -332,10 +341,25 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 			DefaultTableModel dm = (DefaultTableModel) tableNCC.getModel();
 			dm.addRow(new Object[] {ncc.getMaNCC(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai(), ncc.getEmail()});
 		}
+		else {
+			txtMess.setText("Thêm không thành công nhà cung cấp.");
+		}
 	}
 	
-	public void xoaNhaCungCap() {
-		
+	private void xoaNhaCungCap() {
+		txtMess.setText("");
+		if(JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa nhà cung cấp này không?", "Xác nhận", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			String maNCC = tableNCC.getValueAt(tableNCC.getSelectedRow(), 0).toString();
+			if(nccBus.xoaNhaCC(maNCC)) {
+				txtMess.setText("Xóa thành công nhà cung cấp.");
+				DefaultTableModel dm = (DefaultTableModel) tableNCC.getModel();
+				dm.removeRow(tableNCC.getSelectedRow());
+				xoaTrang();
+			}
+			else {
+				txtMess.setText("Xóa không thành công.");
+			}
+		}
 	}
 	
 	@Override
@@ -385,7 +409,7 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 			themNhaCungCap();
 		}
 		if(o.equals(btnXoa)) {
-			
+			xoaNhaCungCap();
 		}
 	}
 }

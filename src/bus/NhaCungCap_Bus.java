@@ -10,7 +10,7 @@ import interfaces.INhaCungCap;
 public class NhaCungCap_Bus implements INhaCungCap{
 	
 	private NhaCungCap_DAO ncc_Dao = new NhaCungCap_DAO();
-	private int ma = 5;
+	private int ma;
 
 	@Override
 	public ArrayList<NhaCungCap> getListNhaCC() {
@@ -29,8 +29,12 @@ public class NhaCungCap_Bus implements INhaCungCap{
 
 	@Override
 	public boolean themNhaCC(NhaCungCap ncc) {
-		ma++;
+		ma = ncc_Dao.getListNhaCC().size() + 1;
 		String maNCC = "NCC" + String.format("%03d", ma);
+		while (getListNhaCC().contains(new NhaCungCap(maNCC))) {
+			ma++;
+			maNCC = "NCC" + String.format("%03d", ma);
+		}
 		ncc.setMaNCC(maNCC);
 		if(ncc_Dao.themNhaCC(ncc)) {
 			return true;
@@ -40,10 +44,14 @@ public class NhaCungCap_Bus implements INhaCungCap{
 
 	@Override
 	public boolean xoaNhaCC(String maNCC) {
-		if(ncc_Dao.xoaNhaCC(maNCC)) {
-			return true;
+		boolean result = true;
+		try {
+			result = ncc_Dao.xoaNhaCC(maNCC);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return false;
 		}
-		return false;
+		return result;
 	}
 
 	@Override

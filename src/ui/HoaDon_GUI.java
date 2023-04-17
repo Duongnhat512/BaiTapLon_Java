@@ -14,16 +14,23 @@ import javax.swing.JTabbedPane;
 import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+
 import javax.swing.border.TitledBorder;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 
 public class HoaDon_GUI extends JFrame {
 
@@ -37,15 +44,16 @@ public class HoaDon_GUI extends JFrame {
 	private JTextField txtNgayGiao;
 	private JTextField txtNoiNhan;
 	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField txtMaChiTietHD;
+	private JTextField txtMaHD_1;
 	private JTextField txtsoLuong;
 	private JTextField txtGiaBan;
+	private JPanel pCenter;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void openUI_HoaDon() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -56,6 +64,14 @@ public class HoaDon_GUI extends JFrame {
 				}
 			}
 		});
+	}
+	
+	public static void main(String[] args) {
+		openUI_HoaDon();
+	}
+	
+	public JPanel getHoaDonPanel() {
+		return pCenter;
 	}
 
 	/**
@@ -69,15 +85,16 @@ public class HoaDon_GUI extends JFrame {
 		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
+		
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		pWest.setBounds(10, 10, 110, 623);
+		pWest.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		pWest.setBounds(10, 10, 123, 623);
 		contentPane.add(pWest);
 		pWest.setLayout(null);
 		
-		JPanel pCenter = new JPanel();
-		pCenter.setBorder(new LineBorder(new Color(0, 0, 0)));
+		pCenter = new JPanel();
+		pCenter.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 		pCenter.setBounds(130, 10, 1046, 623);
 		contentPane.add(pCenter);
 		pCenter.setLayout(null);
@@ -153,6 +170,7 @@ public class HoaDon_GUI extends JFrame {
 		pTacVuHD.add(lblMaHD);
 		
 		txtMaHD = new JTextField();
+		txtMaHD.setEditable(false);
 		txtMaHD.setBounds(156, 17, 150, 21);
 		pTacVuHD.add(txtMaHD);
 		txtMaHD.setColumns(10);
@@ -249,21 +267,22 @@ public class HoaDon_GUI extends JFrame {
 		lblMaCTHD.setBounds(6, 17, 150, 21);
 		pTacVuCTHD.add(lblMaCTHD);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(156, 17, 150, 21);
-		pTacVuCTHD.add(textField_1);
+		txtMaChiTietHD = new JTextField();
+		txtMaChiTietHD.setEditable(false);
+		txtMaChiTietHD.setColumns(10);
+		txtMaChiTietHD.setBounds(156, 17, 150, 21);
+		pTacVuCTHD.add(txtMaChiTietHD);
 		
 		JLabel lblMaHD_1 = new JLabel("Mã hóa đơn");
 		lblMaHD_1.setHorizontalAlignment(SwingConstants.LEFT);
 		lblMaHD_1.setBounds(6, 48, 150, 21);
 		pTacVuCTHD.add(lblMaHD_1);
 		
-		textField_2 = new JTextField();
-		textField_2.setEditable(false);
-		textField_2.setColumns(10);
-		textField_2.setBounds(156, 48, 150, 21);
-		pTacVuCTHD.add(textField_2);
+		txtMaHD_1 = new JTextField();
+		txtMaHD_1.setEditable(false);
+		txtMaHD_1.setColumns(10);
+		txtMaHD_1.setBounds(156, 48, 150, 21);
+		pTacVuCTHD.add(txtMaHD_1);
 		
 		JLabel lblLoai = new JLabel("Loại sản phẩm");
 		lblLoai.setBounds(6, 79, 150, 21);
