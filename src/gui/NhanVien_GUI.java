@@ -360,9 +360,9 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 					JOptionPane.showMessageDialog(this, "Không tìm thấy");
 				}
 				else {
-					modelNhanVien.getDataVector().removeAllElements();
+					xoaHetDuLieuTable();
 					for (NhanVien s: list) {
-						String [] rowdata = {s.getMaNV(),s.getTenNV(),s.getPhong().getMaPhongBan()+"",s.getSoDT(),s.getLuong()+"",s.getPhai()?"Nu":"Nam"};
+						String [] rowdata = {s.getMaNV(),s.getTenNV(),s.getPhong().getMaPhongBan()+"",s.getSoDT(),String.format("%.0f", s.getLuong())+"",s.getPhai()?"Nu":"Nam"};
 						modelNhanVien.addRow(rowdata);
 					}
 				}
@@ -377,7 +377,7 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 					JOptionPane.showMessageDialog(this, "Không tìm thấy");
 				}
 				else {
-					modelNhanVien.getDataVector().removeAllElements();
+					xoaHetDuLieuTable();
 					for (NhanVien s: list) {
 						String [] rowdata = {s.getMaNV(),s.getTenNV(),s.getPhong().getMaPhongBan()+"",s.getSoDT(),s.getLuong()+"",s.getPhai()?"Nu":"Nam"};
 						modelNhanVien.addRow(rowdata);
@@ -386,13 +386,23 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 			}}
 		if(o.equals(btnXem)) {
 			try {
+				xoaHetDuLieuTable();
 				DocDuLieuDatabaseVaoTable();
+				
 			} catch (ClassNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
 	}
+	
+	private void xoaHetDuLieuTable() {
+		DefaultTableModel dm = (DefaultTableModel) tableNhanVien.getModel();
+		dm.getDataVector().removeAllElements();
+	}
+	/*
+	 * Đọc dữ liệu từ database vào table
+	 */
 	public void DocDuLieuDatabaseVaoTable() throws ClassNotFoundException{
 		ArrayList<NhanVien> list = nv_Bus.getalltbNhanVien();
 		for (NhanVien nv : list) {

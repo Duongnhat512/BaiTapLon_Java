@@ -28,4 +28,7 @@ public class KhachHang_Bus {
 	public boolean xoa(KhachHang k) throws SQLException{
 		return kh_Dao.xoa(k);
 	}
+	public boolean sua(KhachHang k) throws SQLException{
+		return kh_Dao.sua(k);
+	}
 }

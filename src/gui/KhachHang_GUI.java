@@ -16,6 +16,7 @@ import entities.KhachHang;
 
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -25,6 +26,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -402,8 +405,95 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			}
 			
 		}
+		if(obj.equals(btnSua)) {
+			int r = table.getSelectedRow() ;
+			String ma = txtMa.getText().trim();
+			String ten = txtTen.getText().trim();
+			boolean gioiTinh;
+			if (rdNam.isSelected()) {
+				gioiTinh = true;
+			} else {
+				gioiTinh = false;
+			}
+			String diaChi = txtDiaChi.getText().trim();
+			String sdt = txtSDT.getText().trim();
+			String gmail =txtGmail.getText().trim();
+			String loai = txtLoai.getText().trim();
+			KhachHang k =new KhachHang(ma, ten, gioiTinh, diaChi, sdt, gmail, loai);
+			if(checkValue()) {
+				try {
+					kh_Bus.sua(k);
+					JOptionPane.showMessageDialog(null, "Thành công");
+					updateCBB();
+					docDulieuVaoTable();
+					
+				} catch (HeadlessException | SQLException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Không tìm thấy");
+					
+					e1.printStackTrace();
+				}				
+			}
+		}
 	}
 	
+	public boolean checkValue() {
+		String ten = txtTen.getText().trim();
+		boolean gioiTinh;
+		if (rdNam.isSelected()) {
+			gioiTinh = true;
+		} else if (rdNu.isSelected()) {
+			gioiTinh = false;
+		} else {
+			JOptionPane.showMessageDialog(null, "Hãy lựa chọn giới tính");
+			return false;
+		}
+		String diaChi = txtDiaChi.getText().trim();
+		String sdt = txtSDT.getText().trim();
+		String gmail = txtGmail.getText().trim();
+		if (ten.length() == 0) {
+			JOptionPane.showMessageDialog(null, "Tên ko được rỗng");
+			return false;
+		}
+		if (diaChi.length() == 0) {
+			JOptionPane.showMessageDialog(null, "Địa chỉ ko được rỗng");
+			return false;
+		}
+		if (gmail.length() == 0) {
+			JOptionPane.showMessageDialog(null, "Gmail ko được rỗng");
+			return false;
+		}
+		if (sdt.length() == 0) {
+			JOptionPane.showMessageDialog(null, "Số điện thoại ko được rỗng");
+			return false;
+		}
+
+//		String a = "([A-Z][a-z]*\\s*)+([A-Z][a-z]*)*";
+		String a = "[\\p{Lu}][\\p{L}]+([\\s]+[\\p{Lu}][\\p{L}]+)+";
+		Pattern p = Pattern.compile(a);
+		Matcher m = p.matcher(ten);
+		if (!m.matches()) {
+			JOptionPane.showMessageDialog(null, "Tên phải bắt đầu là chữ hoa và không có ký tự số");
+			return false;
+		}
+
+		String a1 = "^0[1-9][0-9]{8}$";
+		Pattern p1 = Pattern.compile(a1);
+		Matcher m1 = p1.matcher(sdt);
+		if (!m1.matches()) {
+			JOptionPane.showMessageDialog(null, "Số điện thoại gồm 10 số bắt đầu là số 0 ");
+			return false;
+		}
+
+		String a3 = "[a-zA-Z0-9_.]+\\@[a-zA-Z0-9]+\\.[a-zA-Z]{2,}";
+		Pattern p3 = Pattern.compile(a3);
+		Matcher m3 = p3.matcher(gmail);
+		if (!m3.matches()) {
+			JOptionPane.showMessageDialog(null, "Gmail là 1 chuỗi có thể có ký tự số chữ và ký tự đặc biệt");
+			return false;
+		}
+		return true;
+	}
 
 	public void thayTable(ArrayList<KhachHang> ds) {
 		xoaTable();

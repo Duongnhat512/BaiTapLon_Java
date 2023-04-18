@@ -53,7 +53,7 @@ public class NhaCungCap_DAO implements INhaCungCap{
 		int n = 0;
 		try {
 			stm = con.prepareStatement("insert into NhaCungCap values(?, ?, ?, ?, ?)");
-			stm.setString(1, ncc.getMaNCC());
+			stm.setString(1, ncc.getNhaCCID());
 			stm.setString(2, ncc.getTenNCC());
 			stm.setString(3, ncc.getDiaChi());
 			stm.setString(4, ncc.getSoDienThoai());
@@ -81,7 +81,6 @@ public class NhaCungCap_DAO implements INhaCungCap{
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;
-//		boolean n = false;
 		int n = 0;
 		try {
 			stm = con.prepareStatement("delete from NhaCungCap where maNCC = ?");
@@ -103,8 +102,30 @@ public class NhaCungCap_DAO implements INhaCungCap{
 
 	@Override
 	public boolean capNhatNhaCC(NhaCungCap ncc) {
-		// TODO Auto-generated method stub
-		return false;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		int n = 0;
+		try {
+			stm = con.prepareStatement("update NhaCungCap set tenNCC = ?, diaChi = ?, soDT = ?, email = ? where maNCC = ?");
+			stm.setString(1, ncc.getTenNCC());
+			stm.setString(2, ncc.getDiaChi());
+			stm.setString(3, ncc.getSoDienThoai());
+			stm.setString(4, ncc.getEmail());
+			stm.setString(5, ncc.getNhaCCID());
+			n = stm.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally {
+			try {
+				stm.close();
+			} catch (SQLException  e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return n > 0;
 	}
 
 }

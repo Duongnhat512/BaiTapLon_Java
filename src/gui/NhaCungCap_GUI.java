@@ -46,7 +46,7 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 	private JTextField txtEmail;
 	private JTextField txtTimNCC;
 	
-	private NhaCungCap_Bus nccBus;
+	private NhaCungCap_Bus ncc_Bus;
 	private JButton btnSua;
 	private JButton btnXoaTrang;
 	private JButton btnXoa;
@@ -211,7 +211,7 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		
 		txtMess = new JTextField();
 		txtMess.setForeground(new Color(255, 0, 0));
-		txtMess.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 13));
+		txtMess.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 12));
 		txtMess.setEditable(false);
 		txtMess.setBounds(10, 237, 359, 39);
 		pTacVu.add(txtMess);
@@ -260,10 +260,11 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		btnXoa.addActionListener(this);
 		btnXoaTrangTim.addActionListener(this);
 		btnTim.addActionListener(this);
+		btnSua.addActionListener(this);
 	}
 	
 	public void loadDataNCC() {
-		nccBus = new NhaCungCap_Bus();
+		ncc_Bus = new NhaCungCap_Bus();
 		capNhatBangNhaCC();
 	}
 	
@@ -272,8 +273,8 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 	 */
 	private void capNhatBangNhaCC() {
 		DefaultTableModel dm = (DefaultTableModel) tableNCC.getModel();
-		for(NhaCungCap ncc : nccBus.getListNhaCC()) {
-			dm.addRow(new Object[] {ncc.getMaNCC(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai(), ncc.getEmail()});
+		for(NhaCungCap ncc : ncc_Bus.getListNhaCC()) {
+			dm.addRow(new Object[] {ncc.getNhaCCID(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai(), ncc.getEmail()});
 		}
 		tableNCC.setModel(dm);
 	}
@@ -318,7 +319,7 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 			capNhatBangNhaCC();
 			return;
 		}
-		NhaCungCap ncc = nccBus.getNhaCCTheoMa(txtTimNCC.getText());
+		NhaCungCap ncc = ncc_Bus.getNhaCCTheoMa(txtTimNCC.getText());
 		if(ncc == null) {
 			txtMessTim.setText("Không tìm thấy nhân viên có mã: " + txtTimNCC.getText());
 			return;
@@ -326,46 +327,118 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		xoaHetDuLieuTable();
 		xoaTrang();
 		DefaultTableModel dm = (DefaultTableModel) tableNCC.getModel();
-		dm.addRow(new Object[] {ncc.getMaNCC(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai(), ncc.getEmail()});
+		dm.addRow(new Object[] {ncc.getNhaCCID(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai(), ncc.getEmail()});
 		tableNCC.setModel(dm);
 	}
 	
+	/*
+	 * Kiểm tra thông tin trên các text field
+	 */
 	private boolean kiemTraThongTin() {
 		String tenNCC = txtTenNCC.getText();
 		String diaChi = txtDiaChi.getText();
 		String soDT = txtSoDienThoai.getText();
 		String email = txtEmail.getText();
 		
-		if(!(tenNCC.trim().length() > 0 && tenNCC.matches("[\\p{L}]+([\\s]+[\\p{L}]+)+"))) {
-//			txtMess
+		if (tenNCC.trim().length() > 0) {
+			if(!(tenNCC.matches("^[\\p{L}]+([\\s]+[\\p{L}]+)*"))) {
+				txtMess.setText("Tên nhà cung cấp không được chứa ký tự đặc biệt.");
+				txtTenNCC.selectAll();
+				txtTenNCC.requestFocus();
+				return false;
+			}
 		}
+		else {
+			txtMess.setText("Tên nhà cung cấp không được để trống.");
+			txtTenNCC.selectAll();
+			txtTenNCC.requestFocus();
+			return false;
+		}
+		
+		if(diaChi.trim().length() > 0) {
+			if(!(diaChi.matches("^(\\s*[\\p{L}0-9]+)+([\\,][\\s]*[\\p{L}[\\.]*[\\s]0-9]+)+"))) {
+				txtMess.setText("Địa chỉ phải theo dạng: Đường, Quận, Thành phố");
+				txtDiaChi.selectAll();
+				txtDiaChi.requestFocus();
+				return false;
+			}
+		}
+		else {
+			txtMess.setText("Địa chỉ không được để trống.");
+			txtDiaChi.selectAll();
+			txtDiaChi.requestFocus();
+			return false;
+		}
+		
+		if(soDT.trim().length() > 0) {
+			if(!(soDT.matches("0[1-9][0-9]{8}"))) {
+				txtMess.setText("Số điện thoại phải có 10 số, bắt đầu bằng số 0.");
+				txtSoDienThoai.selectAll();
+				txtSoDienThoai.requestFocus();
+				return false;
+			}
+		}
+		else {
+			txtMess.setText("Không được để trống số điện thoại.");
+			txtSoDienThoai.selectAll();
+			txtSoDienThoai.requestFocus();
+			return false;
+		}
+		
+		if(email.trim().length() > 0) {
+			if(!(email.matches("[a-zA-Z][\\w]+\\@[a-zA-Z]{4,8}(\\.[a-zA-Z]{2,4})+"))) {
+				txtMess.setText("Email không hợp lệ.");
+				txtEmail.selectAll();
+				txtEmail.requestFocus();
+				return false;
+			}
+		}
+		else {
+			txtMess.setText("Không được để trống email.");
+			txtEmail.selectAll();
+			txtEmail.requestFocus();
+			return false;
+		}
+		
 		return true;
 	}
 
-	/*
-	 * Thêm nhà cung cấp
-	 */
-	private void themNhaCungCap() {
+	private NhaCungCap layDuLieuNCC() {
 		NhaCungCap ncc = new NhaCungCap();
 		ncc.setTenNCC(txtTenNCC.getText());
 		ncc.setSoDienThoai(txtSoDienThoai.getText());
 		ncc.setDiaChi(txtDiaChi.getText());
 		ncc.setEmail(txtEmail.getText());
-		if(nccBus.themNhaCC(ncc)) {
+		return ncc;
+	}
+	/*
+	 * Thêm nhà cung cấp
+	 */
+	private void themNhaCungCap() {
+		NhaCungCap ncc = new NhaCungCap();
+		if(!kiemTraThongTin()) {
+			return;
+		}
+		ncc = layDuLieuNCC();
+		if(ncc_Bus.themNhaCC(ncc)) {
 			txtMess.setText("Thêm thành công nhà cung cấp.");
 			DefaultTableModel dm = (DefaultTableModel) tableNCC.getModel();
-			dm.addRow(new Object[] {ncc.getMaNCC(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai(), ncc.getEmail()});
-		}
-		else {
-			txtMess.setText("Thêm không thành công nhà cung cấp.");
+			dm.addRow(new Object[] {ncc.getNhaCCID(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai(), ncc.getEmail()});
 		}
 	}
 	
+	/*
+	 * Xóa nhà cung cấp
+	 */
 	private void xoaNhaCungCap() {
+		if(tableNCC.getSelectedRow() == -1) {
+			txtMess.setText("Bạn phải chọn dòng cần xóa.");
+			return;
+		}
 		txtMess.setText("");
 		if(JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa nhà cung cấp này không?", "Xác nhận", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			String maNCC = tableNCC.getValueAt(tableNCC.getSelectedRow(), 0).toString();
-			if(nccBus.xoaNhaCC(maNCC)) {
+			if(ncc_Bus.xoaNhaCC(maNCC)) {
 				txtMess.setText("Xóa thành công nhà cung cấp.");
 				DefaultTableModel dm = (DefaultTableModel) tableNCC.getModel();
 				dm.removeRow(tableNCC.getSelectedRow());
@@ -377,6 +450,24 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		}
 	}
 	
+	/*
+	 * Sửa nhà cung cấp
+	 */
+	private void suaNhaCungCap() {
+		if(tableNCC.getSelectedRow() == -1) {
+			txtMess.setText("Bạn phải chọn dòng cần xóa.");
+			return;
+		}
+		if(kiemTraThongTin()) {
+			NhaCungCap ncc = layDuLieuNCC();
+			ncc.setNhaCCID(txtMaNCC.getText());
+			ncc_Bus.capNhatNhaCC(ncc);
+			txtMess.setText("Cập nhật thành công.");
+			xoaHetDuLieuTable();
+			capNhatBangNhaCC();
+		}
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(tableNCC.getSelectedRow() != -1) {
@@ -425,6 +516,9 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		}
 		if(o.equals(btnXoa)) {
 			xoaNhaCungCap();
+		}
+		if(o.equals(btnSua)) {
+			suaNhaCungCap();
 		}
 	}
 }

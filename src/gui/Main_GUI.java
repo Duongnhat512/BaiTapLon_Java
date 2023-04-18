@@ -51,7 +51,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private JButton btnThoat;
 	private JButton btnKhachHang;
 	/**
-	 * Launch the application.
+	 * Mở main UI.
 	 */
 	public static void open_MainUI() {
 		EventQueue.invokeLater(new Runnable() {

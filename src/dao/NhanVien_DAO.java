@@ -68,7 +68,6 @@ public class NhanVien_DAO {
 				// TODO: handle exception
 			}
 		}return dsnv;
-			// TODO: handle exception
 	}
 	
 	public ArrayList<NhanVien> getNhanVienTheoTen(String ten) {

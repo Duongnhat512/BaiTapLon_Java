@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import javax.swing.SpinnerListModel;
+
 import connectDB.ConnectDB;
 import entities.PhongBan;
 
@@ -31,6 +34,32 @@ public class PhongBan_DAO {
 			// TODO: handle exception
 		}
 		return dsphongban;
+	}
+	public PhongBan getPhongBanTheoMa(String ma) {
+		PhongBan pb = null;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement statement = null;
+		try {
+			String sql = "Select * from PhongBan where maPhong = ?";
+			statement = con.prepareStatement(sql);
+			statement.setString(1, ma);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				String maPB = rs.getString(1);
+				String tenPB = rs.getString(2);
+				pb = new PhongBan(maPB,tenPB);
+			}
+		} catch (SQLException e) {e.printStackTrace();
+			// TODO: handle exception
+		}finally {
+			try {
+				
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+		}
+		return pb;
 	}
 	public boolean themPhongBan(PhongBan pb) {
 		ConnectDB.getInstance();

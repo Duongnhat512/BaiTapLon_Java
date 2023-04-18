@@ -59,7 +59,6 @@ public class KhachHang_DAO {
 			dskh.add(k);
 		}
 		return dskh;
-		
 	}
 	public ArrayList<KhachHang> getKhachHangTheoLoai(String loai) throws SQLException{
 		ArrayList<KhachHang> dskh = new ArrayList<>();
@@ -108,4 +107,19 @@ public class KhachHang_DAO {
 		int r = st.executeUpdate();
 		return r>0;
 	}
+	public boolean sua(KhachHang k) throws SQLException {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "update KhachHang set tenKH = ? , gioiTinh = ? , diaChi = ? , soDienThoai = ? ,gmail = ? where maKH = ?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, k.getTenKH());
+		st.setBoolean(2, k.isGioiTinh());
+		st.setString(3, k.getDiaChi());
+		st.setString(4, k.getSoDienThoai());
+		st.setString(5, k.getGmail());
+		st.setString(6, k.getIdKH());
+		int r = st.executeUpdate();
+		return r>0;
+	}
+
 }

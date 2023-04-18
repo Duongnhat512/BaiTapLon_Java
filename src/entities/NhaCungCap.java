@@ -23,10 +23,10 @@ public class NhaCungCap {
 	public NhaCungCap() {
 		super();
 	}
-	public String getMaNCC() {
+	public String getNhaCCID() {
 		return nhaCCID;
 	}
-	public void setMaNCC(String maNCC) {
+	public void setNhaCCID(String maNCC) {
 		this.nhaCCID = maNCC;
 	}
 	public String getTenNCC() {

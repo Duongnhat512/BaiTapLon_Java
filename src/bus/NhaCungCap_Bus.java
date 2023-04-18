@@ -20,7 +20,7 @@ public class NhaCungCap_Bus implements INhaCungCap{
 	@Override
 	public NhaCungCap getNhaCCTheoMa(String maNCC) {
 		for(NhaCungCap ncc : getListNhaCC()) {
-			if(maNCC.trim().equals(ncc.getMaNCC())) {
+			if(maNCC.trim().equalsIgnoreCase(ncc.getNhaCCID())) {
 				return ncc;
 			}
 		}
@@ -35,7 +35,7 @@ public class NhaCungCap_Bus implements INhaCungCap{
 			ma++;
 			maNCC = "NCC" + String.format("%03d", ma);
 		}
-		ncc.setMaNCC(maNCC);
+		ncc.setNhaCCID(maNCC);
 		if(ncc_Dao.themNhaCC(ncc)) {
 			return true;
 		}
@@ -56,7 +56,9 @@ public class NhaCungCap_Bus implements INhaCungCap{
 
 	@Override
 	public boolean capNhatNhaCC(NhaCungCap ncc) {
-		// TODO Auto-generated method stub
+		if(ncc_Dao.capNhatNhaCC(ncc)) {
+			return true;
+		}
 		return false;
 	}
 
