@@ -18,6 +18,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.Reader;
+import java.io.Writer;
 import java.sql.SQLException;
 
 import javax.swing.JTextField;
@@ -37,6 +43,7 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 	private JButton btnQuenMatKhau;
 	private TaiKhoan_Bus taiKhoan_Bus;
 	private JTextField txtMess;
+	private JCheckBox chkLuu;
 	protected static Login_GUI frame;
 
 	/**
@@ -64,6 +71,7 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 739, 469);
 		setLocationRelativeTo(null);
+		setTitle("Đăng nhập");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
 
@@ -112,11 +120,18 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		txtMess.setForeground(new Color(255, 0, 0));
 		txtMess.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 12));
 		txtMess.setEditable(false);
-		txtMess.setBounds(243, 255, 341, 34);
+		txtMess.setBounds(243, 233, 341, 34);
 		contentPane.add(txtMess);
 		txtMess.setColumns(10);
 		txtMess.setBorder(null);
 		
+		chkLuu = new JCheckBox("Lưu mật khẩu");
+		chkLuu.setFont(new Font("Arial", Font.PLAIN, 12));
+		chkLuu.setBounds(437, 273, 127, 23);
+		contentPane.add(chkLuu);
+		
+		dangNhapTuDong();
+		chkLuu.setSelected(true);
 		//Kết nối tới SQL Server
 		ConnectDB.getInstance().connect();
 		//
@@ -133,16 +148,49 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if(o.equals(btnDangNhap)) {
-				kiemTra();
+			if(kiemTra()) {
+				String s = "";
+				if(chkLuu.isSelected()) {
+					s = txtTaiKhoan.getText() + ";" + new String(txtMatKhau.getPassword());
+					luuDangNhap(s);
+				}
+				else {
+					luuDangNhap(s);
+				}
+			}
 		}
-		
+	}
+	
+	private void luuDangNhap(String taiKhoan) {
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("data/LuuDangNhap.txt"));
+			writer.write(taiKhoan);
+			writer.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	
+	private void dangNhapTuDong() {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("data/LuuDangNhap.txt"));
+			String tmp = reader.readLine();
+			if(tmp == null) return;
+			String[] s = tmp.split(";");
+			txtTaiKhoan.setText(s[0]);
+			txtMatKhau.setText(s[1]);
+			reader.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 
 	private boolean kiemTra(){
 		txtMess.setText("");
 		String taiKhoan = txtTaiKhoan.getText();
-		@SuppressWarnings("deprecation")
-		String matKhau = txtMatKhau.getText();
+		String matKhau = new String(txtMatKhau.getPassword());
 		TaiKhoan tk = taiKhoan_Bus.getTaiKhoanTheoTenTaiKhoan(taiKhoan);
 		if(tk != null) {
 			if(matKhau.equals(tk.getMatKhau())) {
@@ -157,11 +205,8 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 				return false;
 			}
 		}
-		else {
-			txtMess.setText("Thông tin tài khoản hoặc mật khẩu không chính xác.");
-			return false;
-		}
-		return true;
+		txtMess.setText("Thông tin tài khoản hoặc mật khẩu không chính xác.");
+		return false;
 	}
 
 	@Override
@@ -183,5 +228,4 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
-	
 }

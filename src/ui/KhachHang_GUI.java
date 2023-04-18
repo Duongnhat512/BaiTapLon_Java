@@ -46,7 +46,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void open_KhachHangUI() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -58,7 +58,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			}
 		});
 	}
-
+	
 	private JPanel contentPane;
 	private JScrollPane scrollPane;
 	private DefaultTableModel dftable;
@@ -309,7 +309,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		xoaTable();
 		ArrayList<KhachHang> ds = new ArrayList<>();
 		ds = kh_Bus.getAllTableKhachHang();
-		int stt=0;
+		int stt = 1;
 		for (KhachHang khachHang : ds) {
 			String s="";
 			if(khachHang.isGioiTinh()) {
@@ -318,8 +318,8 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 				s+="Nữ";
 			}
 			dftable.addRow(new Object[] {
-					stt,khachHang.getIdKH(),khachHang.getTenKH(),khachHang.getLoaiKhachHang(),s,khachHang.getDiaChi(),
-					khachHang.getSoDienThoai(),khachHang.getGmail()
+					stt, khachHang.getIdKH(), khachHang.getTenKH(), khachHang.getLoaiKhachHang(), s, khachHang.getDiaChi(),
+					khachHang.getSoDienThoai(), khachHang.getGmail()
 			});
 			stt++;
 		}

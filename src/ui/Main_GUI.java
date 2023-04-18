@@ -15,7 +15,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import connectDB.ConnectDB;
-import entities.CustomButton;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,11 +31,13 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private NhaCungCap_GUI ncc_UI;
 	private HoaDon_GUI hoaDon_UI;
 	private KhachHang_GUI kh_UI;
+	private NhanVien_GUI nv_UI;
 	
 	private JPanel pHoaDon;
 	private JPanel pTrangChu;
 	private JPanel pNhaCC;
 	private JPanel pKhachHang;
+	private JPanel pNhanVien;
 	
 	private String currentUI;
 	
@@ -156,6 +157,11 @@ public class Main_GUI extends JFrame implements ActionListener{
 			pKhachHang = kh_UI.getKhachHangPanel();
 			contentPane.add(pKhachHang);
 		}
+		if(btn.equals(btnNhanVien)) {
+			nv_UI = new NhanVien_GUI();
+			pNhanVien = nv_UI.getNhanVienPanel();
+			contentPane.add(pNhanVien);
+		}
 		this.revalidate();
 		this.repaint();	
 	}
@@ -172,6 +178,8 @@ public class Main_GUI extends JFrame implements ActionListener{
 			return pHoaDon;
 		if(currentUI.equals("Khách hàng"))
 			return pKhachHang;
+		if(currentUI.equals("Nhân viên"))
+			return pNhanVien;
 		return null;
 	}
 	
@@ -234,6 +242,8 @@ public class Main_GUI extends JFrame implements ActionListener{
 				System.exit(0);
 			}
 		}
-		
+		if(o.equals(btnNhanVien)) {
+			updatePanel(btnNhanVien);
+		}
 	}
 }

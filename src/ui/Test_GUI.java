@@ -24,6 +24,8 @@ public class Test_GUI {
 //		double a = 1000000;
 //		System.out.println(String.format("%,.0f", a));
 		
-		Main_GUI.open_MainUI();
+//		Main_GUI.open_MainUI();
+		
+		KhachHang_GUI.open_KhachHangUI();
 	}
 }
