@@ -199,7 +199,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		if(btn.equals(btnKhachHang)) return "Khách hàng";
 		if(btn.equals(btnHoaDon)) return "Hóa đơn";
 		if(btn.equals(btnNhaCC)) return "Nhà cung cấp";
-		if(btn.equals(btnNhanVien)) return "Khách hàng";
+		if(btn.equals(btnNhanVien)) return "Nhân viên";
 		if(btn.equals(btnTrangChu)) return "Trang chủ";
 		if(btn.equals(btnSanPham)) return "Sản phẩm";
 		return null;
