@@ -1,4 +1,4 @@
-package ui;
+package gui;
 
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -193,7 +193,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	}
 	
 	/*
-	 * Lấy tên chủa nút được nhấn
+	 * Lấy tên của nút được nhấn
 	 */
 	private String getButtonName(JButton btn) {
 		if(btn.equals(btnKhachHang)) return "Khách hàng";

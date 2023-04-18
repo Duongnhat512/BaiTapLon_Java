@@ -1,4 +1,4 @@
-package ui;
+package gui;
 
 import java.awt.EventQueue;
 
@@ -328,6 +328,18 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		DefaultTableModel dm = (DefaultTableModel) tableNCC.getModel();
 		dm.addRow(new Object[] {ncc.getMaNCC(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai(), ncc.getEmail()});
 		tableNCC.setModel(dm);
+	}
+	
+	private boolean kiemTraThongTin() {
+		String tenNCC = txtTenNCC.getText();
+		String diaChi = txtDiaChi.getText();
+		String soDT = txtSoDienThoai.getText();
+		String email = txtEmail.getText();
+		
+		if(!(tenNCC.trim().length() > 0 && tenNCC.matches("[\\p{L}]+([\\s]+[\\p{L}]+)+"))) {
+//			txtMess
+		}
+		return true;
 	}
 
 	/*
