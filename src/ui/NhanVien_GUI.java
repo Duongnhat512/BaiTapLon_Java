@@ -136,6 +136,7 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 		pCenter.add(lblTenNV);
 		
 		txtMaNV = new JTextField();
+		txtMaNV.setEditable(false);
 		txtMaNV.setBounds(188, 394, 156, 20);
 		pCenter.add(txtMaNV);
 		txtMaNV.setColumns(10);
