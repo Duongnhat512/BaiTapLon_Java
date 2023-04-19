@@ -261,6 +261,7 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		int row = tableNhanVien.getSelectedRow();
+		System.out.println(row);
 		txtMaNV.setText(modelNhanVien.getValueAt(row, 0).toString());
 		txtTenNV.setText(modelNhanVien.getValueAt(row, 1).toString());
 		cboPhongBan.setSelectedItem(modelNhanVien.getValueAt(row, 2).toString());
@@ -392,6 +393,20 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 			} catch (ClassNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+			}
+		}
+		if (o.equals(btnXoa)) {
+			int r = tableNhanVien.getSelectedRow();
+			if (r>=0) {
+				String maNV =  tableNhanVien.getValueAt(r, 0).toString();
+				if(nv_Bus.delete(maNV)) {
+					modelNhanVien.removeRow(r);
+					txtTenNV.setText("");
+					txtMaNV.setText("");
+					txtSoDT.setText("");
+					txtLuong.setText("");
+					txtMaNV.requestFocus();
+				}
 			}
 		}
 	}

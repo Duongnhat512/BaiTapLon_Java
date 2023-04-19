@@ -190,4 +190,18 @@ public class NhanVien_DAO {
 		}
 		return n>0;
 	}
+	
+	public boolean delete(String maNV) {
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stmt = null;
+		int n=0;
+		try {
+			stmt = con.prepareStatement("delete from NhanVien where maNV = ?");
+			stmt.setString(1, maNV);
+			n = stmt.executeUpdate();
+		} catch (SQLException e) {	e.printStackTrace();
+			// TODO: handle exception
+		}
+		return n>0;
+	}
 }

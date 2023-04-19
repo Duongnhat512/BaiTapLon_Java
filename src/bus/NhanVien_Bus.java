@@ -29,4 +29,8 @@ public class NhanVien_Bus {
 		nv_Dao.update(nv);
 		return true;
 	}
+	public boolean  delete (String ma) {
+		nv_Dao.delete(ma);
+		return true;
+	}
 }
