@@ -359,6 +359,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			}
 		}
 		if(obj.equals(btnReset)) {
+			docDulieuVaoTable();
 			reSet();
 		}
 		if(obj.equals(btnXoa)) {
@@ -367,11 +368,13 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 				String ma = (String) table.getValueAt(r, 1);
 				KhachHang k =new KhachHang(ma);
 				try {
-					kh_Bus.xoa(k);
-					JOptionPane.showMessageDialog(null, "Thành công");
-					updateCBB();
-					docDulieuVaoTable();
-					reSet();
+					if(JOptionPane.showConfirmDialog(this,"Có chắc chắn muốn xóa","Cảnh báo !",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
+						kh_Bus.xoa(k);
+						JOptionPane.showMessageDialog(null, "Thành công");
+						updateCBB();
+						docDulieuVaoTable();
+						reSet();
+					}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -379,8 +382,8 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 				}
 			}
 		}
-		if(obj.equals(btnReset)) {
-			docDulieuVaoTable();
+		if(obj.equals(btnTrang)) {
+			reSet();
 		}
 		if(obj.equals(btnTim)) {
 			String ten = txtTimKiem.getText();

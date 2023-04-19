@@ -56,6 +56,9 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private JLabel lblTenTK;
 
 
+	private SanPham_GUI sp_UI;
+
+
 	/**
 	 * Mở main UI.
 	 */
@@ -186,7 +189,8 @@ public class Main_GUI extends JFrame implements ActionListener{
 			contentPane.add(pTrangChu);
 		}
 		if(btn.equals(btnSanPham)) {
-			pSanPham = new JPanel();
+			sp_UI = new SanPham_GUI();
+			pSanPham = sp_UI.getSanPhamPanel();
 			contentPane.add(pSanPham);
 		}
 		this.revalidate();

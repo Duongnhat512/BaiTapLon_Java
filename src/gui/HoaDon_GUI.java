@@ -117,7 +117,7 @@ public class HoaDon_GUI extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"M\u00E3 h\u00F3a \u0111\u01A1n", "Kh\u00E1ch h\u00E0ng", "Nh\u00E2n vi\u00EAn", "Ng\u00E0y l\u1EADp h\u00F3a \u0111\u01A1n", "Ng\u00E0y giao", "N\u01A1i nh\u1EADn h\u00E0ng", "T\u1ED5ng ti\u1EC1n"
+				"M\u00E3 h\u00F3a \u0111\u01A1n", "ID Khách hàng", "ID Nhân viên", "Ng\u00E0y l\u1EADp h\u00F3a \u0111\u01A1n", "Ng\u00E0y giao", "N\u01A1i nh\u1EADn h\u00E0ng", "T\u1ED5ng ti\u1EC1n"
 			}
 		) {
 			Class[] columnTypes = new Class[] {

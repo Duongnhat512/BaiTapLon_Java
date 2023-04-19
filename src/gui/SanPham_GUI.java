@@ -38,6 +38,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.LineBorder;
 
 public class SanPham_GUI extends JFrame  implements ActionListener, MouseListener{
 
@@ -70,21 +71,26 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 	private JPanel panel_2;
 	private JTextField txtSLTon;
 	private JTextField txtHang;
+	private JPanel pCenter;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SanPham_GUI frame = new SanPham_GUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					SanPham_GUI frame = new SanPham_GUI();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
+	
+	public JPanel getSanPhamPanel() {
+		return pCenter;
 	}
 
 	/**
@@ -114,13 +120,20 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		pCenter = new JPanel();
+		pCenter.setBorder(new LineBorder(new Color(0, 0, 0)));
+		pCenter.setBounds(130, 10, 1046, 623);
+		pCenter.setLayout(null);
+		contentPane.add(pCenter);
+		
 		JPanel panel = new JPanel();
-		panel.setBounds(130, 45, 1046, 288);
-		contentPane.add(panel);
-		panel.setLayout(new BorderLayout(0, 0));
+		panel.setBounds(10, 45, 1026, 288);
+		pCenter.add(panel);
+		panel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		panel.add(scrollPane, BorderLayout.CENTER);
+		scrollPane.setBounds(0, 0, 1026, 288);
+		panel.add(scrollPane);
 		
 		table = new JTable();
 		table.setModel( model = new DefaultTableModel(
@@ -141,18 +154,18 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 		scrollPane.setViewportView(table);
 		DocDuLieuDatabaseVaoTable();
 		JLabel lblNewLabel = new JLabel("THÔNG TIN SẢN PHẨM");
-		lblNewLabel.setBounds(597, 20, 142, 13);
-		contentPane.add(lblNewLabel);
+		lblNewLabel.setBounds(424, 22, 142, 13);
+		pCenter.add(lblNewLabel);
 		lblNewLabel.setForeground(new Color(0, 0, 255));
 		
-		JPanel pMenu = new JPanel();
-		pMenu.setBounds(0, 0, 120, 680);
-		contentPane.add(pMenu);
+//		JPanel pMenu = new JPanel();
+//		pMenu.setBounds(0, 0, 120, 680);
+//		pCenter.add(pMenu);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "S\u1EA3n Ph\u1EA9m: ", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
-		panel_1.setBounds(130, 343, 759, 211);
-		contentPane.add(panel_1);
+		panel_1.setBounds(10, 343, 749, 197);
+		pCenter.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("Tên SP:");
@@ -241,32 +254,32 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 
 		panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Loại Sản Phẩm", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
-		panel_2.setBounds(899, 343, 277, 212);
-		contentPane.add(panel_2);
+		panel_2.setBounds(759, 343, 277, 197);
+		pCenter.add(panel_2);
 		panel_2.setLayout(null);
 		lblNewLabel_10 = new JLabel("");
-		lblNewLabel_10.setBounds(10, 47, 99, 13);
+		lblNewLabel_10.setBounds(10, 38, 99, 13);
 		panel_2.add(lblNewLabel_10);
 		
 		lblNewLabel_11 = new JLabel("");
-		lblNewLabel_11.setBounds(10, 101, 99, 13);
+		lblNewLabel_11.setBounds(10, 92, 99, 13);
 		panel_2.add(lblNewLabel_11);
 		
 		lblNewLabel_12 = new JLabel("");
-		lblNewLabel_12.setBounds(10, 155, 99, 13);
+		lblNewLabel_12.setBounds(10, 146, 99, 13);
 		panel_2.add(lblNewLabel_12);
 		txtInput1 = new JTextField();
-		txtInput1.setBounds(119, 44, 128, 19);
+		txtInput1.setBounds(119, 35, 128, 19);
 		panel_2.add(txtInput1);
 		txtInput1.setColumns(10);
 		
 		txtInput2 = new JTextField();
-		txtInput2.setBounds(119, 98, 128, 19);
+		txtInput2.setBounds(119, 89, 128, 19);
 		panel_2.add(txtInput2);
 		txtInput2.setColumns(10);
 		
 		txtInput3 = new JTextField();
-		txtInput3.setBounds(119, 152, 128, 19);
+		txtInput3.setBounds(119, 143, 128, 19);
 		panel_2.add(txtInput3);
 		txtInput3.setColumns(10);
 		txtInput1.setVisible(false);
@@ -282,8 +295,8 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "Ch\u1ECDn t\u00E1c v\u1EE5:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 255)));
-		panel_3.setBounds(130, 564, 1046, 67);
-		contentPane.add(panel_3);
+		panel_3.setBounds(10, 540, 1026, 73);
+		pCenter.add(panel_3);
 		panel_3.setLayout(null);
 		
 		ArrayList<NhaCungCap> lisNcc = ncc_DAO.getListNhaCC();
