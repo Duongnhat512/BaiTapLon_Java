@@ -44,6 +44,7 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 	private TaiKhoan_Bus taiKhoan_Bus;
 	private JTextField txtMess;
 	private JCheckBox chkLuu;
+	private String tenTaiKhoan;
 	protected static Login_GUI frame;
 
 	/**
@@ -161,6 +162,9 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		}
 	}
 	
+	/*
+	 * Lưu lại tài khoản đã đăng nhập
+	 */
 	private void luuDangNhap(String taiKhoan) {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter("data/LuuDangNhap.txt"));
@@ -171,7 +175,9 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 			e.printStackTrace();
 		}
 	}
-	
+	/*
+	 * Tự động điền tài khoản và mật khẩu khi tích vào checkbox của lần đăng nhập trước đó
+	 */
 	private void dangNhapTuDong() {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("data/LuuDangNhap.txt"));
@@ -186,7 +192,9 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 			e.printStackTrace();
 		}
 	}
-
+	/*
+	 * Kiểm tra thông tin tài khoản và mật khẩu được nhập vào
+	 */
 	private boolean kiemTra(){
 		txtMess.setText("");
 		String taiKhoan = txtTaiKhoan.getText();
@@ -201,14 +209,21 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 				}
 			}
 			else {
-				txtMess.setText("Thông tin tài khoản hoặc mật khẩu không chính xác.");
+				txtMess.setText("Mật khẩu không chính xác.");
+				txtMatKhau.selectAll();
+				txtMatKhau.requestFocus();
 				return false;
 			}
 		}
-		txtMess.setText("Thông tin tài khoản hoặc mật khẩu không chính xác.");
+		txtMess.setText("Tài khoản không tồn tại.");
+		txtTaiKhoan.selectAll();
+		txtTaiKhoan.requestFocus();
 		return false;
 	}
-
+	
+	public String getTaiKhoanDuocDangNhap() {
+		return txtTaiKhoan.getText();
+	}
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -226,6 +241,5 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 }
