@@ -39,8 +39,8 @@ public class NhanVien_DAO {
 		}
 		return dsnv;
 	}
-	public ArrayList<NhanVien> getNhanVienTheoMaNV(String id) {
-		ArrayList<NhanVien> dsnv = new ArrayList<NhanVien>();
+	public NhanVien getNhanVienTheoMaNV(String id) {
+		NhanVien nv = null;
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement statement = null;
@@ -57,8 +57,7 @@ public class NhanVien_DAO {
 				double luong = rs.getDouble(5);
 				boolean phai = rs.getBoolean(6);
 				
-				NhanVien nv = new NhanVien(maNV,tenNV,pBan,soDT,luong,phai);
-				dsnv.add(nv);
+				nv = new NhanVien(maNV,tenNV,pBan,soDT,luong,phai);
 			}
 		} catch (SQLException e) {e.printStackTrace(); }
 		finally {
@@ -67,7 +66,7 @@ public class NhanVien_DAO {
 			} catch (SQLException e) { e.printStackTrace();
 				// TODO: handle exception
 			}
-		}return dsnv;
+		}return nv;
 	}
 	
 	public ArrayList<NhanVien> getNhanVienTheoTen(String ten) {
@@ -141,7 +140,7 @@ public class NhanVien_DAO {
 		int n=0;
 		try {
 			stmt = con.prepareStatement("insert into"+" NhanVien values(?,?,?,?,?,?)");
-			stmt.setString(1, nv.getMaNV());
+			stmt.setString(1, nv.getNhanVienID());
 			stmt.setString(2, nv.getTenNV());
 			stmt.setString(3, nv.getPhong().getMaPhongBan());
 			stmt.setString(4, nv.getSoDT());
@@ -167,14 +166,14 @@ public class NhanVien_DAO {
 		PreparedStatement stmt = null;
 		int n = 0;
 		try {
-			stmt = con.prepareStatement("update NhanVien set ten=?,maPhong=?,soDT=?,luong=?,phai=? where maNV=?");
+			stmt = con.prepareStatement("update NhanVien set tenNV=?,maPhong=?,soDT=?,luong=?,gioiTinh=? where maNV=?");
 		
 			stmt.setString(1, nv.getTenNV());
 			stmt.setString(2, nv.getPhong().getMaPhongBan());
 			stmt.setString(3, nv.getSoDT());
 			stmt.setDouble(4, nv.getLuong());
 			stmt.setBoolean(5, nv.getPhai());
-			stmt.setString(6, nv.getMaNV());
+			stmt.setString(6, nv.getNhanVienID());
 			
 			n = stmt.executeUpdate();
 		} catch (Exception e) {

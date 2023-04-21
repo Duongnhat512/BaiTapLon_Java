@@ -46,7 +46,7 @@ public class SanPham_DAO {
 					SanPham s = new CPU(maSP, tenSP, hang, loai, giaNhap, giaBan, slTon, ncc, thoiGianBH, nhan, luong, cache);
 					dsSP.add(s);
 				}
-				else if(loai.equals("MainBoard")) {
+				else if(loai.equalsIgnoreCase("MainBoard")) {
 					String chipSet = sr.getString(10);
 					String kheLuuTru = sr.getString(11);
 					String kheMoRong = sr.getString(12);
@@ -66,11 +66,7 @@ public class SanPham_DAO {
 					float tuoiTho = sr.getFloat(18);
 					SanPham s = new HardDisk(maSP, tenSP, hang, loai, giaNhap, giaBan, slTon, ncc, thoiGianBH, dungLuong, DDR, tuoiTho);
 					dsSP.add(s);
-				}
-				
-				
-				
-				
+				}			
 			}
 		} catch (SQLException e) {
 			// TODO: handle exception
@@ -79,9 +75,9 @@ public class SanPham_DAO {
 		return dsSP;
 	}
 	public SanPham getSPTheoMa(String id){
-			ConnectDB.getInstance();
-			Connection con = ConnectDB.getConnection();
-			PreparedStatement	statement = null;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement statement = null;
 		try {	
 			String sql = "Select * from SanPham where maSP = ?";	
 			statement = con.prepareStatement(sql);
@@ -98,8 +94,8 @@ public class SanPham_DAO {
 				Integer slTon = sr.getInt(7);
 				String maNCC = sr.getString(8);
 				NhaCungCap ncc = new NhaCungCap(maNCC);
-				Integer tgBH = sr.getInt(9);
-				if(loai.equals("MainBoard"))
+				int tgBH = sr.getInt(9);
+				if(loai.equalsIgnoreCase("MainBoard"))
 				{	
 					String chipSet = sr.getString(10);
 					String kheLuuTru = sr.getString(11);

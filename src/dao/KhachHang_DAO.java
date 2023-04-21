@@ -37,6 +37,27 @@ public class KhachHang_DAO {
 		}
 		return dskh;
 	}
+	public KhachHang getKhachHangTheoMa(String ma) throws SQLException{
+		KhachHang kh  = null;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select * from KhachHang where maKH = ?";
+		PreparedStatement st = null;
+		st = con.prepareStatement(sql);
+		st.setString(1, ma);
+		ResultSet r = st.executeQuery();
+		while(r.next()) {
+			String maKH = r.getString(1);
+			String ten1 = r.getString(2);
+			boolean gioiTinh = r.getBoolean(3);
+			String diaChi = r.getString(4);
+			String sdt = r.getString(5);
+			String gmail = r.getString(6);
+			String loai = r.getString(7);
+			kh = new KhachHang(maKH,ten1,gioiTinh,diaChi,sdt,gmail,loai);
+		}
+		return kh;
+	}
 	public ArrayList<KhachHang> getKhachHangTheoTen(String ten) throws SQLException{
 		ArrayList<KhachHang> dskh = new ArrayList<>();
 		ConnectDB.getInstance();
@@ -47,7 +68,6 @@ public class KhachHang_DAO {
 		st.setString(1, ten);
 		ResultSet r = st.executeQuery();
 		while(r.next()) {
-			System.out.println( r.getString(1));
 			String ma = r.getString(1);
 			String ten1 = r.getString(2);
 			boolean gioiTinh = r.getBoolean(3);

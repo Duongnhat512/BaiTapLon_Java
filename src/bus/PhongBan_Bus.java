@@ -6,7 +6,7 @@ import dao.PhongBan_DAO;
 import entities.PhongBan;
 
 public class PhongBan_Bus {
-	PhongBan_DAO pb_Dao = new PhongBan_DAO();
+	private PhongBan_DAO pb_Dao = new PhongBan_DAO();
 	
 	public ArrayList<PhongBan> getalltbPhongBan(){
 		return pb_Dao.getalltbPhongBan();

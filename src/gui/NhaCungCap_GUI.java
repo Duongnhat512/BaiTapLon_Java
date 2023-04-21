@@ -28,6 +28,8 @@ import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
@@ -35,7 +37,7 @@ import java.sql.SQLException;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
-public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListener{
+public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListener, KeyListener{
 
 	private JPanel contentPane;
 	private JTable tableNCC;
@@ -97,7 +99,6 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		
 		
 		pCenter = new JPanel();
-		pCenter.setBorder(new LineBorder(new Color(0, 0, 0)));
 		pCenter.setBounds(130, 10, 1046, 623);
 		contentPane.add(pCenter);
 		pCenter.setLayout(null);
@@ -109,7 +110,7 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		
 		JLabel lblTitleNCC = new JLabel("NHÀ CUNG CẤP");
 		lblTitleNCC.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitleNCC.setFont(new Font("Arial", Font.BOLD, 23));
+		lblTitleNCC.setFont(new Font("Arial", Font.BOLD, 20));
 		pNhaCungCap.add(lblTitleNCC, BorderLayout.NORTH);
 		lblTitleNCC.setPreferredSize(new Dimension(0, 30));
 		
@@ -261,6 +262,8 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		btnXoaTrangTim.addActionListener(this);
 		btnTim.addActionListener(this);
 		btnSua.addActionListener(this);
+		
+		txtTimNCC.addKeyListener(this);
 	}
 	
 	public void loadDataNCC() {
@@ -322,10 +325,13 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		NhaCungCap ncc = ncc_Bus.getNhaCCTheoMa(txtTimNCC.getText());
 		if(ncc == null) {
 			txtMessTim.setText("Không tìm thấy nhân viên có mã: " + txtTimNCC.getText());
+			txtTimNCC.selectAll();
+			txtTimNCC.requestFocus();
 			return;
 		}
 		xoaHetDuLieuTable();
 		xoaTrang();
+		txtMessTim.setText("");
 		DefaultTableModel dm = (DefaultTableModel) tableNCC.getModel();
 		dm.addRow(new Object[] {ncc.getNhaCCID(), ncc.getTenNCC(), ncc.getDiaChi(), ncc.getSoDienThoai(), ncc.getEmail()});
 		tableNCC.setModel(dm);
@@ -520,5 +526,25 @@ public class NhaCungCap_GUI extends JFrame implements MouseListener, ActionListe
 		if(o.equals(btnSua)) {
 			suaNhaCungCap();
 		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+			timNhaCungCapTheoMa();
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
 	}
 }

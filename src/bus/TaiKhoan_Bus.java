@@ -7,7 +7,7 @@ import entities.TaiKhoan;
 import interfaces.ITaiKhoan;
 
 public class TaiKhoan_Bus implements ITaiKhoan{
-	TaiKhoan_DAO tk_Dao = new TaiKhoan_DAO();
+	private TaiKhoan_DAO tk_Dao = new TaiKhoan_DAO();
 
 	@Override
 	public ArrayList<TaiKhoan> getListTaiKhoan() {

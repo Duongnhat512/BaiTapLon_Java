@@ -11,4 +11,6 @@ public interface IHoaDon {
 	public boolean themHoaDon(HoaDon hd);
 	public boolean suaHoaDon(HoaDon hd);
 	public boolean xoaHoaDon(String maHD);
+	public boolean capNhatTongTien();
+	public boolean capNhatTongTienHDThemMaHD(String id);
 }

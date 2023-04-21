@@ -54,7 +54,6 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 	private JButton btnSua;
 	private JButton btnXoa;
 	private JButton btnXoaTrang;
-	private JButton btnLuu;
 	private JButton btnTim;
 	private JCheckBox chkNu;
 	private JComboBox<String> cboPhongBan;
@@ -67,6 +66,7 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 	private PhongBan_Bus pb_Bus = new PhongBan_Bus(); 
 	private NhanVien_Bus nv_Bus = new NhanVien_Bus();
 	private JPanel pCenter;
+	private JTextField txtMess;
 	
 	/**
 	 * Launch the application.
@@ -103,7 +103,6 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 		contentPane.setLayout(null);
 		
 		pCenter = new JPanel();
-		pCenter.setBorder(new LineBorder(new Color(0, 0, 0)));
 		pCenter.setLayout(null);
 		pCenter.setBounds(130, 10, 1046, 623);
 		contentPane.add(pCenter);
@@ -195,24 +194,20 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 		
 		
 		btnThem = new JButton("Thêm");
-		btnThem.setBounds(439, 373, 104, 40);
+		btnThem.setBounds(441, 414, 104, 40);
 		pCenter.add(btnThem);
 		
 		btnSua = new JButton("Sửa");
-		btnSua.setBounds(439, 420, 104, 40);
+		btnSua.setBounds(441, 461, 104, 40);
 		pCenter.add(btnSua);
 		
 		btnXoa = new JButton("Xóa");
-		btnXoa.setBounds(439, 466, 104, 40);
+		btnXoa.setBounds(441, 507, 104, 40);
 		pCenter.add(btnXoa);
 		
 		btnXoaTrang = new JButton("Xóa Trắng");
-		btnXoaTrang.setBounds(439, 512, 104, 40);
+		btnXoaTrang.setBounds(441, 553, 104, 40);
 		pCenter.add(btnXoaTrang);
-		
-		btnLuu = new JButton("Lưu");
-		btnLuu.setBounds(439, 562, 104, 40);
-		pCenter.add(btnLuu);
 		
 		JLabel lblNewLabel_3 = new JLabel("Tìm Kiếm");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
@@ -246,11 +241,19 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 		btnXem.setBounds(700, 557, 217, 37);
 		pCenter.add(btnXem);
 		
+		txtMess = new JTextField();
+		txtMess.setEditable(false);
+		txtMess.setForeground(new Color(255, 0, 0));
+		txtMess.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 12));
+		txtMess.setBounds(38, 361, 507, 19);
+		pCenter.add(txtMess);
+		txtMess.setBorder(null);
+		txtMess.setColumns(10);
+		
 		btnXem.addActionListener(this);
 		btnTim.addActionListener(this);
 		btnThem.addActionListener(this);
 		btnXoa.addActionListener(this);
-		btnLuu.addActionListener(this);
 		btnSua.addActionListener(this);
 		btnXoaTrang.addActionListener(this);
 		tableNhanVien.addMouseListener(this);
@@ -261,7 +264,6 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		int row = tableNhanVien.getSelectedRow();
-		System.out.println(row);
 		txtMaNV.setText(modelNhanVien.getValueAt(row, 0).toString());
 		txtTenNV.setText(modelNhanVien.getValueAt(row, 1).toString());
 		cboPhongBan.setSelectedItem(modelNhanVien.getValueAt(row, 2).toString());
@@ -317,7 +319,7 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 			NhanVien nv = new NhanVien(ma, ten, phban, soDT, luong, phai);
 			try {
 				nv_Bus.create(nv);
-				modelNhanVien.addRow(new Object[] {nv.getMaNV(),nv.getTenNV(),nv.getPhong().getMaPhongBan(),nv.getSoDT(),nv.getLuong(),nv.getPhai()?"Nữ":"Nam"});
+				modelNhanVien.addRow(new Object[] {nv.getNhanVienID(),nv.getTenNV(),nv.getPhong().getMaPhongBan(),nv.getSoDT(),nv.getLuong(),nv.getPhai()?"Nữ":"Nam"});
 			} catch (Exception e1) {
 				// TODO: handle exception
 				JOptionPane.showMessageDialog(this, "Trùng");
@@ -345,27 +347,36 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 					tableNhanVien.setValueAt(txtLuong.getText(), row, 4);
 					tableNhanVien.setValueAt(chkNu.isSelected()?"Nữ":"Nam", row, 5);
 				}
-
+				txtMess.setText("Sửa thành công.");
+			}
+			else {
+				txtMess.setText("Bạn cần chọn dòng để sửa.");
 			}
 		}
 		if (o.equals(btnXoa)) {
 			int r = tableNhanVien.getSelectedRow();
-			modelNhanVien.removeRow(r); 
+			if(r != -1) {
+				if(JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa dòng này không?", "Cảnh báo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					nv_Bus.delete(modelNhanVien.getValueAt(r, 0).toString());
+					txtMess.setText("Xóa thành công.");
+				}
+			}
+			else {
+				txtMess.setText("Bạn cần chọn dòng để xóa.");
+			}
 		}
 		if (rdbtnTimMa.isSelected()){
 			if (o.equals(btnTim)) {
-				List<NhanVien> list = nv_Bus.getNhanVienTheoMaNV(txtTim.getText());
+				NhanVien nv = nv_Bus.getNhanVienTheoMaNV(txtTim.getText());
 				if (txtTim.getText().equals("")) {
 					JOptionPane.showMessageDialog(this, "Nhập mã cần tìm");
-				}else if (list.size()==0) {
+				}else if (nv == null) {
 					JOptionPane.showMessageDialog(this, "Không tìm thấy");
 				}
 				else {
 					xoaHetDuLieuTable();
-					for (NhanVien s: list) {
-						String [] rowdata = {s.getMaNV(),s.getTenNV(),s.getPhong().getMaPhongBan()+"",s.getSoDT(),String.format("%.0f", s.getLuong())+"",s.getPhai()?"Nu":"Nam"};
-						modelNhanVien.addRow(rowdata);
-					}
+					String [] rowdata = {nv.getNhanVienID(),nv.getTenNV(),nv.getPhong().getMaPhongBan()+"",nv.getSoDT(),String.format("%.0f", nv.getLuong())+"",nv.getPhai()?"Nu":"Nam"};
+					modelNhanVien.addRow(rowdata);
 				}
 			}
 		}
@@ -380,7 +391,7 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 				else {
 					xoaHetDuLieuTable();
 					for (NhanVien s: list) {
-						String [] rowdata = {s.getMaNV(),s.getTenNV(),s.getPhong().getMaPhongBan()+"",s.getSoDT(),s.getLuong()+"",s.getPhai()?"Nu":"Nam"};
+						String [] rowdata = {s.getNhanVienID(),s.getTenNV(),s.getPhong().getMaPhongBan()+"",s.getSoDT(),s.getLuong()+"",s.getPhai()?"Nu":"Nam"};
 						modelNhanVien.addRow(rowdata);
 					}
 				}
@@ -421,7 +432,7 @@ public class NhanVien_GUI extends JFrame implements ActionListener , MouseListen
 	public void DocDuLieuDatabaseVaoTable() throws ClassNotFoundException{
 		ArrayList<NhanVien> list = nv_Bus.getalltbNhanVien();
 		for (NhanVien nv : list) {
-			modelNhanVien.addRow(new Object[] { nv.getMaNV() ,nv.getTenNV(),nv.getPhong().getMaPhongBan(),nv.getSoDT(),String.format("%.0f", nv.getLuong()),nv.getPhai()?"Nữ":"Nam"});
+			modelNhanVien.addRow(new Object[] { nv.getNhanVienID() ,nv.getTenNV(),nv.getPhong().getMaPhongBan(),nv.getSoDT(),String.format("%.0f", nv.getLuong()),nv.getPhai()?"Nữ":"Nam"});
 		}
 	}
 	private NhanVien reverSPFromTextFile() {

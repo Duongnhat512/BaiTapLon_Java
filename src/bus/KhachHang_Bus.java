@@ -7,10 +7,14 @@ import dao.KhachHang_DAO;
 import entities.KhachHang;
 
 public class KhachHang_Bus {
-	KhachHang_DAO kh_Dao = new KhachHang_DAO();
+	private KhachHang_DAO kh_Dao = new KhachHang_DAO();
 	
 	public ArrayList<KhachHang> getAllTableKhachHang(){
 		return kh_Dao.getAllTableKhachHang();
+	}
+	
+	public KhachHang getKhachHangTheoMa(String ma) throws SQLException {
+		return kh_Dao.getKhachHangTheoMa(ma);
 	}
 	
 	public ArrayList<KhachHang> getKhachHangTheoTen(String ten) throws SQLException{

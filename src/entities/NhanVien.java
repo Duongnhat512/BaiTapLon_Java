@@ -23,11 +23,11 @@ public class NhanVien {
         this.phai = phai;
     }
 
-    public String getMaNV() {
+    public String getNhanVienID() {
         return nhanVienID;
     }
 
-    public void setMaNV(String maNV) {
+    public void setNhanVienID(String maNV) {
         this.nhanVienID = maNV;
     }
 

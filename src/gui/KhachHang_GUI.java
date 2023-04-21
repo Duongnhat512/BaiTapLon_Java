@@ -115,7 +115,6 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		contentPane.setLayout(null);
 		
 		pCenter = new JPanel();
-		pCenter.setBorder(new LineBorder(new Color(0, 0, 0)));
 		pCenter.setBounds(130, 10, 1043, 623);
 		contentPane.add(pCenter);
 		
@@ -142,7 +141,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		
 		JLabel lblKhachHang = new JLabel("Khách Hàng");
 		lblKhachHang.setForeground(new Color(0, 0, 0));
-		lblKhachHang.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblKhachHang.setFont(new Font("Arial", Font.BOLD, 20));
 		lblKhachHang.setBounds(442, 10, 116, 30);
 		pCenter.add(lblKhachHang);
 		panel.setLayout(null);
@@ -520,19 +519,25 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 	 * Lấy dữ liệu Khách hàng
 	 */
 	public KhachHang layData() {
-		String ma = txtMa.getText();
-		String ten =  txtTen.getText();
-		boolean gioiTinh ;
-		if(rdNam.isSelected()) {
+		int x = 1;
+		String ma = String.format("KH%03d", x);
+		ArrayList<KhachHang> ds = kh_Bus.getAllTableKhachHang();
+		while (ds.contains(new KhachHang(ma))) {
+			x++;
+			ma = String.format("KH%03d", x);
+		}
+		String ten = txtTen.getText();
+		boolean gioiTinh;
+		if (rdNam.isSelected()) {
 			gioiTinh = true;
-		}else {
+		} else {
 			gioiTinh = false;
 		}
-		String diaChi =  txtDiaChi.getText();
-		String sdt =  txtSDT.getText();
+		String diaChi = txtDiaChi.getText();
+		String sdt = txtSDT.getText();
 		String gmail = txtGmail.getText();
-		String loai =  txtLoai.getText();
-		KhachHang k = new KhachHang(ma,ten,gioiTinh,diaChi,sdt,gmail,loai);
+		String loai = "Đồng";
+		KhachHang k = new KhachHang(ma, ten, gioiTinh, diaChi, sdt, gmail, loai);
 		return k;
 	}
 	
