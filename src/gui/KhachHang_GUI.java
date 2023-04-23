@@ -345,11 +345,13 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			KhachHang k = layData();
 			
 			try {
-				if(kh_Bus.them(k)) {
-					JOptionPane.showMessageDialog(null, "Thành công");
-					docDulieuVaoTable();
-					updateCBB();
-					reSet();
+				if(checkValue()) {
+					if(kh_Bus.them(k)) {
+						JOptionPane.showMessageDialog(null, "Thành công");
+						docDulieuVaoTable();
+						updateCBB();
+						reSet();
+					}					
 				}
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block

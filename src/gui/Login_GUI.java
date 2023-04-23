@@ -41,10 +41,10 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 	private JPasswordField txtMatKhau;
 	private JButton btnDangNhap;
 	private JButton btnQuenMatKhau;
-	private TaiKhoan_Bus taiKhoan_Bus;
+	private static TaiKhoan_Bus taiKhoan_Bus;
 	private JTextField txtMess;
 	private JCheckBox chkLuu;
-	private String tenTaiKhoan;
+	private static String tenTaiKhoan;
 	protected static Login_GUI frame;
 
 	/**
@@ -61,6 +61,18 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 				}
 			}
 		});
+	}
+	
+	public static void open_LoginUI() {
+		try {
+			new Login_GUI().setVisible(true);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -150,14 +162,7 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		Object o = e.getSource();
 		if(o.equals(btnDangNhap)) {
 			if(kiemTra()) {
-				String s = "";
-				if(chkLuu.isSelected()) {
-					s = txtTaiKhoan.getText() + ";" + new String(txtMatKhau.getPassword());
-					luuDangNhap(s);
-				}
-				else {
-					luuDangNhap(s);
-				}
+				
 			}
 		}
 	}
@@ -202,11 +207,18 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		TaiKhoan tk = taiKhoan_Bus.getTaiKhoanTheoTenTaiKhoan(taiKhoan);
 		if(tk != null) {
 			if(matKhau.equals(tk.getMatKhau())) {
-				if(tk.getLoaiTK().trim().equals("admin")) {
-					Main_GUI.open_MainUI();
-					Login_GUI.frame.setVisible(false);
-					return true;
+				String s = "";
+				if(chkLuu.isSelected()) {
+					s = txtTaiKhoan.getText() + ";" + new String(txtMatKhau.getPassword());
+					luuDangNhap(s);
 				}
+				else {
+					luuDangNhap(s);
+				}
+				Main_GUI.open_MainUI();
+				Login_GUI.frame.setVisible(false);
+				setTaiKhoanDuocDangNhap();
+				return true;
 			}
 			else {
 				txtMess.setText("Mật khẩu không chính xác.");
@@ -221,8 +233,22 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		return false;
 	}
 	
-	public String getTaiKhoanDuocDangNhap() {
-		return txtTaiKhoan.getText();
+	
+	/**
+	 * Trả về tài khoản đã đăng nhập
+	 * @return
+	 */
+	public static String getTaiKhoanDuocDangNhap() {
+		return tenTaiKhoan;
+	}
+	
+	public void setTaiKhoanDuocDangNhap() {
+		tenTaiKhoan = txtTaiKhoan.getText();
+	}
+	
+	public static String getLoaiTaiKhoanDuocDangNhap() {
+		TaiKhoan tk = taiKhoan_Bus.getTaiKhoanTheoTenTaiKhoan(tenTaiKhoan);
+		return tk.getLoaiTK();
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {

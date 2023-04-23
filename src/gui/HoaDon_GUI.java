@@ -63,7 +63,6 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 	private JTextField txtNgayLap;
 	private JTextField txtNgayGiao;
 	private JTextField txtNoiNhan;
-	private JTextField txtTim;
 	private JTextField txtMaChiTietHD;
 	private JPanel pCenter;
 	private JButton btnThemCT;
@@ -90,6 +89,9 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 	private DefaultTableModel modelCTHD;
 	private JTextField txtMaSp;
 	private ArrayList<ChiTietHoaDon> listCTHD;
+	private JTextField txtTim;
+	private JTextField txtMessTim;
+	private JButton btnTim;
 
 	/**
 	 * Launch the application.
@@ -173,7 +175,7 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 		
 		JPanel pTacVuHD = new JPanel();
 		pTacVuHD.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Ch\u1ECDn t\u00E1c v\u1EE5", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		pTacVuHD.setBounds(695, 64, 341, 285);
+		pTacVuHD.setBounds(695, 10, 341, 341);
 		pCenter.add(pTacVuHD);
 		pTacVuHD.setLayout(null);
 		
@@ -254,7 +256,7 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 		txtMess.setForeground(new Color(255, 0, 0));
 		txtMess.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 12));
 		txtMess.setEditable(false);
-		txtMess.setBounds(6, 228, 321, 19);
+		txtMess.setBounds(6, 225, 321, 29);
 		txtMess.setBorder(null);
 		pTacVuHD.add(txtMess);
 		txtMess.setColumns(10);
@@ -270,24 +272,27 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 		txtTongTienHD.setBounds(156, 204, 150, 21);
 		pTacVuHD.add(txtTongTienHD);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new TitledBorder(null, "T\u00ECm h\u00F3a \u0111\u01A1n theo m\u00E3", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(695, 10, 341, 50);
-		pCenter.add(panel);
-		panel.setLayout(null);
-		
 		JLabel lblTimHD = new JLabel("Nhập mã hóa đơn: ");
-		lblTimHD.setBounds(10, 10, 116, 29);
-		panel.add(lblTimHD);
+		lblTimHD.setBounds(6, 285, 117, 29);
+		pTacVuHD.add(lblTimHD);
 		
 		txtTim = new JTextField();
-		txtTim.setBounds(124, 15, 128, 19);
-		panel.add(txtTim);
 		txtTim.setColumns(10);
+		txtTim.setBounds(121, 290, 127, 19);
+		pTacVuHD.add(txtTim);
 		
-		JButton btnTim = new JButton("Tìm");
-		btnTim.setBounds(262, 15, 69, 19);
-		panel.add(btnTim);
+		btnTim = new JButton("Tìm");
+		btnTim.setBounds(258, 290, 69, 19);
+		pTacVuHD.add(btnTim);
+		
+		txtMessTim = new JTextField();
+		txtMessTim.setForeground(Color.RED);
+		txtMessTim.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 12));
+		txtMessTim.setEditable(false);
+		txtMessTim.setColumns(10);
+		txtMessTim.setBorder(null);
+		txtMessTim.setBounds(6, 312, 321, 19);
+		pTacVuHD.add(txtMessTim);
 		
 		JPanel pTacVuCTHD = new JPanel();
 		pTacVuCTHD.setLayout(null);
@@ -389,7 +394,6 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 		
 		//Đăng ký sự kiện
 		btnThem.addActionListener(this);
-		btnTim.addActionListener(this);
 		btnSua.addActionListener(this);
 		btnXoa.addActionListener(this);
 		btnXoaTrang.addActionListener(this);
@@ -397,6 +401,7 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 		btnThemCT.addActionListener(this);
 		btnXoaCT.addActionListener(this);
 		btnXoaTrangCT.addActionListener(this);
+		btnTim.addActionListener(this);
 		
 		txtMaSp.addFocusListener(this);
 		txtSoLuong.addFocusListener(this);
@@ -475,6 +480,7 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 			HoaDon hd = getHoaDonData(); 
 			hd_Bus.themHoaDon(hd);
 			txtMess.setText("Thêm thành công.");
+			xoaHetDuLieuTable(tableChiTietHD);
 			xoaHetDuLieuTable(tableHoaDon);
 			docDuLieuLenTableHD();
 		}
@@ -612,6 +618,7 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 		}
 		else {
 			txtMessCTHD.setText("Vui lòng nhập mã sản phẩm.");
+			txtGiaBan.setText("");
 			return false;
 		}
 		if(soLuong.length() > 0) {
@@ -637,6 +644,7 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 		}
 		else {
 			txtMessCTHD.setText("");
+			txtTongTienCTHD.setText("");
 			return false;
 		}
 		
@@ -648,7 +656,7 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 	 * @return
 	 */
 	private ChiTietHoaDon layDuLieuCTHD() {
-		String chiTietHDID = null;
+		String chiTietHDID = txtMaChiTietHD.getText().trim();
 		SanPham sp = sp_Bus.getSPTheoMa(txtMaSp.getText().trim());
 		HoaDon hd = hd_Bus.getHoaDonTheoMa(txtMaHD.getText());
 		int soLuong = Integer.parseInt(txtSoLuong.getText());
@@ -657,17 +665,25 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 		return new ChiTietHoaDon(chiTietHDID, sp, hd, soLuong, giaBan, tongTien);
 	}
 	
+	/**
+	 * Thêm chi tiết hóa đơn
+	 */
 	private void themChiTietHoaDon() {
 		if(kiemTraDuLieuCTHD()) {
 			if(ctHD_Bus.themChiTietHD(layDuLieuCTHD())) {
 				txtMessCTHD.setText("Thêm thành công.");
 				hd_Bus.capNhatTongTienHDThemMaHD(txtMaHD.getText());
-				docDuLieuCTHDLenTable(tableChiTietHD.getSelectedRow());
+				int row = tableHoaDon.getSelectedRow();
+				docDuLieuCTHDLenTable();
 				docDuLieuLenTableHD();
+				tableHoaDon.setRowSelectionInterval(row, row);
 			}
 		}
 	}
 	
+	/**
+	 * Xóa chi tiết hóa đơn
+	 */
 	private void xoaChiTietHoaDon() {
 		if(tableChiTietHD.getSelectedRow() != -1) {
 			if(JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa chi tiết hóa đơn này không?", "Cảnh báo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -675,8 +691,10 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 				modelCTHD.removeRow(tableChiTietHD.getSelectedRow());
 				txtMessCTHD.setText("Xóa thành công.");
 				hd_Bus.capNhatTongTienHDThemMaHD(txtMaHD.getText());
+				int n = tableHoaDon.getSelectedRow();
 				docDuLieuLenTableHD();
 				xoaTrangCTHD();
+				tableHoaDon.setRowSelectionInterval(n, n);
 			}
 		}
 		else {
@@ -700,7 +718,7 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 	/*
 	 * Đưa dữ liệu chi tiết hóa đơn lên table Chi tiết hóa đơn khi nhấn chuột vào hóa đơn cụ thể
 	 */
-	private void docDuLieuCTHDLenTable(int row) {
+	private void docDuLieuCTHDLenTable() {
 		xoaHetDuLieuTable(tableChiTietHD);
 		listCTHD  = ctHD_Bus.getChiTietHDTheoMaHD(txtMaHD.getText());
 		if(listCTHD.size() > 0) {
@@ -727,6 +745,8 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 		xoaHetDuLieuTable(tableChiTietHD);
 		txtSoLuong.setEditable(false);
 		txtMaSp.setEditable(false);
+		txtMess.setText("");
+		txtMessTim.setText("");
 	}
 	
 	/**
@@ -739,28 +759,75 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 		txtGiaBan.setText("");
 		txtTongTienCTHD.setText("");
 		tableChiTietHD.clearSelection();
+		txtMessCTHD.setText("");
 	}
 	
 	/**
 	 * Sửa hóa đơn
+	 * @throws SQLException 
+	 * @throws NumberFormatException 
 	 */
-	private void suaHoaDon() {
+	private void suaHoaDon() throws NumberFormatException, SQLException {
 		int row = tableHoaDon.getSelectedRow();
-		if(row != -1) {
-			HoaDon hd = getHoaDonData();
-			hd_Bus.suaHoaDon(hd);
-			txtMess.setText("Sửa thành công.");
-			docDuLieuLenTableHD();
+		if(row != -1 ) {
+			if (kiemTraDuLieuHD()) {
+				HoaDon hd = getHoaDonData();
+				hd.setTongTien(Double.parseDouble(tableHoaDon.getValueAt(row, 6).toString()));
+				hd_Bus.suaHoaDon(hd);
+				txtMess.setText("Sửa thành công.");
+				docDuLieuLenTableHD();
+				tableHoaDon.setRowSelectionInterval(row, row);
+			}
 		}
 		else {
 			txtMess.setText("Oops! Hình như bạn chưa chọn dòng để sửa.");
 		}
 	}
 	
+	/**
+	 * Sửa chi tiết hóa đơn
+	 */
 	private void suaChiTietHoaDon() {
-		
+		int n = tableHoaDon.getSelectedRow();
+		int row = tableChiTietHD.getSelectedRow();
+		if(row != -1) {
+			if (kiemTraDuLieuCTHD()) {
+				ctHD_Bus.suaChiTietHD(layDuLieuCTHD());
+				txtMessCTHD.setText("Sửa thành công.");
+				docDuLieuCTHDLenTable();
+				hd_Bus.capNhatTongTienHDThemMaHD(txtMaHD.getText());
+				docDuLieuLenTableHD();
+				tableHoaDon.setRowSelectionInterval(n, n);
+				tableChiTietHD.setRowSelectionInterval(row, row);
+			}
+		}
+		else {
+			txtMessCTHD.setText("Oops! Bạn chưa chọn dòng để sửa.");
+		}
 	}
 	
+	/**
+	 * Tìm hóa đơn theo mã hóa đơn
+	 */
+	private void timHoaDon() {
+		String id = txtTim.getText().trim();
+		if (id.length() > 0) {
+			HoaDon hd = hd_Bus.getHoaDonTheoMa(id);
+			if(hd == null) {
+				txtMessTim.setText("Không tìm thấy.");
+				return;
+			}
+			xoaHetDuLieuTable(tableChiTietHD);
+			xoaHetDuLieuTable(tableHoaDon);
+			DefaultTableModel dm = (DefaultTableModel) tableHoaDon.getModel();
+			dm.addRow(new Object[] {hd.getIdHD(), hd.getKhachHang().getIdKH(), hd.getNhanVien().getTenNV(), hd.getNgayLapHD(), hd.getNgayGiao(), hd.getNoiNhan(), String.format("%.0f", hd.getTongTien())});
+		}
+		else {
+			xoaHetDuLieuTable(tableChiTietHD);
+			docDuLieuLenTableHD();
+		}
+		
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -792,7 +859,21 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 			xoaTrangCTHD();
 		}
 		if(o.equals(btnSua)) {
-			suaHoaDon();
+			try {
+				suaHoaDon();
+			} catch (NumberFormatException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		if (o.equals(btnSuaCT)) {
+			suaChiTietHoaDon();
+		}
+		if (o.equals(btnTim)) {
+			timHoaDon();
 		}
 	}
 
@@ -811,7 +892,7 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 			txtTongTienHD.setText(tableHoaDon.getValueAt(rowHD, 6).toString());
 			txtMaSp.setEditable(true);
 			txtSoLuong.setEditable(true);
-			docDuLieuCTHDLenTable(rowHD);
+			docDuLieuCTHDLenTable();
 			tableChiTietHD.clearSelection();
 		}
 	}

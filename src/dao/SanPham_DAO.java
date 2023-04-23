@@ -53,7 +53,7 @@ public class SanPham_DAO {
 					SanPham s = new MainBoard(maSP, tenSP, hang, loai, giaNhap, giaBan, slTon, ncc, thoiGianBH, chipSet, kheLuuTru, kheMoRong);
 					dsSP.add(s);
 				}
-				else if(loai.equals("Ram")) {
+				else if(loai.equalsIgnoreCase("Ram")) {
 					String loaiRam = sr.getString(19);
 					int dungLuong = sr.getInt(20);
 					int tocDo = sr.getInt(21);
@@ -119,7 +119,7 @@ public class SanPham_DAO {
 					SanPham p = new HardDisk(maSP, tenSP, hang, loai, giaNhap, giaBan, slTon, ncc,tgBH, dungLuongHD, cacheDDR, tuoiThoTB);
 					return p;
 				}
-				else if(loai.equals("Ram"))
+				else if(loai.equalsIgnoreCase("Ram"))
 				{
 					String loaiR = sr.getString(19);
 					Integer dungLuongR = sr.getInt(20);

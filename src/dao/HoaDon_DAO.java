@@ -55,7 +55,7 @@ public class HoaDon_DAO implements IHoaDon{
 	 */
 	@Override
 	public HoaDon getHoaDonTheoMa(String maHD) {
-		HoaDon hd = new HoaDon();
+		HoaDon hd = null;
 		ConnectDB.getInstance();
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement stm = null;

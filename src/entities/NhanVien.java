@@ -23,7 +23,11 @@ public class NhanVien {
         this.phai = phai;
     }
 
-    public String getNhanVienID() {
+    public NhanVien(String ma) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getNhanVienID() {
         return nhanVienID;
     }
 
@@ -71,22 +75,19 @@ public class NhanVien {
         this.phai = phai;
     }
 
-    
+	@Override
 	public int hashCode() {
 		return Objects.hash(nhanVienID);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		NhanVien other = (NhanVien) obj;
 		return Objects.equals(nhanVienID, other.nhanVienID);
 	}

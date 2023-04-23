@@ -14,6 +14,8 @@ import java.awt.BorderLayout;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import bus.NhaCungCap_Bus;
+import bus.SanPham_Bus;
 import dao.NhaCungCap_DAO;
 import dao.SanPham_DAO;
 import connectDB.ConnectDB;
@@ -55,8 +57,8 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 	private JTextField txtInput3;
 	private JTextField txtTim;
 	private DefaultTableModel model;
-	private NhaCungCap_DAO ncc_DAO;
-	private SanPham_DAO sp_DAO;
+	private SanPham_Bus sp_Bus;
+	private NhaCungCap_Bus ncc_Bus;
 	private JButton btnReset;
 	private JButton btnLoc;
 	private JButton btnSua;
@@ -107,8 +109,8 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 			e.printStackTrace();
 		}
 		
-		ncc_DAO = new NhaCungCap_DAO();
-		sp_DAO = new SanPham_DAO();
+		ncc_Bus = new NhaCungCap_Bus();
+		sp_Bus = new SanPham_Bus();
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -300,7 +302,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 		pCenter.add(panel_3);
 		panel_3.setLayout(null);
 		
-		ArrayList<NhaCungCap> lisNcc = ncc_DAO.getListNhaCC();
+		ArrayList<NhaCungCap> lisNcc = ncc_Bus.getListNhaCC();
 		for (NhaCungCap n : lisNcc) {
 			cbNcc.addItem(n.getNhaCCID());
 		}
@@ -339,7 +341,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 		btnReset = new JButton("Reset");
 		
 		
-		btnReset.setBounds(917, 29, 108, 21);
+		btnReset.setBounds(917, 29, 99, 21);
 		panel_3.add(btnReset);
 		
 		JLabel lblNewLabel_13 = new JLabel("Nhập mã SP cần tìm:");
@@ -370,7 +372,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 	}
 	private void DocDuLieuDatabaseVaoTable() {
 		// TODO Auto-generated method stub
-		ArrayList<SanPham> listSP  =  sp_DAO.getAllTbSP();
+		ArrayList<SanPham> listSP  =  sp_Bus.getAllTbSP();
 		for (SanPham s : listSP) {
 			double a = s.getGiaNhap();
 			double b = s.getGiaBan();
@@ -441,23 +443,23 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 	private String sinhMaSP() {
 		
 		if(cbLoai.getSelectedItem().toString().equals("MainBoard")){
-			int stt = sp_DAO.getSPTheoLoai("MainBoard").size() + 1;
+			int stt = sp_Bus.getSPTheoLoai("MainBoard").size() + 1;
 			String ma="MB" + String.format("%03d",  stt);
 			return ma;
 		}
 		else if(cbLoai.getSelectedItem().toString().equals("CPU")){
-			int stt = sp_DAO.getSPTheoLoai("HardDisk").size() + 1;
+			int stt = sp_Bus.getSPTheoLoai("HardDisk").size() + 1;
 			String ma="CPU" + String.format("%03d",  stt);
 			return ma;
 		}
 		else if(cbLoai.getSelectedItem().toString().equals("HardDisk")){
-			int stt = sp_DAO.getSPTheoLoai("HardDisk").size() + 1;
+			int stt = sp_Bus.getSPTheoLoai("HardDisk").size() + 1;
 			String ma="HD" + String.format("%03d",  stt);
 			return ma;
 		}
 		else if(cbLoai.getSelectedItem().toString().equals("Ram")){
-			int stt = sp_DAO.getSPTheoLoai("Ram").size() + 1;
-			String ma="R" + String.format("%03d",  stt);
+			int stt = sp_Bus.getSPTheoLoai("Ram").size() + 1;
+			String ma="RAM" + String.format("%03d",  stt);
 			return ma;
 		}
 		return null;
@@ -503,7 +505,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 	        if(result == JOptionPane.YES_OPTION) {
 	        	String ma = table.getValueAt(r, 0).toString();
 	        	model.removeRow(r); 
-	        	sp_DAO.delete(ma);
+	        	sp_Bus.delete(ma);
 	        	clearTextField();
 	        }
 	        else {
@@ -569,7 +571,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 	private void locTheoLoai() {
 		// TODO Auto-generated method stub
 		String loaiSP = cbLoai.getSelectedItem().toString();
-		ArrayList<SanPham> listSP = sp_DAO.getSPTheoLoai(loaiSP);
+		ArrayList<SanPham> listSP = sp_Bus.getSPTheoLoai(loaiSP);
 		model.setRowCount(0);
 		for (SanPham s : listSP) {
 			double a = s.getGiaNhap();
@@ -595,11 +597,11 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 		// TODO Auto-generated method stub
 		int r = table.getSelectedRow();
 		if(r!= -1) {
-			SanPham s = sp_DAO.getSPTheoMa(model.getValueAt(r, 0).toString());
+			SanPham s = sp_Bus.getSPTheoMa(model.getValueAt(r, 0).toString());
 			SanPham s1 = laySPTuJtextField();
 			if(s1!=null && s1.getLoai().equals(s.getLoai()))
 			{	
-				sp_DAO.update(s1);
+				sp_Bus.update(s1);
 				JOptionPane.showMessageDialog(this, "Sửa thành công!");
 				model.setRowCount(0);
 				DocDuLieuDatabaseVaoTable();
@@ -635,7 +637,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 				SanPham s = new MainBoard(maSP, tenSP, hang, loai, giaNhap, giaBan, slt, ncc, tgBH, chipSet, kheLuuTru, kheMoRong);
 				if(s!=null) {
 					try {
-						if(sp_DAO.create(s))
+						if(sp_Bus.create(s))
 							JOptionPane.showMessageDialog(this,"Thêm thành công!");
 							double a = s.getGiaNhap();
 							double b = s.getGiaBan();
@@ -668,7 +670,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 				SanPham s = new CPU(maSP, tenSP, hang, loai, giaNhap, giaBan, slt, ncc,tgBH, nhan, luong, cache);
 				if(s!=null) {
 					try {
-						if(sp_DAO.create(s))
+						if(sp_Bus.create(s))
 							JOptionPane.showMessageDialog(this,"Thêm thành công!");
 							double a = s.getGiaNhap();
 							double b = s.getGiaBan();
@@ -701,7 +703,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 				SanPham s = new HardDisk(maSP, tenSP, hang, loai, giaNhap, giaBan, slt, ncc,tgBH, dungLuong, cacheDDR, tuoiThoTB);
 				if(s!=null) {
 					try {
-						if(sp_DAO.create(s))
+						if(sp_Bus.create(s))
 							JOptionPane.showMessageDialog(this,"Thêm thành công!");
 							double a = s.getGiaNhap();
 							double b = s.getGiaBan();
@@ -726,7 +728,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 					}
 				}
 			}
-			else if(loai.equals("Ram")) {
+			else if(loai.equalsIgnoreCase("Ram")) {
 				String maSP = sinhMaSP();
 				String loaiRam = txtInput1.getText();
 				int dungLuongRam = Integer.parseInt(txtInput2.getText());
@@ -734,7 +736,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 				SanPham s = new Ram(maSP, tenSP, hang, loai, giaNhap, giaBan, slt, ncc, tgBH, loaiRam, dungLuongRam, tocDoRam);
 				if(s!=null) {
 					try {
-						if(sp_DAO.create(s))
+						if(sp_Bus.create(s))
 							JOptionPane.showMessageDialog(this,"Thêm thành công!");
 							double a = s.getGiaNhap();
 							double b = s.getGiaBan();
@@ -768,7 +770,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 	}
 	private void timSPTheoMa() {
 		String maTim = txtTim.getText();
-		SanPham s = sp_DAO.getSPTheoMa(maTim);
+		SanPham s = sp_Bus.getSPTheoMa(maTim);
 		if(s!=null) {
 			double a = s.getGiaNhap();
 			double b = s.getGiaBan();
@@ -820,28 +822,28 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 		txtBH.setText(model.getValueAt(r, 8).toString());
 		if(model.getValueAt(r, 3).toString().equals("MainBoard"))
 		{
-			MainBoard p = (MainBoard) sp_DAO.getSPTheoMa(model.getValueAt(r, 0).toString());
+			MainBoard p = (MainBoard) sp_Bus.getSPTheoMa(model.getValueAt(r, 0).toString());
 			txtInput1.setText(p.getChipSet());
 			txtInput2.setText(p.getKheLuuTru());
 			txtInput3.setText(p.getKheMoRong());
 		}
 		else if(model.getValueAt(r, 3).toString().equals("CPU"))
 		{
-			CPU  p = (CPU) sp_DAO.getSPTheoMa(model.getValueAt(r, 0).toString());
+			CPU  p = (CPU) sp_Bus.getSPTheoMa(model.getValueAt(r, 0).toString());
 			txtInput1.setText(p.getNhan() + "");
 			txtInput2.setText(p.getLuong()+ "");
 			txtInput3.setText(p.getCache()+ "");
 		}
 		else if(model.getValueAt(r, 3).toString().equals("HardDisk"))
 		{
-			HardDisk p = (HardDisk) sp_DAO.getSPTheoMa(model.getValueAt(r, 0).toString());
+			HardDisk p = (HardDisk) sp_Bus.getSPTheoMa(model.getValueAt(r, 0).toString());
 			txtInput1.setText(p.getDungLuong()+"");
 			txtInput2.setText(p.getCacheDDR());
 			txtInput3.setText(p.getTuoiThoTB()+"");
 		}
 		else if(model.getValueAt(r, 3).toString().equals("Ram"))
 		{
-			Ram p = (Ram) sp_DAO.getSPTheoMa(model.getValueAt(r, 0).toString());
+			Ram p = (Ram) sp_Bus.getSPTheoMa(model.getValueAt(r, 0).toString());
 			txtInput1.setText(p.getLoaiRam());
 			txtInput2.setText(p.getDungLuongRam()+"");
 			txtInput3.setText(p.getTocDo()+"");

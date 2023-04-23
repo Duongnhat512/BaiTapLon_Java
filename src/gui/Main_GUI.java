@@ -59,6 +59,12 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private SanPham_GUI sp_UI;
 
 
+	private JButton btnDangXuat;
+
+
+	protected static Main_GUI frame;
+
+
 	/**
 	 * Mở main UI.
 	 */
@@ -66,7 +72,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Main_GUI frame = new Main_GUI();
+					frame = new Main_GUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -74,7 +80,15 @@ public class Main_GUI extends JFrame implements ActionListener{
 			}
 		});
 	}
-
+	
+	/**
+	 * Đóng main UI
+	 */
+	public static void close_MainUI() {
+		Main_GUI.frame.setVisible(false);
+	}
+	
+	
 	/**
 	 * Create the frame.
 	 * @throws SQLException 
@@ -139,17 +153,18 @@ public class Main_GUI extends JFrame implements ActionListener{
 		currentUI = "Trang chủ";	
 		currentButton = btnTrangChu;
 		
-		JButton btnDangXuat = new JButton("Đăng xuất");
+		btnDangXuat = new JButton("Đăng xuất");
 		btnDangXuat.setBackground(Color.WHITE);
 		btnDangXuat.setBounds(0, 498, 120, 65);
 		pWest.add(btnDangXuat);
 		
-		lblTenTK = new JLabel(new Login_GUI().getTaiKhoanDuocDangNhap());
+		lblTenTK = new JLabel(Login_GUI.getTaiKhoanDuocDangNhap());
 		lblTenTK.setFont(new Font("Arial", Font.BOLD, 15));
 		lblTenTK.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTenTK.setBounds(0, 27, 120, 43);
 		pWest.add(lblTenTK);
 		
+		//Đăng ký sự kiện
 		btnHoaDon.addActionListener(this);
 		btnNhaCC.addActionListener(this);
 		btnKhachHang.addActionListener(this);
@@ -243,6 +258,16 @@ public class Main_GUI extends JFrame implements ActionListener{
 		currentButton = btn;
 		btn.setBackground(Color.WHITE);
 	}
+	
+	/**
+	 * Đăng xuất tài khoản đã đăng nhập
+	 */
+	private void dangXuat() {
+		if (JOptionPane.showConfirmDialog(this, "Bạn có muốn đăng xuất không?", "Cảnh báo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			Login_GUI.open_LoginUI();
+			close_MainUI();
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -269,6 +294,9 @@ public class Main_GUI extends JFrame implements ActionListener{
 		}
 		if (o.equals(btnSanPham)) {
 			updatePanel(btnSanPham);
+		}
+		if (o.equals(btnDangXuat)) {
+			dangXuat();
 		}
 	}
 }

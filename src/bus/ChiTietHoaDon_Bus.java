@@ -42,7 +42,7 @@ public class ChiTietHoaDon_Bus implements IChiTietHoaDon{
 	@Override
 	public boolean suaChiTietHD(ChiTietHoaDon ctHD) {
 		// TODO Auto-generated method stub
-		return false;
+		return ctHD_Dao.suaChiTietHD(ctHD);
 	}
 
 	@Override

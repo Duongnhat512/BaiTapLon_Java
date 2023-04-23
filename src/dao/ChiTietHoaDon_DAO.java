@@ -124,8 +124,30 @@ public class ChiTietHoaDon_DAO implements IChiTietHoaDon{
 
 	@Override
 	public boolean suaChiTietHD(ChiTietHoaDon ctHD) {
-		// TODO Auto-generated method stub
-		return false;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		int n = 0;
+		try {
+			stm = con.prepareStatement("update ChiTietHoaDon set maSP = ?, soLuong = ?, giaBan = ?, tongTien = ? where maChiTietHD = ?");
+			stm.setString(1, ctHD.getSanPham().getSpID());
+			stm.setInt(2, ctHD.getSoLuong());
+			stm.setDouble(3, ctHD.getGiaBan());
+			stm.setDouble(4, ctHD.getTongTien());
+			stm.setString(5, ctHD.getChiTietHoaDonID());
+			n = stm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
 	}
 
 	@Override
