@@ -51,4 +51,27 @@ public class ChiTietHoaDon_Bus implements IChiTietHoaDon{
 		return ctHD_Dao.xoaCTHDTheoMaHD(id);
 	}
 
+	@Override
+	public double layTongTienTheoMaSP(String idSP) {
+		// TODO Auto-generated method stub
+		return ctHD_Dao.layTongTienTheoMaSP(idSP);
+	}
+
+	@Override
+	public int laySoLuongSPDaBan(String idSP) {
+		// TODO Auto-generated method stub
+		return ctHD_Dao.laySoLuongSPDaBan(idSP);
+	}
+
+	@Override
+	public int laySoLuongTheoNamThang(String spID, int thang, int nam) {
+		// TODO Auto-generated method stub
+		return ctHD_Dao.laySoLuongTheoNamThang(spID, thang, nam);
+	}
+	@Override
+	public double layTongTienSPTheoNamThang(String spID, int thang, int nam) {
+		// TODO Auto-generated method stub
+		return ctHD_Dao.layTongTienSPTheoNamThang(spID, thang, nam);
+	}
+
 }

@@ -39,4 +39,8 @@ public class KhachHang_Bus {
 	public boolean updateLoaiKH(KhachHang k) throws SQLException {
 		return kh_Dao.updateLoaiKH(k);
 	}
+	
+	public double tongTienDaMua(KhachHang k) throws SQLException{
+		return kh_Dao.tongTienDaMua(k);
+	}
 }

@@ -166,7 +166,7 @@ public class NhanVien_DAO {
 		PreparedStatement stmt = null;
 		int n = 0;
 		try {
-			stmt = con.prepareStatement("update NhanVien set tenNV=?,maPhong=?,soDT=?,luong=?,gioiTinh=? where maNV=?");
+			stmt = con.prepareStatement("update NhanVien set tenNV=?,phongBan=?,soDT=?,luong=?,gioiTinh=? where maNV=?");
 		
 			stmt.setString(1, nv.getTenNV());
 			stmt.setString(2, nv.getPhong().getMaPhongBan());

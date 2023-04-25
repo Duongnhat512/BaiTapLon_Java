@@ -416,4 +416,28 @@ public class SanPham_DAO {
 		}
 		return n > 0;
 	}
+	public boolean updateSLTon(String id, int soLuong) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		int n = 0;
+		PreparedStatement stm = null;
+		try {
+			stm = con.prepareStatement("update SanPham set slTon = ? where maSP = ?");
+			stm.setInt(1, soLuong);
+			stm.setString(2, id);
+			n = stm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+
 }

@@ -34,6 +34,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private HoaDon_GUI hoaDon_UI;
 	private KhachHang_GUI kh_UI;
 	private NhanVien_GUI nv_UI;
+	private ThongKe_GUI thongKe_GUI;
 	
 	private JPanel pHoaDon;
 	private JPanel pThongKe;
@@ -100,6 +101,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 680);
 		setLocationRelativeTo(null);
+		setTitle("PHẦN MỀM QUẢN LÝ BÁN LINH KIỆN ĐIỆN TỬ");
 		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setForeground(new Color(245, 245, 245));
@@ -207,7 +209,8 @@ public class Main_GUI extends JFrame implements ActionListener{
 			contentPane.add(pNhanVien);
 		}
 		if(btn.equals(btnThongKe)) {
-			pThongKe = new JPanel();
+			thongKe_GUI = new ThongKe_GUI();
+			pThongKe = thongKe_GUI.getThongKePanel();
 			contentPane.add(pThongKe);
 		}
 		if(btn.equals(btnSanPham)) {

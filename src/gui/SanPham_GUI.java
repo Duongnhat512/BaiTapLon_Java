@@ -458,7 +458,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 			return ma;
 		}
 		else if(cbLoai.getSelectedItem().toString().equals("CPU")){
-			int stt = sp_Bus.getSPTheoLoai("HardDisk").size() + 1;
+			int stt = sp_Bus.getSPTheoLoai("CPU").size() + 1;
 			String ma="CPU" + String.format("%03d",  stt);
 			return ma;
 		}

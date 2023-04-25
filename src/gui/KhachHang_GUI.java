@@ -129,7 +129,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			new Object[][] {
 			},
 			new String[] {
-				"STT", "M\u00E3 Kh\u00E1ch H\u00E0ng", "T\u00EAn Kh\u00E1ch H\u00E0ng", "Lo\u1EA1i Kh\u00E1ch H\u00E0ng", "Gi\u1EDBi T\u00EDnh", "\u0110\u1ECBa Ch\u1EC9", "S\u1ED1 \u0110i\u1EC7n Tho\u1EA1i", "Gmail"
+				"STT", "M\u00E3 Kh\u00E1ch H\u00E0ng", "T\u00EAn Kh\u00E1ch H\u00E0ng", "Lo\u1EA1i Kh\u00E1ch H\u00E0ng", "Gi\u1EDBi T\u00EDnh", "\u0110\u1ECBa Ch\u1EC9", "S\u1ED1 \u0110i\u1EC7n Tho\u1EA1i", "Gmail", "Tổng tiền đã mua"
 			}
 		));
 		scrollPane.setViewportView(table);
@@ -324,7 +324,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		ds = kh_Bus.getAllTableKhachHang();
 		int stt = 1;
 		for (KhachHang khachHang : ds) {
-//			kh_Bus.updateLoaiKH(khachHang);
+			String total = String.format("%.0f", kh_Bus.tongTienDaMua(khachHang));
 			String s="";
 			if(khachHang.isGioiTinh()) {
 				s+="Nam";
@@ -333,7 +333,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			}
 			dftable.addRow(new Object[] {
 					stt, khachHang.getIdKH(), khachHang.getTenKH(), khachHang.getLoaiKhachHang(), s, khachHang.getDiaChi(),
-					khachHang.getSoDienThoai(), khachHang.getGmail()
+					khachHang.getSoDienThoai(), khachHang.getGmail(),total
 			});
 			stt++;
 		}

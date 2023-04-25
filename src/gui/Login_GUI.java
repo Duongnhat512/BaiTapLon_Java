@@ -13,6 +13,8 @@ import connectDB.ConnectDB;
 import entities.TaiKhoan;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,7 +42,7 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 	private JTextField txtTaiKhoan;
 	private JPasswordField txtMatKhau;
 	private JButton btnDangNhap;
-	private JButton btnDangKy;
+	private JButton btnQuenMatKhau;
 	private static TaiKhoan_Bus taiKhoan_Bus;
 	private JTextField txtMess;
 	private JCheckBox chkLuu;
@@ -124,10 +126,10 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		btnDangNhap.setBounds(241, 313, 141, 46);
 		contentPane.add(btnDangNhap);
 		
-		btnDangKy = new JButton("Đăng ký");
-		btnDangKy.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnDangKy.setBounds(437, 313, 141, 46);
-		contentPane.add(btnDangKy);
+		btnQuenMatKhau = new JButton("Quên mật khẩu");
+		btnQuenMatKhau.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnQuenMatKhau.setBounds(437, 313, 141, 46);
+		contentPane.add(btnQuenMatKhau);
 		
 		txtMess = new JTextField();
 		txtMess.setForeground(new Color(255, 0, 0));
@@ -152,6 +154,7 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		
 		//Đăng ký sự kiện
 		btnDangNhap.addActionListener(this);
+		btnQuenMatKhau.addActionListener(this);
 		txtTaiKhoan.addKeyListener(this);
 		txtMatKhau.addKeyListener(this);
 	}
@@ -163,8 +166,14 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		if(o.equals(btnDangNhap)) {
 			kiemTra();
 		}
-		if (o.equals(btnDangKy)) {
-			
+		if (o.equals(btnQuenMatKhau)) {
+			TaiKhoan tk = taiKhoan_Bus.getTaiKhoanTheoTenTaiKhoan(txtTaiKhoan.getText());
+			if(tk != null) {
+				JOptionPane.showMessageDialog(this, "Mật khẩu của tài khoản " + tk.getTaiKhoan() + " là: " + tk.getMatKhau());
+			}
+			else {
+				txtMess.setText("Tài khoản hoặc mật khẩu không tồn tại.");
+			}
 		}
 	}
 	

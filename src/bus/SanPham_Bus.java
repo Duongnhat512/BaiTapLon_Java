@@ -25,4 +25,8 @@ public class SanPham_Bus {
 	public boolean 	delete(String maSP) {
 		return sp_Dao.delete(maSP);
 	}
+	
+	public boolean updateSLTon(String id, int soLuong) {
+		return sp_Dao.updateSLTon(id, soLuong);
+	}
 }

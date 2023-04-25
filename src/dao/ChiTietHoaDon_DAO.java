@@ -174,4 +174,116 @@ public class ChiTietHoaDon_DAO implements IChiTietHoaDon{
 		return n > 0;
 	}
 
+	@Override
+	public double layTongTienTheoMaSP(String idSP) {
+		double tongTien = 0;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		try {
+			stm = con.prepareStatement("select sum(tongTien) from ChiTietHoaDon where maSP = ?");
+			stm.setString(1, idSP);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				tongTien = rs.getDouble(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return tongTien;
+	}
+
+	@Override
+	public int laySoLuongSPDaBan(String idSP) {
+		int soLuong = 0;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		try {
+			stm = con.prepareStatement("select sum(soLuong) from ChiTietHoaDon where maSP = ?");
+			stm.setString(1, idSP);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				soLuong = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return soLuong;
+	}
+
+	@Override
+	public int laySoLuongTheoNamThang(String spID, int thang, int nam) {
+		int soLuong = 0;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		try {
+			stm = con.prepareStatement("select SUM(soLuong) from ChiTietHoaDon ct join HoaDon hd on ct.maHD = hd.maHD where MONTH(ngayLapHD) = ? and YEAR(ngayLapHD) = ? and maSP = ?");
+			stm.setInt(1, thang);
+			stm.setInt(2, nam);
+			stm.setString(3, spID);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				soLuong = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return soLuong;
+	}
+
+	@Override
+	public double layTongTienSPTheoNamThang(String spID, int thang, int nam) {
+		double tongTienSP = 0;
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		try {
+			stm = con.prepareStatement("select SUM(ct.tongTien) from ChiTietHoaDon ct join HoaDon hd on ct.maHD = hd.maHD where MONTH(ngayLapHD) = ? and YEAR(ngayLapHD) = ? and maSP = ?");
+			stm.setInt(1, thang);
+			stm.setInt(2, nam);
+			stm.setString(3, spID);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				tongTienSP = rs.getDouble(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return tongTienSP;
+	}
+	
 }

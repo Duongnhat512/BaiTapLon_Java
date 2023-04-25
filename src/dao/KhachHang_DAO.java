@@ -151,5 +151,19 @@ public class KhachHang_DAO {
 		int r = st.executeUpdate();
 		return r>0;
 	}
+	
+	public double tongTienDaMua(KhachHang k) throws SQLException {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "select sum(tongTien) as tongTien from HoaDon where maKH = ?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1,k.getIdKH());
+		ResultSet r = st.executeQuery();
+		double total = 0;
+		while(r.next()) {
+			total = r.getDouble(1);
+		}
+		return total;
+	}
 
 }
