@@ -259,11 +259,3 @@ where maKH = @maKH
 end
 
 --
-
-go
-create proc laySoLuongVaTongTienTheoThangNam @nam int, @thang int, @maSP nvarchar(50)
-as
-begin
-	select SUM(ct.tongTien) from ChiTietHoaDon ct join HoaDon hd on ct.maHD = hd.maHD
-		where MONTH(ngayLapHD) = 3 and YEAR(ngayLapHD) = 2023 and maSP = 'MB001'
-end
