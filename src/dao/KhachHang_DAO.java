@@ -141,5 +141,15 @@ public class KhachHang_DAO {
 		int r = st.executeUpdate();
 		return r>0;
 	}
+	
+	public boolean updateLoaiKH(KhachHang k) throws SQLException {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		String sql = "exec capNhapLoai ?";
+		PreparedStatement st = con.prepareStatement(sql);
+		st.setString(1, k.getIdKH());
+		int r = st.executeUpdate();
+		return r>0;
+	}
 
 }

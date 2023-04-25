@@ -36,7 +36,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private NhanVien_GUI nv_UI;
 	
 	private JPanel pHoaDon;
-	private JPanel pTrangChu;
+	private JPanel pThongKe;
 	private JPanel pNhaCC;
 	private JPanel pKhachHang;
 	private JPanel pNhanVien;
@@ -50,7 +50,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 	private Color colorButton;
 	private JButton btnSanPham;
 	private JButton btnNhanVien;
-	private JButton btnTrangChu;
+	private JButton btnThongKe;
 	private JButton btnThoat;
 	private JButton btnKhachHang;
 	private JLabel lblTenTK;
@@ -116,18 +116,18 @@ public class Main_GUI extends JFrame implements ActionListener{
 		colorButton = new Color(r, g, b);
 		
 		btnHoaDon = new JButton("Hóa đơn");
-		btnHoaDon.setBounds(0, 210, 120, 65);
+		btnHoaDon.setBounds(0, 80, 120, 65);
 		btnHoaDon.setBackground(colorButton);
 		pWest.add(btnHoaDon);
 		
 		btnNhaCC = new JButton("Nhà cung cấp");
-		btnNhaCC.setBounds(0, 275, 120, 65);
+		btnNhaCC.setBounds(0, 210, 120, 65);
 		btnNhaCC.setBackground(colorButton);
 		pWest.add(btnNhaCC);
 		
 		btnSanPham = new JButton("Sản phẩm");
 		btnSanPham.setBackground(new Color(210, 210, 210));
-		btnSanPham.setBounds(0, 340, 120, 65);
+		btnSanPham.setBounds(0, 275, 120, 65);
 		pWest.add(btnSanPham);
 		
 		btnNhanVien = new JButton("Nhân viên");
@@ -135,10 +135,10 @@ public class Main_GUI extends JFrame implements ActionListener{
 		btnNhanVien.setBounds(0, 145, 120, 65);
 		pWest.add(btnNhanVien);
 		
-		btnTrangChu = new JButton("Trang chủ");
-		btnTrangChu.setBackground(new Color(210, 210, 210));
-		btnTrangChu.setBounds(0, 80, 120, 65);
-		pWest.add(btnTrangChu);
+		btnThongKe = new JButton("Thống kê");
+		btnThongKe.setBackground(new Color(210, 210, 210));
+		btnThongKe.setBounds(0, 404, 120, 65);
+		pWest.add(btnThongKe);
 		
 		btnThoat = new JButton("Thoát");
 		btnThoat.setBounds(0, 573, 120, 50);
@@ -147,7 +147,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 
 		btnKhachHang = new JButton("Khách hàng");
 		btnKhachHang.setBackground(new Color(210, 210, 210));
-		btnKhachHang.setBounds(0, 405, 120, 65);
+		btnKhachHang.setBounds(0, 340, 120, 65);
 		pWest.add(btnKhachHang);
 		
 		
@@ -168,7 +168,7 @@ public class Main_GUI extends JFrame implements ActionListener{
 		btnKhachHang.addActionListener(this);
 		btnNhanVien.addActionListener(this);
 		btnSanPham.addActionListener(this);
-		btnTrangChu.addActionListener(this);
+		btnThongKe.addActionListener(this);
 		btnThoat.addActionListener(this);
 		btnDangXuat.addActionListener(this);
 	}
@@ -206,9 +206,9 @@ public class Main_GUI extends JFrame implements ActionListener{
 			pNhanVien = nv_UI.getNhanVienPanel();
 			contentPane.add(pNhanVien);
 		}
-		if(btn.equals(btnTrangChu)) {
-			pTrangChu = new JPanel();
-			contentPane.add(pTrangChu);
+		if(btn.equals(btnThongKe)) {
+			pThongKe = new JPanel();
+			contentPane.add(pThongKe);
 		}
 		if(btn.equals(btnSanPham)) {
 			sp_UI = new SanPham_GUI();
@@ -223,8 +223,8 @@ public class Main_GUI extends JFrame implements ActionListener{
 	 * Trả về JPanel hiện tại đang được hiện
 	 */
 	private JPanel getCurrentUI() {
-		if(currentButton.equals(btnTrangChu))
-			return pTrangChu;
+		if(currentButton.equals(btnThongKe))
+			return pThongKe;
 		if(currentButton.equals(btnNhaCC))
 			return pNhaCC;
 		if(currentButton.equals(btnHoaDon))
@@ -296,8 +296,8 @@ public class Main_GUI extends JFrame implements ActionListener{
 		if(o.equals(btnNhanVien)) {
 			updatePanel(btnNhanVien);
 		}
-		if (o.equals(btnTrangChu)) {
-			updatePanel(btnTrangChu);
+		if (o.equals(btnThongKe)) {
+			updatePanel(btnThongKe);
 		}
 		if (o.equals(btnSanPham)) {
 			updatePanel(btnSanPham);

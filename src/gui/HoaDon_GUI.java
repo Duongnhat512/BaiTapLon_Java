@@ -523,11 +523,11 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 				String hoaDonID = txtMaHD.getText().trim();
 				xoaHetDuLieuTable(tableChiTietHD);
 				hd_Bus.xoaHoaDon(hoaDonID);
-				txtMess.setText("Xóa thành công.");
 				DefaultTableModel dm = (DefaultTableModel) tableHoaDon.getModel();
 				dm.removeRow(row);
 				xoaTrangHoaDon();
 				xoaTrangCTHD();
+				txtMess.setText("Xóa thành công.");
 			}
 		}
 		else {
@@ -667,8 +667,9 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 	
 	/**
 	 * Thêm chi tiết hóa đơn
+	 * @throws SQLException 
 	 */
-	private void themChiTietHoaDon() {
+	private void themChiTietHoaDon() throws SQLException {
 		if(kiemTraDuLieuCTHD()) {
 			if(ctHD_Bus.themChiTietHD(layDuLieuCTHD())) {
 				txtMessCTHD.setText("Thêm thành công.");
@@ -677,6 +678,7 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 				docDuLieuCTHDLenTable();
 				docDuLieuLenTableHD();
 				tableHoaDon.setRowSelectionInterval(row, row);
+				kh_Bus.updateLoaiKH(new KhachHang(txtIDKH.getText()));
 			}
 		}
 	}
@@ -689,12 +691,12 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 			if(JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa chi tiết hóa đơn này không?", "Cảnh báo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				ctHD_Bus.xoaChiTietHD(txtMaChiTietHD.getText());
 				modelCTHD.removeRow(tableChiTietHD.getSelectedRow());
-				txtMessCTHD.setText("Xóa thành công.");
 				hd_Bus.capNhatTongTienHDThemMaHD(txtMaHD.getText());
 				int n = tableHoaDon.getSelectedRow();
 				docDuLieuLenTableHD();
 				xoaTrangCTHD();
 				tableHoaDon.setRowSelectionInterval(n, n);
+				txtMessCTHD.setText("Xóa thành công.");
 			}
 		}
 		else {
@@ -850,7 +852,12 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 			xoaHoaDon();
 		}
 		if (o.equals(btnThemCT)) {
-			themChiTietHoaDon();
+			try {
+				themChiTietHoaDon();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		if(o.equals(btnXoaCT)) {
 			xoaChiTietHoaDon();

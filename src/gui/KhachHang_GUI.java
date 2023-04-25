@@ -85,6 +85,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 	private KhachHang_Bus kh_Bus;
 	private JTable table;
 	private JPanel pCenter;
+	private JTextField txtThongBao;
 	
 	
 	public JPanel getKhachHangPanel() {
@@ -94,8 +95,9 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 	/**
 	 * Create the frame.
 	 * @throws ClassNotFoundException 
+	 * @throws SQLException 
 	 */
-	public KhachHang_GUI() throws ClassNotFoundException {
+	public KhachHang_GUI() throws ClassNotFoundException, SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 680);
 		setLocationRelativeTo(null);
@@ -221,37 +223,37 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		
 		btnThem = new JButton("Thêm");
 		btnThem.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnThem.setBounds(819, 31, 192, 30);
+		btnThem.setBounds(846, 30, 151, 30);
 		panel.add(btnThem);
 		
 		btnXoa = new JButton("Xóa");
 		btnXoa.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnXoa.setBounds(819, 78, 192, 30);
+		btnXoa.setBounds(846, 78, 151, 30);
 		panel.add(btnXoa);
 		
 		btnSua = new JButton("Sửa");
 		btnSua.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnSua.setBounds(819, 126, 192, 30);
+		btnSua.setBounds(846, 126, 151, 30);
 		panel.add(btnSua);
 		
 		btnReset = new JButton("Reset");
 		btnReset.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnReset.setBounds(819, 174, 192, 30);
+		btnReset.setBounds(846, 166, 151, 30);
 		panel.add(btnReset);
 		
 		JLabel lblTimKiem = new JLabel("Tìm kiếm theo tên ");
 		lblTimKiem.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblTimKiem.setBounds(15, 213, 124, 29);
+		lblTimKiem.setBounds(15, 214, 124, 29);
 		panel.add(lblTimKiem);
 		
 		txtTimKiem = new JTextField();
-		txtTimKiem.setBounds(140, 213, 228, 30);
+		txtTimKiem.setBounds(149, 214, 219, 30);
 		panel.add(txtTimKiem);
 		txtTimKiem.setColumns(10);
 		
 		btnTim = new JButton("Tìm");
 		btnTim.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnTim.setBounds(184, 253, 90, 35);
+		btnTim.setBounds(204, 253, 90, 35);
 		panel.add(btnTim);
 		
 		JLabel lblLoai = new JLabel("Loại KH");
@@ -266,22 +268,31 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		
 		JLabel lblLoc = new JLabel("Lọc theo loại KH");
 		lblLoc.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblLoc.setBounds(409, 212, 106, 30);
+		lblLoc.setBounds(409, 213, 106, 30);
 		panel.add(lblLoc);
 		
 		cbbLoc = new JComboBox();
-		cbbLoc.setBounds(543, 213, 217, 30);
+		cbbLoc.setBounds(525, 214, 237, 30);
 		panel.add(cbbLoc);
 		
 		btnLoc = new JButton("Lọc");
 		btnLoc.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnLoc.setBounds(605, 253, 90, 35);
+		btnLoc.setBounds(584, 253, 90, 35);
 		panel.add(btnLoc);
 		
 		btnTrang = new JButton("Xóa Trắng");
 		btnTrang.setFont(new Font("Dialog", Font.BOLD, 12));
-		btnTrang.setBounds(819, 213, 190, 30);
+		btnTrang.setBounds(846, 213, 151, 30);
 		panel.add(btnTrang);
+		
+		txtThongBao = new JTextField();
+		txtThongBao.setEditable(false);
+		txtThongBao.setForeground(new Color(255, 0, 0));
+		txtThongBao.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 12));
+		txtThongBao.setBounds(409, 174, 353, 30);
+		txtThongBao.setBorder(null);
+		panel.add(txtThongBao);
+		txtThongBao.setColumns(10);
 		
 		pCenter.setLayout(null);
 		
@@ -297,7 +308,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		table.addMouseListener(this);
 	}
 	
-	public void loadDataKH() {
+	public void loadDataKH() throws SQLException {
 		kh_Bus = new KhachHang_Bus();
 		docDulieuVaoTable();
 		updateCBB();
@@ -307,12 +318,13 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		DefaultTableModel dm = (DefaultTableModel) table.getModel();
 		dm.getDataVector().removeAllElements();
 	}
-	public void docDulieuVaoTable() {
+	public void docDulieuVaoTable() throws SQLException {
 		xoaTable();
 		ArrayList<KhachHang> ds = new ArrayList<>();
 		ds = kh_Bus.getAllTableKhachHang();
 		int stt = 1;
 		for (KhachHang khachHang : ds) {
+//			kh_Bus.updateLoaiKH(khachHang);
 			String s="";
 			if(khachHang.isGioiTinh()) {
 				s+="Nam";
@@ -347,20 +359,25 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			try {
 				if(checkValue()) {
 					if(kh_Bus.them(k)) {
-						JOptionPane.showMessageDialog(null, "Thành công");
 						docDulieuVaoTable();
 						updateCBB();
 						reSet();
+						txtThongBao.setText("Thêm thành công");
 					}					
 				}
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
-				JOptionPane.showMessageDialog(null, "Lỗi dữ liệu");
+				txtThongBao.setText("Lỗi dữ liệu");
 				e1.printStackTrace();
 			}
 		}
 		if(obj.equals(btnReset)) {
-			docDulieuVaoTable();
+			try {
+				docDulieuVaoTable();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			reSet();
 		}
 		if(obj.equals(btnXoa)) {
@@ -371,15 +388,15 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 				try {
 					if(JOptionPane.showConfirmDialog(this,"Có chắc chắn muốn xóa","Cảnh báo !",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
 						kh_Bus.xoa(k);
-						JOptionPane.showMessageDialog(null, "Thành công");
 						updateCBB();
 						docDulieuVaoTable();
 						reSet();
+						txtThongBao.setText("Xóa thành công");
 					}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Lỗi dữ liệu");
+					txtThongBao.setText("Lỗi dữ liệu");
 				}
 			}
 		}
@@ -394,7 +411,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Không tìm thấy");
+				txtThongBao.setText("Không tìm thấy");
 			}
 		}
 		if(obj.equals(btnLoc)) {
@@ -405,7 +422,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Lỗi dữ liệu");
+				txtThongBao.setText("Lỗi dữ liệu");
 			}
 			
 		}
@@ -427,13 +444,13 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			if(checkValue()) {
 				try {
 					kh_Bus.sua(k);
-					JOptionPane.showMessageDialog(null, "Thành công");
+					txtThongBao.setText("Sửa thành công");
 					updateCBB();
 					docDulieuVaoTable();
 					
 				} catch (HeadlessException | SQLException e1) {
 					// TODO Auto-generated catch block
-					JOptionPane.showMessageDialog(null, "Không tìm thấy");
+					txtThongBao.setText("Không tìm thấy");
 					
 					e1.printStackTrace();
 				}				
@@ -449,26 +466,26 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		} else if (rdNu.isSelected()) {
 			gioiTinh = false;
 		} else {
-			JOptionPane.showMessageDialog(null, "Hãy lựa chọn giới tính");
+			txtThongBao.setText("Hãy lựa chọn giới tính");
 			return false;
 		}
 		String diaChi = txtDiaChi.getText().trim();
 		String sdt = txtSDT.getText().trim();
 		String gmail = txtGmail.getText().trim();
 		if (ten.length() == 0) {
-			JOptionPane.showMessageDialog(null, "Tên ko được rỗng");
+			txtThongBao.setText("Tên không được rỗng");
 			return false;
 		}
 		if (diaChi.length() == 0) {
-			JOptionPane.showMessageDialog(null, "Địa chỉ ko được rỗng");
+			txtThongBao.setText("Địa chỉ không được rỗng");
 			return false;
 		}
 		if (gmail.length() == 0) {
-			JOptionPane.showMessageDialog(null, "Gmail ko được rỗng");
+			txtThongBao.setText("Gmail không được rỗng");
 			return false;
 		}
 		if (sdt.length() == 0) {
-			JOptionPane.showMessageDialog(null, "Số điện thoại ko được rỗng");
+			txtThongBao.setText("Số điện thoại không được rỗng");
 			return false;
 		}
 
@@ -477,7 +494,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		Pattern p = Pattern.compile(a);
 		Matcher m = p.matcher(ten);
 		if (!m.matches()) {
-			JOptionPane.showMessageDialog(null, "Tên phải bắt đầu là chữ hoa và không có ký tự số");
+			txtThongBao.setText("Tên phải bắt đầu là chữ hoa và không có ký tự số");
 			return false;
 		}
 
@@ -485,7 +502,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		Pattern p1 = Pattern.compile(a1);
 		Matcher m1 = p1.matcher(sdt);
 		if (!m1.matches()) {
-			JOptionPane.showMessageDialog(null, "Số điện thoại gồm 10 số bắt đầu là số 0 ");
+			txtThongBao.setText("Số điện thoại gồm 10 số bắt đầu là số 0 ");
 			return false;
 		}
 
@@ -493,7 +510,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		Pattern p3 = Pattern.compile(a3);
 		Matcher m3 = p3.matcher(gmail);
 		if (!m3.matches()) {
-			JOptionPane.showMessageDialog(null, "Gmail là 1 chuỗi có thể có ký tự số chữ và ký tự đặc biệt");
+			txtThongBao.setText("Gmail là 1 chuỗi có thể có ký tự số chữ và ký tự đặc biệt");
 			return false;
 		}
 		return true;
@@ -555,7 +572,8 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		txtSDT.setText("");
 		txtGmail.setText("");
 		txtLoai.setText("");
-		txtMa.requestFocus();
+		txtTen.requestFocus();
+		txtThongBao.setText("");
 	}
 
 	@Override
