@@ -235,3 +235,35 @@ VALUES  ('CTHD001', 'SP001', 2, 'HD001', 800000.00,1600000.00),
 		('CTHD028', 'MB001', 1, 'HD005', 2000000, 2000000),
 		('CTHD029', 'CPU001', 3, 'HD003', 6000000, 2000000),
 		('CTHD030', 'HD001', 2, 'HD001', 4000000, 2000000)
+
+--
+go
+create proc capNhapLoai @maKH nvarchar(50)
+as
+begin
+declare @tongTien money
+select @tongTien = sum(tongTien) from KhachHang k join HoaDon d on k.maKH = d.maKH where d.maKH = @maKH
+if @tongTien is null 
+begin 
+	set @tongTien =0
+end
+update KhachHang
+set loaiKH = 
+case
+	when (@tongTien <1000000) then N'Đồng'
+	when (@tongTien <10000000) then N'Bạc'
+	when (@tongTien <20000000) then N'Vàng'
+	else N'Kim Cương'
+end
+where maKH = @maKH
+end
+
+--
+
+go
+create proc laySoLuongVaTongTienTheoThangNam @nam int, @thang int, @maSP nvarchar(50)
+as
+begin
+	select SUM(ct.tongTien) from ChiTietHoaDon ct join HoaDon hd on ct.maHD = hd.maHD
+		where MONTH(ngayLapHD) = 3 and YEAR(ngayLapHD) = 2023 and maSP = 'MB001'
+end
