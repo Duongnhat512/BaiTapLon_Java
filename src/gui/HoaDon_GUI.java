@@ -716,12 +716,12 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 	 * Đưa tất cả nhân viên lên combobox	
 	 */
 	private void docNhanVienLenComboBox() throws ClassNotFoundException {
-		ArrayList<NhanVien> listNV = nv_Bus.getalltbNhanVien();
+		ArrayList<NhanVien> listNV = nv_Bus.getNhanVienTheoPhongBan("kd");
 		String[] item = new String[listNV.size()];
 		int i = 0;
 		for(NhanVien nv : listNV) {
 			item[i] = nv.getTenNV();
-			i++;
+			i++;	
 		}
 		cboNhanVien.setModel(new DefaultComboBoxModel<String>(item));
 	}

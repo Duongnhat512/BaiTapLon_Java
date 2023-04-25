@@ -12,6 +12,7 @@ import entities.NhanVien;
 import entities.PhongBan;
 
 public class NhanVien_DAO {
+	PhongBan_DAO pb_Dao = new PhongBan_DAO();
 	public NhanVien_DAO() {
 	}
 	public ArrayList<NhanVien> getalltbNhanVien() throws ClassNotFoundException{
@@ -25,7 +26,7 @@ public class NhanVien_DAO {
 			while (rs.next()) {
 				String maNV = rs.getString(1);
 				String tenNV = rs.getString(2);
-				PhongBan pBan = new PhongBan(rs.getString(3));
+				PhongBan pBan = pb_Dao.getPhongBanTheoMa(rs.getString(3));
 				String soDT = rs.getString(4);
 				double luong = rs.getDouble(5);
 				boolean phai = rs.getBoolean(6);
@@ -52,7 +53,7 @@ public class NhanVien_DAO {
 			while (rs.next()) {
 				String maNV = rs.getString(1);
 				String tenNV = rs.getString(2);
-				PhongBan pBan = new PhongBan(rs.getString(3));
+				PhongBan pBan = pb_Dao.getPhongBanTheoMa(rs.getString(3));
 				String soDT = rs.getString(4);
 				double luong = rs.getDouble(5);
 				boolean phai = rs.getBoolean(6);
@@ -82,7 +83,7 @@ public class NhanVien_DAO {
 			while (rs.next()) {
 				String maNV = rs.getString(1);
 				String tenNV = rs.getString(2);
-				PhongBan pBan = new PhongBan(rs.getString(3));
+				PhongBan pBan = pb_Dao.getPhongBanTheoMa(rs.getString(3));
 				String soDT = rs.getString(4);
 				double luong = rs.getDouble(5);
 				boolean phai = rs.getBoolean(6);
@@ -101,20 +102,20 @@ public class NhanVien_DAO {
 			// TODO: handle exception
 	}
 	
-	public ArrayList<NhanVien> getNhanVienTheoPhongBan(String phongBan) throws SQLException, ClassNotFoundException{
+	public ArrayList<NhanVien> getNhanVienTheoPhongBan(String phongBan){
 		ArrayList<NhanVien> dsnv = new ArrayList<NhanVien>();
-		ConnectDB.getInstance().connect();;
+		ConnectDB.getInstance();;
 		Connection con = ConnectDB.getConnection();
 		PreparedStatement statement = null;
 		try {
 			String sql = "Select * from nhanvien where phongBan = ?";
 		    statement = con.prepareStatement(sql);
 		    statement.setString(1, phongBan);
-		    ResultSet rs = statement.executeQuery(sql);
+		    ResultSet rs = statement.executeQuery();
 		    while (rs.next()) {
 		    	String maNV = rs.getString(1);
 				String tenNV = rs.getString(2);
-				PhongBan pBan = new PhongBan(rs.getString(3));
+				PhongBan pBan = pb_Dao.getPhongBanTheoMa(rs.getString(3));
 				String soDT = rs.getString(4);
 				double luong = rs.getDouble(5);
 				boolean phai = rs.getBoolean(6);
@@ -139,7 +140,7 @@ public class NhanVien_DAO {
 		PreparedStatement stmt = null;
 		int n=0;
 		try {
-			stmt = con.prepareStatement("insert into"+" NhanVien values(?,?,?,?,?,?)");
+			stmt = con.prepareStatement("insert into NhanVien values(?,?,?,?,?,?)");
 			stmt.setString(1, nv.getNhanVienID());
 			stmt.setString(2, nv.getTenNV());
 			stmt.setString(3, nv.getPhong().getMaPhongBan());

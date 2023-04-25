@@ -20,4 +20,11 @@ public class PhongBan_Bus {
 		}
 		return true;
 	}
+	public PhongBan getPhongBanTheoMa(String ma) {
+		return pb_Dao.getPhongBanTheoMa(ma);
+	}
+	
+	public boolean themPhongBan(PhongBan pb) {
+		return pb_Dao.themPhongBan(pb);
+	}
 }

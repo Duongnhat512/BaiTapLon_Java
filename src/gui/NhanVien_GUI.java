@@ -198,7 +198,7 @@ public class NhanVien_GUI extends JFrame implements ActionListener, MouseListene
 		chkNu.setBounds(188, 571, 97, 23);
 		pCenter.add(chkNu);
 
-		DocDuLieuDatabaseVaoTable(); // đưa dữ liệu từ sql lên bảng
+		docDuLieuDatabaseVaoTable(); // đưa dữ liệu từ sql lên bảng
 
 		btnThem = new JButton("Thêm");
 		btnThem.setBounds(439, 373, 104, 40);
@@ -243,50 +243,50 @@ public class NhanVien_GUI extends JFrame implements ActionListener, MouseListene
 		pCenter.add(pTimKiem);
 		pTimKiem.setLayout(null);
 		
-				txtTim = new JTextField();
-				txtTim.setFont(new Font("Arial", Font.PLAIN, 14));
-				txtTim.setBounds(46, 50, 306, 36);
-				pTimKiem.add(txtTim);
-				txtTim.setColumns(10);
-				
-						JLabel lblNewLabel_3 = new JLabel("Tìm Kiếm");
-						lblNewLabel_3.setBounds(64, 10, 329, 30);
-						pTimKiem.add(lblNewLabel_3);
-						lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-						lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 15));
-						
-								btnTim = new JButton("Tìm");
-								btnTim.setBounds(360, 49, 89, 36);
-								pTimKiem.add(btnTim);
-								
-										rdbtnTimTen = new JRadioButton("Theo tên nhân viên"); // thêm nút chọn tìm theo tên
-										rdbtnTimTen.setBounds(239, 105, 154, 23);
-										pTimKiem.add(rdbtnTimTen);
-										buttonGroup.add(rdbtnTimTen);
-										rdbtnTimTen.setFont(new Font("Arial", Font.PLAIN, 12));
-										
-												rdbtnTimMa = new JRadioButton("Theo mã nhân viên"); // thêm nút chọn tìm theo mã
-												rdbtnTimMa.setBounds(47, 105, 156, 23);
-												pTimKiem.add(rdbtnTimMa);
-												rdbtnTimMa.setSelected(true);
-												buttonGroup.add(rdbtnTimMa);
-												rdbtnTimMa.setFont(new Font("Arial", Font.PLAIN, 12));
-												
-														btnXem = new JButton("Xem Lại Danh Sách Nhân Viên");
-														btnXem.setBounds(121, 174, 217, 37);
-														pTimKiem.add(btnXem);
-														
-														txtMessTim = new JTextField();
-														txtMessTim.setBounds(57, 134, 295, 30);
-														pTimKiem.add(txtMessTim);
-														txtMessTim.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 14));
-														txtMessTim.setForeground(new Color(255, 0, 0));
-														txtMessTim.setEditable(false);
-														txtMessTim.setBorder(null);
-														txtMessTim.setColumns(10);
-														
-																btnXem.addActionListener(this);
-								btnTim.addActionListener(this);
+		txtTim = new JTextField();
+		txtTim.setFont(new Font("Arial", Font.PLAIN, 14));
+		txtTim.setBounds(46, 50, 306, 36);
+		pTimKiem.add(txtTim);
+		txtTim.setColumns(10);
+		
+		JLabel lblNewLabel_3 = new JLabel("Tìm Kiếm");
+		lblNewLabel_3.setBounds(64, 10, 329, 30);
+		pTimKiem.add(lblNewLabel_3);
+		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 15));
+		
+		btnTim = new JButton("Tìm");
+		btnTim.setBounds(360, 49, 89, 36);
+		pTimKiem.add(btnTim);
+		
+		rdbtnTimTen = new JRadioButton("Theo tên nhân viên"); // thêm nút chọn tìm theo tên
+		rdbtnTimTen.setBounds(239, 105, 154, 23);
+		pTimKiem.add(rdbtnTimTen);
+		buttonGroup.add(rdbtnTimTen);
+		rdbtnTimTen.setFont(new Font("Arial", Font.PLAIN, 12));
+		
+		rdbtnTimMa = new JRadioButton("Theo mã nhân viên"); // thêm nút chọn tìm theo mã
+		rdbtnTimMa.setBounds(47, 105, 156, 23);
+		pTimKiem.add(rdbtnTimMa);
+		rdbtnTimMa.setSelected(true);
+		buttonGroup.add(rdbtnTimMa);
+		rdbtnTimMa.setFont(new Font("Arial", Font.PLAIN, 12));
+		
+		btnXem = new JButton("Xem Lại Danh Sách Nhân Viên");
+		btnXem.setBounds(121, 174, 217, 37);
+		pTimKiem.add(btnXem);
+		
+		txtMessTim = new JTextField();
+		txtMessTim.setBounds(57, 134, 295, 30);
+		pTimKiem.add(txtMessTim);
+		txtMessTim.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 14));
+		txtMessTim.setForeground(new Color(255, 0, 0));
+		txtMessTim.setEditable(false);
+		txtMessTim.setBorder(null);
+		txtMessTim.setColumns(10);
+		
+		btnXem.addActionListener(this);
+		btnTim.addActionListener(this);
 		
 	}
 
@@ -361,14 +361,15 @@ public class NhanVien_GUI extends JFrame implements ActionListener, MouseListene
 					String soDT = txtSoDT.getText();
 					double luong = Double.parseDouble(txtLuong.getText());
 					boolean phai = chkNu.isSelected();
-					PhongBan phban = new PhongBan(phongban);
+					PhongBan phban = pb_Bus.getPhongBanTheoMa(phongban);
 					
 					NhanVien nv = new NhanVien(ma, ten, phban, soDT, luong, phai);
 					try {
 						nv_Bus.create(nv);
 						
-						modelNhanVien.addRow(new Object[] {nv.getNhanVienID(),nv.getTenNV(),nv.getPhong().getTenPhongBan(),nv.getSoDT(),nv.getLuong(),nv.getPhai()?"Nữ":"Nam"});
-						DocDuLieuDatabaseVaoTable();
+//						modelNhanVien.addRow(new Object[] {nv.getNhanVienID(),nv.getTenNV(),nv.getPhong().getTenPhongBan(),nv.getSoDT(),nv.getLuong(),nv.getPhai()?"Nữ":"Nam"});
+						xoaHetDuLieuTable();
+						docDuLieuDatabaseVaoTable();
 					//	JOptionPane.showMessageDialog(this, "Thêm thành công");
 						txtThongBao.setForeground(Color.blue);
 						txtThongBao.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -393,25 +394,27 @@ public class NhanVien_GUI extends JFrame implements ActionListener, MouseListene
 			if(row != -1) {
 				
 				boolean n = true;
-if (checkValue()){	try { NhanVien nv = reverSPFromTextFile();
-					n = nv_Bus.update(nv);
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-				if(n) {
-					tableNhanVien.setValueAt(txtTenNV.getText(), row, 1);
-					tableNhanVien.setValueAt(cboPhongBan.getSelectedItem().toString(), row, 2);
-					tableNhanVien.setValueAt(txtSoDT.getText(), row, 3);
-					tableNhanVien.setValueAt(txtLuong.getText(), row, 4);
-					tableNhanVien.setValueAt(chkNu.isSelected()?"Nữ":"Nam", row, 5);
-					txtThongBao.setForeground(Color.blue);
-					txtThongBao.setFont(new Font("Arial", Font.PLAIN, 12));
-					txtThongBao.setText("Sửa thành công");
-				}
+				if (checkValue()){	
+					try { 
+						NhanVien nv = reverSPFromTextFile();
+						n = nv_Bus.update(nv);
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					if(n) {
+						tableNhanVien.setValueAt(txtTenNV.getText(), row, 1);
+						tableNhanVien.setValueAt(cboPhongBan.getSelectedItem().toString(), row, 2);
+						tableNhanVien.setValueAt(txtSoDT.getText(), row, 3);
+						tableNhanVien.setValueAt(txtLuong.getText(), row, 4);
+						tableNhanVien.setValueAt(chkNu.isSelected()?"Nữ":"Nam", row, 5);
+						txtThongBao.setForeground(Color.blue);
+						txtThongBao.setFont(new Font("Arial", Font.PLAIN, 12));
+						txtThongBao.setText("Sửa thành công");
+					}
 				}
 			}
 		}
@@ -432,8 +435,8 @@ if (checkValue()){	try { NhanVien nv = reverSPFromTextFile();
 		}
 		if (rdbtnTimTen.isSelected()){		//kiểm tra nếu chọn tìm theo tên thì thực hiện
 			if (o.equals(btnTim)) {
-				List<NhanVien> list = nv_Bus.getNhanVienTheoTen(txtTim.getText());
-				if (txtTim.getText().equals("")) {
+				ArrayList<NhanVien> list = nv_Bus.getNhanVienTheoTen(txtTim.getText());
+				if (txtTim.getText().trim().equals("")) {
 					txtThongBao.setForeground(new Color(255, 0, 0));
 					txtThongBao.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 12));
 					txtThongBao.setText("Nhập mã cần tìm");
@@ -453,7 +456,7 @@ if (checkValue()){	try { NhanVien nv = reverSPFromTextFile();
 		if(o.equals(btnXem)) {	// xem ds nhân viên
 			try {
 				xoaHetDuLieuTable();
-				DocDuLieuDatabaseVaoTable();
+				docDuLieuDatabaseVaoTable();
 				
 			} catch (ClassNotFoundException e1) {
 				// TODO Auto-generated catch block
@@ -488,7 +491,7 @@ if (checkValue()){	try { NhanVien nv = reverSPFromTextFile();
 	/*
 	 * Đọc dữ liệu từ database vào table
 	 */
-	public void DocDuLieuDatabaseVaoTable() throws ClassNotFoundException { // lấy dữ liệu từ sql lên bảng
+	public void docDuLieuDatabaseVaoTable() throws ClassNotFoundException { // lấy dữ liệu từ sql lên bảng
 		xoaHetDuLieuTable();
 		ArrayList<NhanVien> list = nv_Bus.getalltbNhanVien();
 		for (NhanVien nv : list) {

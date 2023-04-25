@@ -18,12 +18,11 @@ public class NhanVien_Bus {
 	public ArrayList<NhanVien> getNhanVienTheoTen(String ten) {
 		return nv_Dao.getNhanVienTheoTen(ten);
 	}
-	public NhanVien getNhanVienTheoPhongBan(String phongBan){
-		return nv_Dao.getNhanVienTheoMaNV(phongBan);
+	public ArrayList<NhanVien> getNhanVienTheoPhongBan(String phongBan){
+		return nv_Dao.getNhanVienTheoPhongBan(phongBan);
 	}
 	public boolean create(NhanVien nv) throws ClassNotFoundException, SQLException{
-		nv_Dao.create(nv);
-		return true;
+		return nv_Dao.create(nv);
 	}
 	public boolean update(NhanVien nv) throws ClassNotFoundException, SQLException{
 		nv_Dao.update(nv);
