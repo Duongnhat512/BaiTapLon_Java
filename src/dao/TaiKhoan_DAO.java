@@ -60,4 +60,29 @@ public class TaiKhoan_DAO implements ITaiKhoan{
 		}
 		return tk;
 	}
+	
+	public boolean themTaiKhoan(TaiKhoan tk) {
+		ConnectDB.getInstance();
+		Connection con = ConnectDB.getConnection();
+		PreparedStatement stm = null;
+		int n = 0;
+		try {
+			stm = con.prepareStatement("insert into TaiKhoan values(?, ?, ?)");
+			stm.setString(1, tk.getTaiKhoan());
+			stm.setString(2, tk.getMatKhau());
+			stm.setString(3, tk.getLoaiTK());
+			n = stm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				stm.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
 }

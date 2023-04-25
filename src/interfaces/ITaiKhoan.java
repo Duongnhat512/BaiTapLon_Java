@@ -7,4 +7,6 @@ import entities.TaiKhoan;
 public interface ITaiKhoan {
 	public ArrayList<TaiKhoan> getListTaiKhoan();
 	public TaiKhoan getTaiKhoanTheoTenTaiKhoan(String tenTaiKhoan);
+	
+	public boolean themTaiKhoan(TaiKhoan tk);
 }

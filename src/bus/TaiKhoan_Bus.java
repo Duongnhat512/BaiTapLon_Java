@@ -20,5 +20,11 @@ public class TaiKhoan_Bus implements ITaiKhoan{
 		// TODO Auto-generated method stub
 		return tk_Dao.getTaiKhoanTheoTenTaiKhoan(tenTaiKhoan);
 	}
+
+	@Override
+	public boolean themTaiKhoan(TaiKhoan tk) {
+		// TODO Auto-generated method stub
+		return tk_Dao.themTaiKhoan(tk);
+	}
 	
 }

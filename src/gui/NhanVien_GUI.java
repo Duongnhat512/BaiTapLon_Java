@@ -241,6 +241,8 @@ public class NhanVien_GUI extends JFrame implements ActionListener, MouseListene
 		btnXem = new JButton("Xem Lại Danh Sách Nhân Viên");
 		btnXem.setBounds(700, 557, 217, 37);
 		pCenter.add(btnXem);
+		
+		kiemTraTaiKhoanDuocDangNhap();
 
 		btnXem.addActionListener(this);
 		btnTim.addActionListener(this);
@@ -500,6 +502,15 @@ public class NhanVien_GUI extends JFrame implements ActionListener, MouseListene
 	public String generateEmployeeID(int index) {
 		String employeeID = "NV" + String.format("%03d", index); // Tạo mã NV + số thứ tự với độ dài 3 ký tự
 		return employeeID;
+	}
+	
+	public void kiemTraTaiKhoanDuocDangNhap() {
+		String loai = Login_GUI.getLoaiTaiKhoanDuocDangNhap();
+		if(!(loai.equals("admin") || loai.equals("ns"))) {
+			btnThem.setEnabled(false);
+			btnSua.setEnabled(false);
+			btnXoa.setEnabled(false);
+		}
 	}
 
 }

@@ -73,12 +73,14 @@ public class Main_GUI extends JFrame implements ActionListener{
 			public void run() {
 				try {
 					frame = new Main_GUI();
+					frame.moHoaDonKhiKhoiDong();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+		
 	}
 	
 	/**
@@ -148,10 +150,6 @@ public class Main_GUI extends JFrame implements ActionListener{
 		btnKhachHang.setBounds(0, 405, 120, 65);
 		pWest.add(btnKhachHang);
 		
-		pTrangChu = new JPanel();
-		contentPane.add(pTrangChu);
-		currentUI = "Trang chủ";	
-		currentButton = btnTrangChu;
 		
 		btnDangXuat = new JButton("Đăng xuất");
 		btnDangXuat.setBackground(Color.WHITE);
@@ -174,6 +172,15 @@ public class Main_GUI extends JFrame implements ActionListener{
 		btnThoat.addActionListener(this);
 		btnDangXuat.addActionListener(this);
 	}
+	
+	private void moHoaDonKhiKhoiDong() throws ClassNotFoundException {
+		currentButton = btnHoaDon;
+		hoaDon_UI = new HoaDon_GUI();
+		pHoaDon = hoaDon_UI.getHoaDonPanel();
+		contentPane.add(pHoaDon);
+		btnHoaDon.setBackground(Color.WHITE);
+	}
+
 	
 	/*
 	 * Mở panel khi nhấn vào nút

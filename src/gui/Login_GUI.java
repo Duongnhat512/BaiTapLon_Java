@@ -40,7 +40,7 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 	private JTextField txtTaiKhoan;
 	private JPasswordField txtMatKhau;
 	private JButton btnDangNhap;
-	private JButton btnQuenMatKhau;
+	private JButton btnDangKy;
 	private static TaiKhoan_Bus taiKhoan_Bus;
 	private JTextField txtMess;
 	private JCheckBox chkLuu;
@@ -124,10 +124,10 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		btnDangNhap.setBounds(241, 313, 141, 46);
 		contentPane.add(btnDangNhap);
 		
-		btnQuenMatKhau = new JButton("Quên mật khẩu");
-		btnQuenMatKhau.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnQuenMatKhau.setBounds(437, 313, 141, 46);
-		contentPane.add(btnQuenMatKhau);
+		btnDangKy = new JButton("Đăng ký");
+		btnDangKy.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnDangKy.setBounds(437, 313, 141, 46);
+		contentPane.add(btnDangKy);
 		
 		txtMess = new JTextField();
 		txtMess.setForeground(new Color(255, 0, 0));
@@ -161,9 +161,10 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		// TODO Auto-generated method stub
 		Object o = e.getSource();
 		if(o.equals(btnDangNhap)) {
-			if(kiemTra()) {
-				
-			}
+			kiemTra();
+		}
+		if (o.equals(btnDangKy)) {
+			
 		}
 	}
 	
