@@ -75,6 +75,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 	private JTextField txtSLTon;
 	private JTextField txtHang;
 	private JPanel pCenter;
+	private JTextField txtMess;
 
 	/**
 	 * Launch the application.
@@ -254,6 +255,15 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 		txtHang.setBounds(480, 27, 250, 19);
 		panel_1.add(txtHang);
 		txtHang.setColumns(10);
+		
+		txtMess = new JTextField();
+		txtMess.setForeground(new Color(255, 0, 0));
+		txtMess.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 17));
+		txtMess.setEditable(false);
+		txtMess.setBounds(393, 161, 337, 26);
+		panel_1.add(txtMess);
+		txtMess.setColumns(10);
+		txtMess.setBorder(null);
 
 		panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Lo\u1EA1i S\u1EA3n Ph\u1EA9m", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -489,6 +499,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 			clearTextField();
 		}
 		if(o.equals(btnReset)) {
+			clearTextField();
 			DocDuLieuDatabaseVaoTable();
 		}
 		if(o.equals(btnTim)) {
@@ -513,7 +524,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 	        }
 		}
 		else {
-			JOptionPane.showMessageDialog(this, "Chọn 1 hàng để xóa!");
+			txtMess.setText("Chọn 1 hàng để xóa!");
 		}
 	}
 
@@ -602,17 +613,17 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 			if(s1!=null && s1.getLoai().equals(s.getLoai()))
 			{	
 				sp_Bus.update(s1);
-				JOptionPane.showMessageDialog(this, "Sửa thành công!");
+				txtMess.setText("Sửa thành công!");
 				model.setRowCount(0);
 				DocDuLieuDatabaseVaoTable();
 			}
 			else {
-				JOptionPane.showMessageDialog(this, "Không sửa được! Loại không được sửa!");
+				txtMess.setText("Không sửa được! Loại không được sửa!");
 			}
 
 		}
 		else {
-			JOptionPane.showMessageDialog(this, "Chọn 1 hàng để sửa!");
+			txtMess.setText("Chọn 1 hàng để sửa!");
 		}
 	}
 
@@ -638,7 +649,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 				if(s!=null) {
 					try {
 						if(sp_Bus.create(s))
-							JOptionPane.showMessageDialog(this,"Thêm thành công!");
+							txtMess.setText("Thêm thành công!");
 							double a = s.getGiaNhap();
 							double b = s.getGiaBan();
 							DecimalFormat formatter = new DecimalFormat("###.#");
@@ -671,7 +682,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 				if(s!=null) {
 					try {
 						if(sp_Bus.create(s))
-							JOptionPane.showMessageDialog(this,"Thêm thành công!");
+							txtMess.setText("Thêm thành công!");
 							double a = s.getGiaNhap();
 							double b = s.getGiaBan();
 							DecimalFormat formatter = new DecimalFormat("###.#");
@@ -704,7 +715,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 				if(s!=null) {
 					try {
 						if(sp_Bus.create(s))
-							JOptionPane.showMessageDialog(this,"Thêm thành công!");
+							txtMess.setText("Thêm thành công!");
 							double a = s.getGiaNhap();
 							double b = s.getGiaBan();
 							DecimalFormat formatter = new DecimalFormat("###.#");
@@ -737,7 +748,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 				if(s!=null) {
 					try {
 						if(sp_Bus.create(s))
-							JOptionPane.showMessageDialog(this,"Thêm thành công!");
+							txtMess.setText("Thêm thành công!");
 							double a = s.getGiaNhap();
 							double b = s.getGiaBan();
 							DecimalFormat formatter = new DecimalFormat("###.#");
@@ -765,7 +776,113 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 	}
 
 	private boolean validData() {
-	
+		String tenSP = txtTenSP.getText().trim();
+		String hang = txtHang.getText().trim();
+		String giaNhap = txtGiaNhap.getText().trim();
+		String giaBan = txtGiaBan.getText().trim();
+		String slTon = txtSLTon.getText().trim();
+		String tgBH = txtBH.getText().trim();
+		String txt1 = txtInput1.getText().trim();
+		String txt2 = txtInput2.getText().trim();
+		String txt3 = txtInput3.getText().trim();
+		if(!(tenSP.length() > 0)) {
+			txtMess.setText("Tên sản phẩm không được rỗng!");
+			txtTenSP.requestFocus();
+			return false;
+		}
+		if(!(hang.length() > 0)) {
+			txtMess.setText("Hãng không được rỗng!");
+			txtHang.requestFocus();
+			return false;
+		}
+		if(!(giaNhap.length() > 0 && giaNhap.matches("[1-9]\\d*(\\.*)(\\d*)"))) {
+			txtMess.setText("Giá nhập phải dương!");
+			txtGiaNhap.requestFocus();
+			return false;
+		}
+		if(!(giaBan.length() > 0 && giaBan.matches("[1-9]\\d*(\\.*)(\\d*)"))) {
+			txtMess.setText("Giá bán phải dương!");
+			txtGiaBan.requestFocus();
+			return false;
+		}
+		if(!(slTon.length() > 0 && slTon.matches("[1-9]\\d*"))) {
+			txtMess.setText("Số lượng phải dương!");
+			txtSLTon.requestFocus();
+			return false;
+		}
+		if(!(tgBH.length() > 0 && tgBH.matches("[1-9]\\d*"))) {
+			txtMess.setText("Thời gian bảo hành phải dương!");
+			txtBH.requestFocus();
+			return false;
+		}
+		if(cbLoai.getSelectedItem().toString().equals("Ram")) {
+			if(!(txt1.length()>0)) {
+				txtMess.setText("Loại Ram không được rỗng!");
+				txtInput1.requestFocus();
+				return false;
+			}
+			if(!(txt2.length()>0 && txt2.matches("[1-9]\\d*"))) {
+				txtMess.setText("Dung lượng phải dương!");
+				txtInput2.requestFocus();
+				return false;
+			}
+			if(!(txt3.length()>0 && txt3.matches("[1-9]\\d*"))) {
+				txtMess.setText("Tốc độ phải dương!");
+				txtInput3.requestFocus();
+				return false;
+			}
+		}
+		if(cbLoai.getSelectedItem().toString().equals("HardDisk")) {
+			if(!(txt1.length()>0 && txt1.matches("[1-9]\\d*"))) {
+				txtMess.setText("Dung lượng phải dương!");
+				txtInput1.requestFocus();
+				return false;
+			}
+			if(!(txt2.length()>0)) {
+				txtMess.setText("CacheDDR không được rỗng!");
+				txtInput2.requestFocus();
+				return false;
+			}
+			if(!(txt3.length()>0 && txt3.matches("[1-9]\\d*(\\.*)(\\d*)"))) {
+				txtMess.setText("Tuổi thọ phải dương!");
+				txtInput3.requestFocus();
+				return false;
+			}
+		}
+		if(cbLoai.getSelectedItem().toString().equals("CPU")) {
+			if(!(txt1.length()>0 && txt1.matches("[1-9]\\d*"))) {
+				txtMess.setText("Nhân phải dương!");
+				txtInput1.requestFocus();
+				return false;
+			}
+			if(!(txt2.length()>0 && txt2.matches("[1-9]\\d*"))) {
+				txtMess.setText("Luồng phải dương!");
+				txtInput2.requestFocus();
+				return false;
+			}
+			if(!(txt3.length()>0 && txt3.matches("[1-9]\\d*"))) {
+				txtMess.setText("Cache phải dương!");
+				txtInput3.requestFocus();
+				return false;
+			}
+		}
+		if(cbLoai.getSelectedItem().toString().equals("MainBoard")) {
+			if(!(txt1.length()>0)) {
+				txtMess.setText("Chip Set không được rỗng!");
+				txtInput1.requestFocus();
+				return false;
+			}
+			if(!(txt2.length()>0)) {
+				txtMess.setText("Khe lưu trữ không được rỗng!");
+				txtInput2.requestFocus();
+				return false;
+			}
+			if(!(txt3.length()>0)) {
+				txtMess.setText("Khe mở rộng không được rỗng!");
+				txtInput3.requestFocus();
+				return false;
+			}
+		}
 		return true;
 	}
 	private void timSPTheoMa() {
@@ -792,7 +909,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 			});
 		}
 		else {
-			JOptionPane.showMessageDialog(this,"Không tìm thấy!");
+			txtMess.setText("Không tìm thấy!");
 		}
 	}
 	private void clearTextField() {
@@ -806,6 +923,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 		txtSLTon.setText("");
 		txtBH.setText("");
 		txtHang.setText("");
+		txtMess.setText("");
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
