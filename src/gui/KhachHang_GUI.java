@@ -129,7 +129,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			new Object[][] {
 			},
 			new String[] {
-				"STT", "M\u00E3 Kh\u00E1ch H\u00E0ng", "T\u00EAn Kh\u00E1ch H\u00E0ng", "Lo\u1EA1i Kh\u00E1ch H\u00E0ng", "Gi\u1EDBi T\u00EDnh", "\u0110\u1ECBa Ch\u1EC9", "S\u1ED1 \u0110i\u1EC7n Tho\u1EA1i", "Gmail", "Tổng tiền đã mua"
+				 "M\u00E3 Kh\u00E1ch H\u00E0ng", "T\u00EAn Kh\u00E1ch H\u00E0ng", "Lo\u1EA1i Kh\u00E1ch H\u00E0ng", "Gi\u1EDBi T\u00EDnh", "\u0110\u1ECBa Ch\u1EC9", "S\u1ED1 \u0110i\u1EC7n Tho\u1EA1i", "Gmail", "Tổng tiền đã mua"
 			}
 		));
 		scrollPane.setViewportView(table);
@@ -322,7 +322,6 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		xoaTable();
 		ArrayList<KhachHang> ds = new ArrayList<>();
 		ds = kh_Bus.getAllTableKhachHang();
-		int stt = 1;
 		for (KhachHang khachHang : ds) {
 			String total = String.format("%.0f", kh_Bus.tongTienDaMua(khachHang));
 			String s="";
@@ -332,10 +331,9 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 				s+="Nữ";
 			}
 			dftable.addRow(new Object[] {
-					stt, khachHang.getIdKH(), khachHang.getTenKH(), khachHang.getLoaiKhachHang(), s, khachHang.getDiaChi(),
+					 khachHang.getIdKH(), khachHang.getTenKH(), khachHang.getLoaiKhachHang(), s, khachHang.getDiaChi(),
 					khachHang.getSoDienThoai(), khachHang.getGmail(),total
 			});
-			stt++;
 		}
 		
 	}
@@ -518,7 +516,6 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 
 	public void thayTable(ArrayList<KhachHang> ds) throws SQLException {
 		xoaTable();
-		int stt=0;
 		for (KhachHang khachHang : ds) {
 			String total = String.format("%.0f", kh_Bus.tongTienDaMua(khachHang));
 			String s="";
@@ -528,10 +525,9 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 				s+="Nữ";
 			}
 			dftable.addRow(new Object[] {
-					stt, khachHang.getIdKH(), khachHang.getTenKH(), khachHang.getLoaiKhachHang(), s, khachHang.getDiaChi(),
+					 khachHang.getIdKH(), khachHang.getTenKH(), khachHang.getLoaiKhachHang(), s, khachHang.getDiaChi(),
 					khachHang.getSoDienThoai(), khachHang.getGmail(),total
 			});
-			stt++;
 		}
 	}
 	
@@ -581,17 +577,17 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		int r = table.getSelectedRow();
-		txtMa.setText((String) table.getValueAt(r, 1));
-		txtTen.setText((String) table.getValueAt(r, 2));
-		if(table.getValueAt(r, 4).equals("Nam")) {
+		txtMa.setText((String) table.getValueAt(r, 0));
+		txtTen.setText((String) table.getValueAt(r, 1));
+		if(table.getValueAt(r, 3).equals("Nam")) {
 			rdNam.setSelected(true);
 		}else {
 			rdNu.setSelected(true);
 		}
-		txtDiaChi.setText((String) table.getValueAt(r, 5));
-		txtSDT.setText((String) table.getValueAt(r, 6));
-		txtGmail.setText((String) table.getValueAt(r, 7));
-		txtLoai.setText((String) table.getValueAt(r, 3));
+		txtDiaChi.setText((String) table.getValueAt(r, 4));
+		txtSDT.setText((String) table.getValueAt(r, 5));
+		txtGmail.setText((String) table.getValueAt(r, 6));
+		txtLoai.setText((String) table.getValueAt(r, 2));
 	}
 
 	@Override
