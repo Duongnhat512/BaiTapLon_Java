@@ -465,6 +465,7 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 		DefaultTableModel dm = (DefaultTableModel) tableHoaDon.getModel();
 		ArrayList<HoaDon> listHD  = hd_Bus.getListHoaDon();
 		for(HoaDon hd : listHD) {
+			hd.tinhTongTien();
 			String noiNhan = hd.getNoiNhan();
 			dm.addRow(new Object[] {hd.getIdHD(), hd.getKhachHang().getIdKH(), hd.getNhanVien().getTenNV(), hd.getNgayLapHD(), hd.getNgayGiao(), noiNhan, String.format("%.0f", hd.getTongTien())});
 		}
