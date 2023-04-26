@@ -27,7 +27,6 @@ public class ChiTietHoaDon {
 		this.hoaDon = hoaDon;
 		this.soLuong = soLuong;
 		this.giaBan = giaBan;
-		this.tongTien = getSoLuong() * getGiaBan();
 	}
 
 	public ChiTietHoaDon() {
@@ -72,6 +71,9 @@ public class ChiTietHoaDon {
 	}
 	public void setTongTien(double tongTien) {
 		this.tongTien = tongTien;
+	}
+	public void tinhTongTien() {
+		this.tongTien = getSoLuong() * getGiaBan();
 	}
 	@Override
 	public int hashCode() {

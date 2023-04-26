@@ -1,7 +1,10 @@
 package entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Objects;
+
+import bus.ChiTietHoaDon_Bus;
 
 public class HoaDon {
 	private String idHD;
@@ -82,7 +85,16 @@ public class HoaDon {
 	public void setTongTien(double tongTien) {
 		this.tongTien = tongTien;
 	}
-	
+	public void tinhTongTien() {
+		double tongTien = 0;
+		ChiTietHoaDon_Bus ctHD = new ChiTietHoaDon_Bus();
+		ArrayList<ChiTietHoaDon> list = ctHD.getChiTietHDTheoMaHD(getIdHD());
+		for (ChiTietHoaDon chiTietHoaDon : list) {
+			chiTietHoaDon.tinhTongTien();
+			tongTien += chiTietHoaDon.getTongTien();
+		}
+		this.tongTien = tongTien;
+	}
 	
 	
 	@Override
