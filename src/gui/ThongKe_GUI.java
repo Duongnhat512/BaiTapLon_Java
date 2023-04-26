@@ -195,7 +195,6 @@ public class ThongKe_GUI extends JFrame implements ActionListener{
 		hd_Bus = new HoaDon_Bus();
 		ctHD_Bus = new ChiTietHoaDon_Bus();
 		
-		hienThiSoLieuThongKe();
 		docDuLieuLenTable();
 		updateCBBNam();
 		
@@ -212,6 +211,7 @@ public class ThongKe_GUI extends JFrame implements ActionListener{
 		ArrayList<HoaDon> listHD = hd_Bus.getListHoaDon();
 		int tongSoHD = listHD.size();
 		for(HoaDon hd : listHD) {
+			hd.tinhTongTien();
 			tongTienHD += hd.getTongTien();
 		}
 		lblDoanhThu.setText(String.format("%,.0f", tongTienHD));
@@ -237,6 +237,7 @@ public class ThongKe_GUI extends JFrame implements ActionListener{
 			}
 			dm.addRow(new Object[] {sanPham.getSpID(), sanPham.getTenSP(), soLuongDaBan, tongTien, ghiChu});
 		}
+		hienThiSoLieuThongKe();
 		tableThongKe.setModel(dm);
 	}
 	
@@ -262,29 +263,43 @@ public class ThongKe_GUI extends JFrame implements ActionListener{
 	}
 	
 	/**
-	 * Lọc dữ liệu theo năm và tháng đã chọn
+	 * Lọc dữ liệu theo năm và tháng đã chọn và cập nhật doanh thu theo tháng và năm được chọn lọc
 	 */
 	private void locDuLieuTheoNamThang() {
 		xoaHetTable();
 		int nam = Integer.parseInt(cboNam.getSelectedItem().toString());
 		int thang = Integer.parseInt(cboThang.getSelectedItem().toString());
 		int soLuongDaBan = 0;
+		int soLuongHD = 0;
 		double tongTien = 0;
+		double tongTienTheoNamThang = 0;
 		String ghiChu = "";
 		DefaultTableModel dm = (DefaultTableModel) tableThongKe.getModel();
 		LocalDate date = null;
 		ArrayList<ChiTietHoaDon> listCTHD = ctHD_Bus.getListChiTietHD();
-		
+		ArrayList<HoaDon> listHD = hd_Bus.getListHoaDon();
+		for (HoaDon hoaDon : listHD) {
+			date = hoaDon.getNgayLapHD();
+			if(date.getYear() == nam && date.getMonthValue() == thang) {
+				hoaDon.tinhTongTien();
+				tongTienTheoNamThang += hoaDon.getTongTien();
+				soLuongHD++;
+			}
+		}
+		lblTongHoaDon.setText(soLuongHD+"");
+		ArrayList<SanPham> listspDaLoc = new ArrayList<SanPham>();
 		for (ChiTietHoaDon ct : listCTHD) {
 			SanPham sanPham = sp_Bus.getSPTheoMa(ct.getSanPham().getSpID());
 			HoaDon hDon = ct.getHoaDon();
 			date = hDon.getNgayLapHD();
-			if(date.getYear() == nam && date.getMonthValue() == thang) {
+			if(date.getYear() == nam && date.getMonthValue() == thang && !listspDaLoc.contains(ct.getSanPham())) {
 				soLuongDaBan = ctHD_Bus.laySoLuongTheoNamThang(ct.getSanPham().getSpID(), thang, nam);
 				tongTien = ctHD_Bus.layTongTienSPTheoNamThang(sanPham.getSpID(), thang, nam);
 				dm.addRow(new Object[] {sanPham.getSpID(), sanPham.getTenSP(), soLuongDaBan, String.format("%.0f", tongTien), ghiChu});
+				listspDaLoc.add(ct.getSanPham());
 			}
 		}
+		lblDoanhThu.setText(String.format("%,.0f", tongTienTheoNamThang));
 		tableThongKe.setModel(dm);
 	}
 
