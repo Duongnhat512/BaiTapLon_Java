@@ -516,10 +516,11 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		return true;
 	}
 
-	public void thayTable(ArrayList<KhachHang> ds) {
+	public void thayTable(ArrayList<KhachHang> ds) throws SQLException {
 		xoaTable();
 		int stt=0;
 		for (KhachHang khachHang : ds) {
+			String total = String.format("%.0f", kh_Bus.tongTienDaMua(khachHang));
 			String s="";
 			if(khachHang.isGioiTinh()) {
 				s+="Nam";
@@ -527,8 +528,8 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 				s+="Nữ";
 			}
 			dftable.addRow(new Object[] {
-					stt,khachHang.getIdKH(),khachHang.getTenKH(),khachHang.getLoaiKhachHang(),s,khachHang.getDiaChi(),
-					khachHang.getSoDienThoai(),khachHang.getGmail()
+					stt, khachHang.getIdKH(), khachHang.getTenKH(), khachHang.getLoaiKhachHang(), s, khachHang.getDiaChi(),
+					khachHang.getSoDienThoai(), khachHang.getGmail(),total
 			});
 			stt++;
 		}
