@@ -258,7 +258,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 		
 		txtMess = new JTextField();
 		txtMess.setForeground(new Color(255, 0, 0));
-		txtMess.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 17));
+		txtMess.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 12));
 		txtMess.setEditable(false);
 		txtMess.setBounds(393, 161, 337, 26);
 		panel_1.add(txtMess);
@@ -518,6 +518,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 	        	model.removeRow(r); 
 	        	sp_Bus.delete(ma);
 	        	clearTextField();
+	        	txtMess.setText("Xóa thành công.");
 	        }
 	        else {
 	        	return;

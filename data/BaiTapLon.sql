@@ -115,10 +115,10 @@ VALUES
     ('KH014', N'Nguyễn Thị Thu', 0, N'1234 Đường A, Quận B, TP HCM', '0909345678', 'thu.nguyen@gmail.com',N'Kim Cương')
 go
 insert into dbo.PhongBan 
-values ('1',N'Phòng kế toán'),
-('2',N'Phòng nhân sự'),
-('3',N'Phòng kinh doanh'),
-('4',N'Phòng Marketing')
+values ('kt',N'Phòng kế toán'),
+('ns',N'Phòng nhân sự'),
+('kd',N'Phòng kinh doanh'),
+('marketing',N'Phòng Marketing')
 go
 INSERT INTO [dbo].[NhaCungCap] (maNCC, tenNCC, diaChi, soDT, email)
 VALUES 
@@ -131,24 +131,25 @@ VALUES
 go
 INSERT INTO [dbo].[NhanVien] (maNV, tenNV, phongBan, soDT, luong, gioiTinh) 
 VALUES 
-    ('NV001', N'Nguyễn Văn An', 1, '0901234567', 15000000, 1),
-    ('NV002', N'Phạm Thị Bình', 2, '0902345678', 12000000, 0),
-    ('NV003', N'Lê Thị Cẩm Tú',4, '0903456789', 10000000, 0),
-    ('NV004', N'Trần Văn Đức', 1, '0904567890', 18000000, 1),
-    ('NV005', N'Hoàng Văn Hùng',3, '0905678901', 13000000, 1),
-    ('NV006', N'Đỗ Thị Kim Chi', 1, '0906789012', 11000000, 0),
-    ('NV007', N'Nguyễn Thị Đào', 1, '0907890123', 16000000, 0),
-    ('NV008', N'Bùi Thị Mai', 2, '0908901234', 14000000, 0),
-    ('NV009', N'Vũ Thị Nga', 2, '0909012345', 9000000, 0),
-    ('NV010', N'Nguyễn Văn Phong',3, '0900123456', 20000000, 1);
+    ('NV001', N'Nguyễn Văn An', 'kt', '0901234567', 15000000, 1),
+    ('NV002', N'Phạm Thị Bình', 'ns', '0902345678', 12000000, 0),
+    ('NV003', N'Lê Thị Cẩm Tú','kd', '0903456789', 10000000, 0),
+    ('NV004', N'Trần Văn Đức', 'kd', '0904567890', 18000000, 1),
+    ('NV005', N'Hoàng Văn Hùng','marketing', '0905678901', 13000000, 1),
+    ('NV006', N'Đỗ Thị Kim Chi', 'kd', '0906789012', 11000000, 0),
+    ('NV007', N'Nguyễn Thị Đào', 'kd', '0907890123', 16000000, 0),
+    ('NV008', N'Bùi Thị Mai', 'kd', '0908901234', 14000000, 0),
+    ('NV009', N'Vũ Thị Nga', 'kt', '0909012345', 9000000, 0),
+    ('NV010', N'Nguyễn Văn Phong', 'ns', '0900123456', 20000000, 1),
+	('NV011', N'Nguyễn Nhất Dương', 'kd', '0900123456', 20000000, 1);
 go
 INSERT INTO SanPham (maSP, tenSP, hang, loai, giaNhap, giaBan, slTon, maNCC, thoiGianBH, chipSet, kheLuuTru, kheMoRong)
 VALUES 
-('MB001', 'Mainboard ASUS Prime Z590-A', 'ASUS', 'mainboard', 7500000, 10000000, 50, 'NCC001', 24, 'Intel Z590', '2 x M.2 2242/2260/2280/22110', '2 x PCIe 4.0/3.0 x16 (x16 or dual x8)'),
-('MB002', 'Mainboard MSI MPG B550 Gaming Carbon WiFi', 'MSI', 'mainboard', 5000000, 7000000, 30, 'NCC003', 24, 'AMD B550', '2 x M.2 slot (Key M)', '2 x PCIe 4.0/3.0 x16 slot'),
-('MB003', 'Mainboard Acer Nitro B460', 'Acer', 'mainboard', 3500000, 5000000, 20, 'NCC002', 24, 'Intel B460', '1 x M.2 slot (2280)', '1 x PCIe 3.0 x16 slot'),
+('MB001', 'Mainboard ASUS Prime Z590-A', 'ASUS', 'MainBoard', 7500000, 10000000, 50, 'NCC001', 24, 'Intel Z590', '2 x M.2 2242/2260/2280/22110', '2 x PCIe 4.0/3.0 x16 (x16 or dual x8)'),
+('MB002', 'Mainboard MSI MPG B550 Gaming Carbon WiFi', 'MSI', 'MainBoard', 5000000, 7000000, 30, 'NCC003', 24, 'AMD B550', '2 x M.2 slot (Key M)', '2 x PCIe 4.0/3.0 x16 slot'),
+('MB003', 'Mainboard Acer Nitro B460', 'Acer', 'MainBoard', 3500000, 5000000, 20, 'NCC002', 24, 'Intel B460', '1 x M.2 slot (2280)', '1 x PCIe 3.0 x16 slot'),
 ('MB004', 'Mainboard Apple M1', 'Apple', 'mainboard', 10000000, 15000000, 10, 'NCC004', 24, 'Apple M1', '1 x 256GB SSD', '1 x 10 Gigabit Ethernet port'),
-('MB005', 'Mainboard Dell OptiPlex 7780', 'Dell', 'mainboard', 9000000, 12000000, 15, 'NCC005', 24, 'Intel Q470', '2 x M.2 2280 PCIe NVMe, 1 x M.2 2230 for WiFi', '2 x PCIe 3.0 x16, 1 x PCIe 3.0 x1, 1 x PCIe 3.0 x4')
+('MB005', 'Mainboard Dell OptiPlex 7780', 'Dell', 'MainBoard', 9000000, 12000000, 15, 'NCC005', 24, 'Intel Q470', '2 x M.2 2280 PCIe NVMe, 1 x M.2 2230 for WiFi', '2 x PCIe 3.0 x16, 1 x PCIe 3.0 x1, 1 x PCIe 3.0 x4')
 go
 INSERT INTO [dbo].[SanPham] (maSP, tenSP, hang, loai, giaNhap, giaBan, slTon, maNCC, nhan, luong, cache)
 VALUES 
@@ -178,16 +179,16 @@ VALUES
 go
 INSERT INTO [dbo].[SanPham] ([maSP], [tenSP], [hang], [loai], [giaNhap], [giaBan], [slTon], [maNCC], [loaiRam], [dungLuongRam], [tocDoRam])
 VALUES 
-('SP001', 'Ram Kingston 4GB DDR4', 'Kingston', 'Ram', 700000, 800000, 50, 'NCC001', 'DDR4', 4, 2400),
-('SP002', 'Ram Gskill 8GB DDR4', 'Gskill', 'Ram', 1300000, 1500000, 30, 'NCC001', 'DDR4', 8, 3200),
-('SP003', 'Ram Corsair 16GB DDR4', 'Corsair', 'Ram', 2500000, 2800000, 20, 'NCC001', 'DDR4', 16, 3600),
-('SP004', 'Ram Adata 8GB DDR3', 'Adata', 'Ram', 1100000, 1200000, 40, 'NCC001', 'DDR3', 8, 1600),
-('SP005', 'Ram Crucial 16GB DDR3', 'Crucial', 'Ram', 2000000, 2200000, 25, 'NCC001', 'DDR3', 16, 1866),
-('SP006', 'Ram Kingston 8GB DDR3', 'Kingston', 'Ram', 1200000, 1400000, 35, 'NCC001', 'DDR3', 8, 1600),
-('SP007', 'Ram Gskill 16GB DDR4', 'Gskill', 'Ram', 2700000, 3000000, 15, 'NCC001', 'DDR4', 16, 3200),
-('SP008', 'Ram Corsair 32GB DDR4', 'Corsair', 'Ram', 5000000, 5500000, 10, 'NCC001', 'DDR4', 32, 3600),
-('SP009', 'Ram Adata 4GB DDR3', 'Adata', 'Ram', 600000, 700000, 60, 'NCC001', 'DDR3', 4, 1333),
-('SP010', 'Ram Crucial 8GB DDR4', 'Crucial', 'Ram', 1200000, 1400000, 35, 'NCC001', 'DDR4', 8, 2400);
+('RAM001', 'Ram Kingston 4GB DDR4', 'Kingston', 'Ram', 700000, 800000, 50, 'NCC001', 'DDR4', 4, 2400),
+('RAM002', 'Ram Gskill 8GB DDR4', 'Gskill', 'Ram', 1300000, 1500000, 30, 'NCC001', 'DDR4', 8, 3200),
+('RAM003', 'Ram Corsair 16GB DDR4', 'Corsair', 'Ram', 2500000, 2800000, 20, 'NCC001', 'DDR4', 16, 3600),
+('RAM004', 'Ram Adata 8GB DDR3', 'Adata', 'Ram', 1100000, 1200000, 40, 'NCC001', 'DDR3', 8, 1600),
+('RAM005', 'Ram Crucial 16GB DDR3', 'Crucial', 'Ram', 2000000, 2200000, 25, 'NCC001', 'DDR3', 16, 1866),
+('RAM006', 'Ram Kingston 8GB DDR3', 'Kingston', 'Ram', 1200000, 1400000, 35, 'NCC001', 'DDR3', 8, 1600),
+('RAM007', 'Ram Gskill 16GB DDR4', 'Gskill', 'Ram', 2700000, 3000000, 15, 'NCC001', 'DDR4', 16, 3200),
+('RAM008', 'Ram Corsair 32GB DDR4', 'Corsair', 'Ram', 5000000, 5500000, 10, 'NCC001', 'DDR4', 32, 3600),
+('RAM009', 'Ram Adata 4GB DDR3', 'Adata', 'Ram', 600000, 700000, 60, 'NCC001', 'DDR3', 4, 1333),
+('RAM010', 'Ram Crucial 8GB DDR4', 'Crucial', 'Ram', 1200000, 1400000, 35, 'NCC001', 'DDR4', 8, 2400);
 go
 INSERT INTO HoaDon(maHD, maKH, maNV, ngayLapHD, ngayGiao, noiNhanHang, tongTien)
 VALUES 
@@ -205,26 +206,26 @@ VALUES
 
 
 INSERT INTO ChiTietHoaDon (maChiTietHD, maSP, soLuong, maHD, giaBan, tongTien)
-VALUES  ('CTHD001', 'SP001', 2, 'HD001', 800000.00,1600000.00),
-        ('CTHD002', 'SP002', 3, 'HD001', 1500000.00,4500000.00),
-        ('CTHD003', 'SP003', 1, 'HD001', 2800000.00,2800000.00),
-        ('CTHD004', 'SP004', 5, 'HD002', 1200000.00,6000000.00),
-        ('CTHD005', 'SP005', 2, 'HD002', 2200000.00,4400000.00),
-        ('CTHD006', 'SP006', 4, 'HD003', 1400000.00,5600000.00),
-        ('CTHD007', 'SP007', 3, 'HD003', 3000000,9000000),
-        ('CTHD008', 'SP008', 1, 'HD004', 5500000.00,5500000.00),
-        ('CTHD009', 'SP009', 2, 'HD004', 700000.00,1400000.00),
-        ('CTHD010', 'SP010', 3, 'HD004', 1400000.00,4200000.00),
-	    ('CTHD011', 'SP001', 2, 'HD001', 800000.00,1600000.00),
-		('CTHD012', 'SP002', 1, 'HD001', 1500000.00,1500000.00),
-		('CTHD013', 'SP003', 3, 'HD001', 2800000.00,8400000.00),
-		('CTHD014', 'SP004', 2, 'HD002', 1200000.00,2400000.00),
-		('CTHD015', 'SP005', 1, 'HD002', 2200000.00,1000000),
-		('CTHD016', 'SP006', 3, 'HD002', 1400000.00,4200000.00),
-		('CTHD017', 'SP007', 4, 'HD003', 3000000.00,12000000.00),
-		('CTHD018', 'SP008', 2, 'HD003', 5500000.00,11000000.00),
-		('CTHD019', 'SP009', 1, 'HD004', 700000.00,700000.00),
-		('CTHD020', 'SP010', 5, 'HD004', 1400000.00,7000000.00),
+VALUES  ('CTHD001', 'RAM001', 2, 'HD001', 800000.00,1600000.00),
+        ('CTHD002', 'RAM002', 3, 'HD001', 1500000.00,4500000.00),
+        ('CTHD003', 'RAM003', 1, 'HD001', 2800000.00,2800000.00),
+        ('CTHD004', 'RAM004', 5, 'HD002', 1200000.00,6000000.00),
+        ('CTHD005', 'RAM005', 2, 'HD002', 2200000.00,4400000.00),
+        ('CTHD006', 'RAM006', 4, 'HD003', 1400000.00,5600000.00),
+        ('CTHD007', 'RAM007', 3, 'HD003', 3000000,9000000),
+        ('CTHD008', 'RAM008', 1, 'HD004', 5500000.00,5500000.00),
+        ('CTHD009', 'RAM009', 2, 'HD004', 700000.00,1400000.00),
+        ('CTHD010', 'RAM010', 3, 'HD004', 1400000.00,4200000.00),
+	    ('CTHD011', 'RAM001', 2, 'HD001', 800000.00,1600000.00),
+		('CTHD012', 'RAM002', 1, 'HD001', 1500000.00,1500000.00),
+		('CTHD013', 'RAM003', 3, 'HD001', 2800000.00,8400000.00),
+		('CTHD014', 'RAM004', 2, 'HD002', 1200000.00,2400000.00),
+		('CTHD015', 'RAM005', 1, 'HD002', 2200000.00,1000000),
+		('CTHD016', 'RAM006', 3, 'HD002', 1400000.00,4200000.00),
+		('CTHD017', 'RAM007', 4, 'HD003', 3000000.00,12000000.00),
+		('CTHD018', 'RAM008', 2, 'HD003', 5500000.00,11000000.00),
+		('CTHD019', 'RAM009', 1, 'HD004', 700000.00,700000.00),
+		('CTHD020', 'RAM010', 5, 'HD004', 1400000.00,7000000.00),
 		('CTHD021', 'HD010', 2, 'HD001', 2200000.00, 4400000.00),
 		('CTHD022', 'CPU001', 1, 'HD002', 15000000.00, 15000000.00),
 		('CTHD023', 'HD003', 3, 'HD009', 1600000.00, 4800000.00),

@@ -58,6 +58,7 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 				try {
 					frame = new Login_GUI();
 					frame.setVisible(true);
+					frame.dangNhapTuDong();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -84,7 +85,7 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 	 */
 	public Login_GUI() throws ClassNotFoundException, SQLException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 739, 469);
+		setBounds(100, 100, 720, 426);
 		setLocationRelativeTo(null);
 		setTitle("Đăng nhập");
 		contentPane = new JPanel();
@@ -145,7 +146,6 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		chkLuu.setBounds(437, 273, 127, 23);
 		contentPane.add(chkLuu);
 		
-		dangNhapTuDong();
 		chkLuu.setSelected(true);
 		//Kết nối tới SQL Server
 		ConnectDB.getInstance().connect();

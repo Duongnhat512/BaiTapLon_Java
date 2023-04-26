@@ -506,12 +506,8 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 			e.printStackTrace();
 		}
 		NhanVien nv = null;
-		try {
-			nv = nv_Bus.getalltbNhanVien().get(cboNhanVien.getSelectedIndex());
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		nv = nv_Bus.getNhanVienTheoPhongBan("kd").get(cboNhanVien.getSelectedIndex());
+	
 		LocalDate ngayLap = LocalDate.now();
 		LocalDate ngayGiao = LocalDate.parse(txtNgayGiao.getText());
 		String noiNhan = txtNoiNhan.getText();
@@ -678,10 +674,10 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 	 */
 	private void themChiTietHoaDon() throws SQLException {
 		if(kiemTraDuLieuCTHD()) {
+			if(!capNhatSLTon(0, Integer.parseInt(txtSoLuong.getText()))) return;
 			if(ctHD_Bus.themChiTietHD(layDuLieuCTHD())) {
 				txtMessCTHD.setText("Thêm thành công.");
 				hd_Bus.capNhatTongTienHDThemMaHD(txtMaHD.getText());
-				capNhatSLTon(0, Integer.parseInt(txtSoLuong.getText()));
 				int row = tableHoaDon.getSelectedRow();
 				docDuLieuCTHDLenTable();
 				docDuLieuLenTableHD();
@@ -758,6 +754,7 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 		txtMaSp.setEditable(false);
 		txtMess.setText("");
 		txtMessTim.setText("");
+		capNhatTrangThaiButtonHD(true);
 	}
 	
 	/**
