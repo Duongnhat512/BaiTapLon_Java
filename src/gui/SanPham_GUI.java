@@ -448,23 +448,55 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 	private String sinhMaSP() {
 		
 		if(cbLoai.getSelectedItem().toString().equals("MainBoard")){
-			int stt = sp_Bus.getSPTheoLoai("MainBoard").size() + 1;
+			int stt = 1;
+			ArrayList<SanPham>  list= sp_Bus.getSPTheoLoai("MainBoard");
 			String ma="MB" + String.format("%03d",  stt);
+			for (SanPham sanPham : list) {
+				if(sanPham.getSpID().equals(ma)) {
+					stt++;
+					ma="MB" + String.format("%03d",  stt);
+				}
+			}
+			
 			return ma;
 		}
 		else if(cbLoai.getSelectedItem().toString().equals("CPU")){
-			int stt = sp_Bus.getSPTheoLoai("CPU").size() + 1;
+			int stt = 1;
+			ArrayList<SanPham>  list= sp_Bus.getSPTheoLoai("CPU");
 			String ma="CPU" + String.format("%03d",  stt);
+			for (SanPham sanPham : list) {
+				if(sanPham.getSpID().equals(ma)) {
+					stt++;
+					ma="CPU" + String.format("%03d",  stt);
+				}
+			}
+			
 			return ma;
 		}
 		else if(cbLoai.getSelectedItem().toString().equals("HardDisk")){
-			int stt = sp_Bus.getSPTheoLoai("HardDisk").size() + 1;
+			int stt = 1;
+			ArrayList<SanPham>  list= sp_Bus.getSPTheoLoai("HardDisk");
 			String ma="HD" + String.format("%03d",  stt);
+			for (SanPham sanPham : list) {
+				if(sanPham.getSpID().equals(ma)) {
+					stt++;
+					ma="HD" + String.format("%03d",  stt);
+				}
+			}
+			
 			return ma;
 		}
 		else if(cbLoai.getSelectedItem().toString().equals("Ram")){
-			int stt = sp_Bus.getSPTheoLoai("Ram").size() + 1;
+			int stt = 1;
+			ArrayList<SanPham>  list= sp_Bus.getSPTheoLoai("Ram");
 			String ma="RAM" + String.format("%03d",  stt);
+			for (SanPham sanPham : list) {
+				if(sanPham.getSpID().equals(ma)) {
+					stt++;
+					ma="RAM" + String.format("%03d",  stt);
+				}
+			}
+			
 			return ma;
 		}
 		return null;
