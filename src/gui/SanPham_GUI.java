@@ -956,6 +956,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 		txtBH.setText("");
 		txtHang.setText("");
 		txtMess.setText("");
+		table.clearSelection();
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
