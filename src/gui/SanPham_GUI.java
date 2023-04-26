@@ -10,14 +10,12 @@ import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import javax.swing.JScrollPane;
-import java.awt.BorderLayout;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import bus.NhaCungCap_Bus;
 import bus.SanPham_Bus;
-import dao.NhaCungCap_DAO;
-import dao.SanPham_DAO;
 import connectDB.ConnectDB;
 import entities.CPU;
 import entities.HardDisk;
@@ -31,8 +29,6 @@ import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
@@ -40,7 +36,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.LineBorder;
 import java.awt.Font;
 
 public class SanPham_GUI extends JFrame  implements ActionListener, MouseListener{
