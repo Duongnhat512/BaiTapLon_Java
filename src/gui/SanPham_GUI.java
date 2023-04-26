@@ -606,16 +606,20 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 		if(r!= -1) {
 			SanPham s = sp_Bus.getSPTheoMa(model.getValueAt(r, 0).toString());
 			SanPham s1 = laySPTuJtextField();
-			if(s1!=null && s1.getLoai().equals(s.getLoai()))
-			{	
-				sp_Bus.update(s1);
-				txtMess.setText("Sửa thành công!");
-				model.setRowCount(0);
-				DocDuLieuDatabaseVaoTable();
+			if(s1!=null) {
+				if(s1.getLoai().equals(s.getLoai()))
+				{	
+					sp_Bus.update(s1);
+					txtMess.setText("Sửa thành công!");
+					model.setRowCount(0);
+					DocDuLieuDatabaseVaoTable();
+					table.setRowSelectionInterval(r, r);
+				}
+				else {
+					txtMess.setText("Không sửa được! Loại không được sửa!");
+				}
 			}
-			else {
-				txtMess.setText("Không sửa được! Loại không được sửa!");
-			}
+			
 
 		}
 		else {
@@ -801,7 +805,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 			txtGiaBan.requestFocus();
 			return false;
 		}
-		if(!(slTon.length() > 0 && slTon.matches("[1-9]\\d*"))) {
+		if(!(slTon.length() > 0 && slTon.matches("[0-9]+"))) {
 			txtMess.setText("Số lượng phải dương!");
 			txtSLTon.requestFocus();
 			return false;
