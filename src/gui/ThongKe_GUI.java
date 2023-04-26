@@ -233,7 +233,7 @@ public class ThongKe_GUI extends JFrame implements ActionListener{
 			String tongTien = String.format("%.0f", ctHD_Bus.layTongTienTheoMaSP(sanPham.getSpID()));
 			String ghiChu = "";
 			if(soLuongDaBan > sanPham.getSlTon()) {
-				ghiChu = "Best seller";
+				ghiChu = "Best Seller";
 			}
 			dm.addRow(new Object[] {sanPham.getSpID(), sanPham.getTenSP(), soLuongDaBan, tongTien, ghiChu});
 		}
@@ -295,6 +295,9 @@ public class ThongKe_GUI extends JFrame implements ActionListener{
 			if(date.getYear() == nam && date.getMonthValue() == thang && !listspDaLoc.contains(ct.getSanPham())) {
 				soLuongDaBan = ctHD_Bus.laySoLuongTheoNamThang(ct.getSanPham().getSpID(), thang, nam);
 				tongTien = ctHD_Bus.layTongTienSPTheoNamThang(sanPham.getSpID(), thang, nam);
+				if (soLuongDaBan >= sanPham.getSlTon()) {
+					ghiChu = "Best Seller";
+				}
 				dm.addRow(new Object[] {sanPham.getSpID(), sanPham.getTenSP(), soLuongDaBan, String.format("%.0f", tongTien), ghiChu});
 				listspDaLoc.add(ct.getSanPham());
 			}
