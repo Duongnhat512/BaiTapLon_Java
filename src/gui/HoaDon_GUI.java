@@ -522,6 +522,18 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 		int row = tableHoaDon.getSelectedRow();
 		if(row != -1) {
 			if(JOptionPane.showConfirmDialog(this, "Bạn có muốn xóa hóa đơn này không?", "Cảnh báo", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				ArrayList<ChiTietHoaDon> listCT = ctHD_Bus.getChiTietHDTheoMaHD(txtMaHD.getText());
+				for (ChiTietHoaDon chiTietHoaDon : listCT) {
+					SanPham sp = chiTietHoaDon.getSanPham();
+					int slTon = sp.getSlTon() + chiTietHoaDon.getSoLuong();
+					if (slTon >= 0) {
+						sp.setSlTon(slTon);
+						sp_Bus.updateSLTon(sp.getSpID(), slTon);
+					}
+					else {
+						txtMessCTHD.setText(String.format("Sản phẩm chỉ còn: %d", sp.getSlTon()));
+					}
+				}
 				String hoaDonID = txtMaHD.getText().trim();
 				xoaHetDuLieuTable(tableChiTietHD);
 				hd_Bus.xoaHoaDon(hoaDonID);
@@ -572,8 +584,18 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 				txtNgayGiao.requestFocus();
 				return false;
 			}
-			if(LocalDate.parse(ngayGiao).isBefore(LocalDate.now())) {
-				txtMess.setText("Ngày giao phải sau ngày lập hóa đơn.");
+			LocalDate ngay = null;
+			try {
+				ngay = LocalDate.parse(ngayGiao);
+				if(ngay.isBefore(LocalDate.now())) {
+					txtMess.setText("Ngày giao phải sau ngày lập hóa đơn.");
+					txtNgayGiao.selectAll();
+					txtNgayGiao.requestFocus();
+					return false;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				txtMess.setText("Ngày nhập không hợp lệ.");
 				txtNgayGiao.selectAll();
 				txtNgayGiao.requestFocus();
 				return false;
@@ -598,6 +620,8 @@ public class HoaDon_GUI extends JFrame implements ActionListener, MouseListener,
 			txtNoiNhan.requestFocus();
 			return false;
 		}
+		
+		
 		return true;
 	}
 	
