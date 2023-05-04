@@ -302,6 +302,7 @@ public class NhanVien_GUI extends JFrame implements ActionListener, MouseListene
 		txtLuong.setText(modelNhanVien.getValueAt(row, 4).toString());
 		chkNu.setSelected(modelNhanVien.getValueAt(row, 5).toString() == "Nữ" ? true : false);
 		txtThongBao.setText("");
+		txtMessTim.setText("");
 	}
 	
 	@Override
@@ -419,6 +420,7 @@ public class NhanVien_GUI extends JFrame implements ActionListener, MouseListene
 			}
 		}
 		if (rdbtnTimMa.isSelected()){		//kiểm tra nếu chọn tìm theo mã thì thực hiện
+			txtMessTim.setText("");
 			if (o.equals(btnTim)) {
 				NhanVien s = nv_Bus.getNhanVienTheoMaNV(txtTim.getText());
 				if (txtTim.getText().equals("")) {
@@ -434,6 +436,7 @@ public class NhanVien_GUI extends JFrame implements ActionListener, MouseListene
 			}
 		}
 		if (rdbtnTimTen.isSelected()){		//kiểm tra nếu chọn tìm theo tên thì thực hiện
+			txtMessTim.setText("");
 			if (o.equals(btnTim)) {
 				ArrayList<NhanVien> list = nv_Bus.getNhanVienTheoTen(txtTim.getText());
 				if (txtTim.getText().trim().equals("")) {

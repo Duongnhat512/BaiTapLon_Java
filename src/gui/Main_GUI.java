@@ -161,8 +161,14 @@ public class Main_GUI extends JFrame implements ActionListener{
 		lblTenTK = new JLabel(Login_GUI.getTaiKhoanDuocDangNhap());
 		lblTenTK.setFont(new Font("Arial", Font.BOLD, 15));
 		lblTenTK.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTenTK.setBounds(0, 27, 120, 43);
+		lblTenTK.setBounds(0, 45, 120, 25);
 		pWest.add(lblTenTK);
+		
+		JLabel lblXinCho = new JLabel("Xin chào!");
+		lblXinCho.setHorizontalAlignment(SwingConstants.CENTER);
+		lblXinCho.setFont(new Font("Arial", Font.BOLD, 15));
+		lblXinCho.setBounds(0, 10, 120, 36);
+		pWest.add(lblXinCho);
 		
 		//Đăng ký sự kiện
 		btnHoaDon.addActionListener(this);
