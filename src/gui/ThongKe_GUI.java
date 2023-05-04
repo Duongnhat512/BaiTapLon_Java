@@ -263,7 +263,7 @@ public class ThongKe_GUI extends JFrame implements ActionListener{
 	}
 	
 	/**
-	 * Lọc dữ liệu theo năm và tháng đã chọn và cập nhật doanh thu theo tháng và năm được chọn lọc
+	 * Lọc dữ liệu theo năm và tháng đã chọn và cập nhật doanh thu theo tháng và năm (dựa vào ngày lập hóa đơn) được lọc
 	 */
 	private void locDuLieuTheoNamThang() {
 		xoaHetTable();

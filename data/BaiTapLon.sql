@@ -146,49 +146,49 @@ go
 INSERT INTO SanPham (maSP, tenSP, hang, loai, giaNhap, giaBan, slTon, maNCC, thoiGianBH, chipSet, kheLuuTru, kheMoRong)
 VALUES 
 ('MB001', 'Mainboard ASUS Prime Z590-A', 'ASUS', 'MainBoard', 7500000, 10000000, 50, 'NCC001', 24, 'Intel Z590', '2 x M.2 2242/2260/2280/22110', '2 x PCIe 4.0/3.0 x16 (x16 or dual x8)'),
-('MB002', 'Mainboard MSI MPG B550 Gaming Carbon WiFi', 'MSI', 'MainBoard', 5000000, 7000000, 30, 'NCC003', 24, 'AMD B550', '2 x M.2 slot (Key M)', '2 x PCIe 4.0/3.0 x16 slot'),
+('MB002', 'Mainboard MSI MPG B550 Gaming Carbon WiFi', 'MSI', 'MainBoard', 5000000, 7000000, 24, 'NCC003', 24, 'AMD B550', '2 x M.2 slot (Key M)', '2 x PCIe 4.0/3.0 x16 slot'),
 ('MB003', 'Mainboard Acer Nitro B460', 'Acer', 'MainBoard', 3500000, 5000000, 20, 'NCC002', 24, 'Intel B460', '1 x M.2 slot (2280)', '1 x PCIe 3.0 x16 slot'),
-('MB004', 'Mainboard Apple M1', 'Apple', 'mainboard', 10000000, 15000000, 10, 'NCC004', 24, 'Apple M1', '1 x 256GB SSD', '1 x 10 Gigabit Ethernet port'),
+('MB004', 'Mainboard Apple M1', 'Apple', 'MainBoard', 10000000, 15000000, 10, 'NCC004', 24, 'Apple M1', '1 x 256GB SSD', '1 x 10 Gigabit Ethernet port'),
 ('MB005', 'Mainboard Dell OptiPlex 7780', 'Dell', 'MainBoard', 9000000, 12000000, 15, 'NCC005', 24, 'Intel Q470', '2 x M.2 2280 PCIe NVMe, 1 x M.2 2230 for WiFi', '2 x PCIe 3.0 x16, 1 x PCIe 3.0 x1, 1 x PCIe 3.0 x4')
 go
-INSERT INTO [dbo].[SanPham] (maSP, tenSP, hang, loai, giaNhap, giaBan, slTon, maNCC, nhan, luong, cache)
+INSERT INTO [dbo].[SanPham] (maSP, tenSP, hang, loai, giaNhap, giaBan, slTon, maNCC, nhan, luong, cache,thoiGianBH)
 VALUES 
-	('CPU001', 'Intel Core i9-11900K', 'Intel', 'CPU', 10000000, 15000000, 10, 'NCC001', 8, 16, 16),
-	('CPU002', 'Intel Core i7-11700K', 'Intel', 'CPU', 7000000, 10000000, 20, 'NCC001', 8, 12, 16),
-	('CPU003', 'AMD Ryzen 9 5950X', 'AMD', 'CPU', 13000000, 18000000, 5, 'NCC002', 16, 32, 64),
-	('CPU004', 'AMD Ryzen 7 5800X', 'AMD', 'CPU', 8000000, 12000000, 15, 'NCC002', 8, 16, 32),
-	('CPU005', 'Intel Core i5-11600K', 'Intel', 'CPU', 5000000, 8000000, 30, 'NCC001', 6, 12, 12),
-	('CPU006', 'AMD Ryzen 5 5600X', 'AMD', 'CPU', 4000000, 6000000, 25, 'NCC002', 6, 12, 32),
-	('CPU007', 'Intel Core i9-10900K', 'Intel', 'CPU', 9000000, 14000000, 12, 'NCC003', 10, 20, 20),
-	('CPU008', 'Intel Core i5-10600K', 'Intel', 'CPU', 4500000, 7000000, 18, 'NCC003', 6, 12, 12),
-	('CPU009', 'AMD Ryzen 7 3700X', 'AMD', 'CPU', 5000000, 9000000, 8, 'NCC002', 8, 16, 36),
-	('CPU010', 'AMD Ryzen 5 3600X', 'AMD', 'CPU', 3500000, 5500000, 10, 'NCC002', 6, 12, 35);
+	('CPU001', 'Intel Core i9-11900K', 'Intel', 'CPU', 10000000, 15000000, 10, 'NCC001', 8, 16, 16,24),
+	('CPU002', 'Intel Core i7-11700K', 'Intel', 'CPU', 7000000, 10000000, 20, 'NCC001', 8, 12, 16,24),
+	('CPU003', 'AMD Ryzen 9 5950X', 'AMD', 'CPU', 13000000, 18000000, 5, 'NCC002', 16, 32, 64,24),
+	('CPU004', 'AMD Ryzen 7 5800X', 'AMD', 'CPU', 8000000, 12000000, 15, 'NCC002', 8, 16, 32,24),
+	('CPU005', 'Intel Core i5-11600K', 'Intel', 'CPU', 5000000, 8000000, 30, 'NCC001', 6, 12, 12,24),
+	('CPU006', 'AMD Ryzen 5 5600X', 'AMD', 'CPU', 4000000, 6000000, 25, 'NCC002', 6, 12, 32,24),
+	('CPU007', 'Intel Core i9-10900K', 'Intel', 'CPU', 9000000, 14000000, 12, 'NCC003', 10, 20, 20,24),
+	('CPU008', 'Intel Core i5-10600K', 'Intel', 'CPU', 4500000, 7000000, 18, 'NCC003', 6, 12, 12,24),
+	('CPU009', 'AMD Ryzen 7 3700X', 'AMD', 'CPU', 5000000, 9000000, 8, 'NCC002', 8, 16, 36,24),
+	('CPU010', 'AMD Ryzen 5 3600X', 'AMD', 'CPU', 3500000, 5500000, 10, 'NCC002', 6, 12, 35,24);
 go
-INSERT INTO SanPham(maSP, tenSP, hang, loai, giaNhap, giaBan, slTon, maNCC, dungLuongODia, cacheDDR, tuoiThoTB)
+INSERT INTO SanPham(maSP, tenSP, hang, loai, giaNhap, giaBan, slTon, maNCC, dungLuongODia, cacheDDR, tuoiThoTB,thoiGianBH)
 VALUES 
-('HD001', N'Ổ cứng Seagate Barracuda', 'Seagate', 'HardDisk', 1200000, 1500000, 50, 'NCC001', 2000, '8MB', 3),
-('HD002', N'Ổ cứng Western Digital Black', 'Western Digital', 'HardDisk', 1250000, 1550000, 40, 'NCC002', 4000, '64MB', 3.5),
-('HD003', N'Ổ cứng Toshiba P300', 'Toshiba', 'HardDisk', 1300000, 1600000, 60, 'NCC003', 3000, '64MB', 3),
-('HD004', N'Ổ cứng Kingston A2000', 'Kingston', 'HardDisk', 1100000, 1400000, 30, 'NCC004', 500, 'N/A', 1.5),
-('HD005', N'Ổ cứng SanDisk Ultra 3D', 'SanDisk', 'HardDisk', 1150000, 1450000, 25, 'NCC005', 1000, 'N/A', 2),
-('HD006', N'Ổ cứng Crucial MX500', 'Crucial', 'HardDisk', 1350000, 1650000, 20, 'NCC001', 2000, 'N/A', 2.5),
-('HD007', N'Ổ cứng Samsung 970 EVO Plus', 'Samsung', 'HardDisk', 2500000, 2800000, 15, 'NCC002', 500, 'N/A', 3),
-('HD008', N'Ổ cứng Adata XPG SX8200 Pro', 'Adata', 'HardDisk', 2100000, 2400000, 10, 'NCC003', 1000, 'N/A', 2),
-('HD009', N'Ổ cứng Team T-Force Vulcan', 'Team', 'HardDisk', 1000000, 1300000, 35, 'NCC004', 1000, 'N/A', 2),
-('HD010', N'Ổ cứng Intel 660p', 'Intel', 'HardDisk', 1900000, 2200000, 45, 'NCC005', 2000, 'N/A', 3)
+('HD001', N'Ổ cứng Seagate Barracuda', 'Seagate', 'HardDisk', 1200000, 1500000, 50, 'NCC001', 2000, '8MB', 3,24),
+('HD002', N'Ổ cứng Western Digital Black', 'Western Digital', 'HardDisk', 1250000, 1550000, 40, 'NCC002', 4000, '64MB', 3.5,24),
+('HD003', N'Ổ cứng Toshiba P300', 'Toshiba', 'HardDisk', 1300000, 1600000, 60, 'NCC003', 3000, '64MB', 3,24),
+('HD004', N'Ổ cứng Kingston A2000', 'Kingston', 'HardDisk', 1100000, 1400000, 30, 'NCC004', 500, 'N/A', 1.5,24),
+('HD005', N'Ổ cứng SanDisk Ultra 3D', 'SanDisk', 'HardDisk', 1150000, 1450000, 25, 'NCC005', 1000, 'N/A', 2,24),
+('HD006', N'Ổ cứng Crucial MX500', 'Crucial', 'HardDisk', 1350000, 1650000, 20, 'NCC001', 2000, 'N/A', 2.5,24),
+('HD007', N'Ổ cứng Samsung 970 EVO Plus', 'Samsung', 'HardDisk', 2500000, 2800000, 15, 'NCC002', 500, 'N/A', 3,24),
+('HD008', N'Ổ cứng Adata XPG SX8200 Pro', 'Adata', 'HardDisk', 2100000, 2400000, 10, 'NCC003', 1000, 'N/A', 2,24),
+('HD009', N'Ổ cứng Team T-Force Vulcan', 'Team', 'HardDisk', 1000000, 1300000, 35, 'NCC004', 1000, 'N/A', 2,24),
+('HD010', N'Ổ cứng Intel 660p', 'Intel', 'HardDisk', 1900000, 2200000, 45, 'NCC005', 2000, 'N/A', 3,24)
 go
-INSERT INTO [dbo].[SanPham] ([maSP], [tenSP], [hang], [loai], [giaNhap], [giaBan], [slTon], [maNCC], [loaiRam], [dungLuongRam], [tocDoRam])
+INSERT INTO [dbo].[SanPham] ([maSP], [tenSP], [hang], [loai], [giaNhap], [giaBan], [slTon], [maNCC], [loaiRam], [dungLuongRam], [tocDoRam],[thoiGianBH])
 VALUES 
-('RAM001', 'Ram Kingston 4GB DDR4', 'Kingston', 'Ram', 700000, 800000, 50, 'NCC001', 'DDR4', 4, 2400),
-('RAM002', 'Ram Gskill 8GB DDR4', 'Gskill', 'Ram', 1300000, 1500000, 30, 'NCC001', 'DDR4', 8, 3200),
-('RAM003', 'Ram Corsair 16GB DDR4', 'Corsair', 'Ram', 2500000, 2800000, 20, 'NCC001', 'DDR4', 16, 3600),
-('RAM004', 'Ram Adata 8GB DDR3', 'Adata', 'Ram', 1100000, 1200000, 40, 'NCC001', 'DDR3', 8, 1600),
-('RAM005', 'Ram Crucial 16GB DDR3', 'Crucial', 'Ram', 2000000, 2200000, 25, 'NCC001', 'DDR3', 16, 1866),
-('RAM006', 'Ram Kingston 8GB DDR3', 'Kingston', 'Ram', 1200000, 1400000, 35, 'NCC001', 'DDR3', 8, 1600),
-('RAM007', 'Ram Gskill 16GB DDR4', 'Gskill', 'Ram', 2700000, 3000000, 15, 'NCC001', 'DDR4', 16, 3200),
-('RAM008', 'Ram Corsair 32GB DDR4', 'Corsair', 'Ram', 5000000, 5500000, 10, 'NCC001', 'DDR4', 32, 3600),
-('RAM009', 'Ram Adata 4GB DDR3', 'Adata', 'Ram', 600000, 700000, 60, 'NCC001', 'DDR3', 4, 1333),
-('RAM010', 'Ram Crucial 8GB DDR4', 'Crucial', 'Ram', 1200000, 1400000, 35, 'NCC001', 'DDR4', 8, 2400);
+('RAM001', 'Ram Kingston 4GB DDR4', 'Kingston', 'Ram', 700000, 800000, 50, 'NCC001', 'DDR4', 4, 2400,24),
+('RAM002', 'Ram Gskill 8GB DDR4', 'Gskill', 'Ram', 1300000, 1500000, 30, 'NCC001', 'DDR4', 8, 3200,24),
+('RAM003', 'Ram Corsair 16GB DDR4', 'Corsair', 'Ram', 2500000, 2800000, 20, 'NCC001', 'DDR4', 16, 3600,24),
+('RAM004', 'Ram Adata 8GB DDR3', 'Adata', 'Ram', 1100000, 1200000, 40, 'NCC001', 'DDR3', 8, 1600,24),
+('RAM005', 'Ram Crucial 16GB DDR3', 'Crucial', 'Ram', 2000000, 2200000, 25, 'NCC001', 'DDR3', 16, 1866,24),
+('RAM006', 'Ram Kingston 8GB DDR3', 'Kingston', 'Ram', 1200000, 1400000, 35, 'NCC001', 'DDR3', 8, 1600,24),
+('RAM007', 'Ram Gskill 16GB DDR4', 'Gskill', 'Ram', 2700000, 3000000, 15, 'NCC001', 'DDR4', 16, 3200,24),
+('RAM008', 'Ram Corsair 32GB DDR4', 'Corsair', 'Ram', 5000000, 5500000, 10, 'NCC001', 'DDR4', 32, 3600,24),
+('RAM009', 'Ram Adata 4GB DDR3', 'Adata', 'Ram', 600000, 700000, 60, 'NCC001', 'DDR3', 4, 1333,24),
+('RAM010', 'Ram Crucial 8GB DDR4', 'Crucial', 'Ram', 1200000, 1400000, 35, 'NCC001', 'DDR4', 8, 2400,24);
 go
 INSERT INTO HoaDon(maHD, maKH, maNV, ngayLapHD, ngayGiao, noiNhanHang, tongTien)
 VALUES 

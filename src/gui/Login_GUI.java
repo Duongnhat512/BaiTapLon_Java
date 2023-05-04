@@ -116,10 +116,10 @@ public class Login_GUI extends JFrame implements ActionListener, KeyListener{
 		txtMatKhau.setBounds(243, 200, 341, 34);
 		contentPane.add(txtMatKhau);
 		
-		JLabel lblTitle = new JLabel("Phần mềm quản lý bán linh kiện");
+		JLabel lblTitle = new JLabel("Phần mềm quản lý bán linh kiện điện tử");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitle.setFont(new Font("Arial", Font.BOLD, 30));
-		lblTitle.setBounds(103, 40, 503, 56);
+		lblTitle.setFont(new Font("Arial", Font.BOLD, 25));
+		lblTitle.setBounds(103, 40, 503, 93);
 		contentPane.add(lblTitle);
 		
 		btnDangNhap = new JButton("Đăng nhập");
