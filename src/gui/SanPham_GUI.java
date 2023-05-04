@@ -527,6 +527,7 @@ public class SanPham_GUI extends JFrame  implements ActionListener, MouseListene
 		}
 		if(o.equals(btnReset)) {
 			clearTextField();
+			model.setRowCount(0);
 			DocDuLieuDatabaseVaoTable();
 		}
 		if(o.equals(btnTim)) {
