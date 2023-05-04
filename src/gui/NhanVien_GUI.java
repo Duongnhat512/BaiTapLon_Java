@@ -341,6 +341,7 @@ public class NhanVien_GUI extends JFrame implements ActionListener, MouseListene
 			txtMaNV.setText("");
 			txtSoDT.setText("");
 			txtLuong.setText("");
+			txtTim.setText("");
 			txtMaNV.requestFocus();
 			
 		}
