@@ -2,4 +2,7 @@
 admin
 123
 
-Lưu ý: Chạy Login_GUI đầu tiên.
+Sử dụng phần mềm phải chạy Login_GUI đầu tiên.
+
+Lưu ý: Phầm mềm được dựng trên jdk 18-SE
+
