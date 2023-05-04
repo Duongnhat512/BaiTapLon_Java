@@ -380,7 +380,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		if(obj.equals(btnXoa)) {
 			int r = table.getSelectedRow();
 			if(r!=-1) {
-				String ma = (String) table.getValueAt(r, 1);
+				String ma = txtMa.getText();
 				KhachHang k =new KhachHang(ma);
 				try {
 					if(JOptionPane.showConfirmDialog(this,"Có chắc chắn muốn xóa","Cảnh báo !",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
