@@ -129,7 +129,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			new Object[][] {
 			},
 			new String[] {
-				 "M\u00E3 Kh\u00E1ch H\u00E0ng", "T\u00EAn Kh\u00E1ch H\u00E0ng", "Lo\u1EA1i Kh\u00E1ch H\u00E0ng", "Gi\u1EDBi T\u00EDnh", "\u0110\u1ECBa Ch\u1EC9", "S\u1ED1 \u0110i\u1EC7n Tho\u1EA1i", "Gmail", "Tổng tiền đã mua"
+				 "M\u00E3 Kh\u00E1ch H\u00E0ng", "T\u00EAn Kh\u00E1ch H\u00E0ng", "Lo\u1EA1i Kh\u00E1ch H\u00E0ng", "Gi\u1EDBi T\u00EDnh", "\u0110\u1ECBa Ch\u1EC9", "S\u1ED1 \u0110i\u1EC7n Tho\u1EA1i", "Gmail"
 			}
 		));
 		scrollPane.setViewportView(table);
@@ -323,7 +323,6 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 		ArrayList<KhachHang> ds = new ArrayList<>();
 		ds = kh_Bus.getAllTableKhachHang();
 		for (KhachHang khachHang : ds) {
-			String total = String.format("%.0f", kh_Bus.tongTienDaMua(khachHang));
 			String s="";
 			if(khachHang.isGioiTinh()) {
 				s+="Nam";
@@ -332,7 +331,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			}
 			dftable.addRow(new Object[] {
 					 khachHang.getIdKH(), khachHang.getTenKH(), khachHang.getLoaiKhachHang(), s, khachHang.getDiaChi(),
-					khachHang.getSoDienThoai(), khachHang.getGmail(),total
+					khachHang.getSoDienThoai(), khachHang.getGmail()
 			});
 		}
 		
@@ -517,7 +516,6 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 	public void thayTable(ArrayList<KhachHang> ds) throws SQLException {
 		xoaTable();
 		for (KhachHang khachHang : ds) {
-			String total = String.format("%.0f", kh_Bus.tongTienDaMua(khachHang));
 			String s="";
 			if(khachHang.isGioiTinh()) {
 				s+="Nam";
@@ -526,7 +524,7 @@ public class KhachHang_GUI extends JFrame implements ActionListener,MouseListene
 			}
 			dftable.addRow(new Object[] {
 					 khachHang.getIdKH(), khachHang.getTenKH(), khachHang.getLoaiKhachHang(), s, khachHang.getDiaChi(),
-					khachHang.getSoDienThoai(), khachHang.getGmail(),total
+					khachHang.getSoDienThoai(), khachHang.getGmail()
 			});
 		}
 	}
